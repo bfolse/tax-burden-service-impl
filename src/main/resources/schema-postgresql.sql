@@ -67,7 +67,7 @@ CREATE SEQUENCE public.hibernate_sequence
   START 1
   CACHE 1;
 ALTER TABLE public.hibernate_sequence
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.monetary_amount
 CREATE TABLE public.monetary_amount
@@ -81,7 +81,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.monetary_amount
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.political_division
 CREATE TABLE public.political_division
@@ -98,7 +98,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.political_division
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_payer_profile
 CREATE TABLE public.tax_payer_profile
@@ -129,7 +129,7 @@ WITH (
     OIDS = FALSE
 );
 ALTER TABLE public.tax_payer_profile
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_definition
 CREATE TABLE public.tax_definition
@@ -148,7 +148,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_definition
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.expenditure_category
 CREATE TABLE public.expenditure_category
@@ -163,7 +163,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.expenditure_category
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.expenditure_category_group
 CREATE TABLE public.expenditure_category_group
@@ -178,7 +178,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.expenditure_category_group
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.expenditure_category_group_expenditure_category_key
 CREATE TABLE public.expenditure_category_group_expenditure_category_key
@@ -193,7 +193,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.expenditure_category_group_expenditure_category_key
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
   -- Table: public.tax_payer_profile_political_division_keys
 CREATE TABLE public.tax_payer_profile_political_division_keys
@@ -208,7 +208,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_payer_profile_political_division_keys
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_burden_report
 CREATE TABLE public.tax_burden_report
@@ -226,7 +226,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_burden_report
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_entry
 CREATE TABLE public.tax_entry
@@ -247,7 +247,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_entry
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_burden_report_tax_entries
 CREATE TABLE public.tax_burden_report_tax_entries
@@ -266,7 +266,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_burden_report_tax_entries
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_rate
 CREATE TABLE public.tax_rate
@@ -283,7 +283,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_rate
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.assessed_rate
 CREATE TABLE public.assessed_rate
@@ -298,7 +298,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.assessed_rate
-  OWNER to postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.postal_code_political_division
 CREATE TABLE public.postal_code_political_division
@@ -312,7 +312,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.postal_code_political_division
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.tax_definition_expenditure_category
 CREATE TABLE public.tax_definition_expenditure_category
@@ -327,7 +327,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_definition_expenditure_category
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
 -- Table: public.consumer_expenditure_profile
 CREATE TABLE public.consumer_expenditure_profile
@@ -341,7 +341,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.consumer_expenditure_profile
-  OWNER TO postgres;
+  OWNER TO ttbdev;
 
   -- Table: public.consumer_expenditure_profile_entry
   CREATE TABLE public.consumer_expenditure_profile_entry
@@ -358,4 +358,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.consumer_expenditure_profile_entry
-  OWNER TO postgres;
+  OWNER TO ttbdev;
