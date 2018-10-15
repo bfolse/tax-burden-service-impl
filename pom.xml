@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>tax-burden-service-impl</name>
-	<description>Tax Burdern Service</description>
+	<description>Tax Burden Service</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
