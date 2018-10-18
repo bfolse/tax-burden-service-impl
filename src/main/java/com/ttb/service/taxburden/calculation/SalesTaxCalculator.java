@@ -57,7 +57,7 @@ public class SalesTaxCalculator implements TaxCalculator {
 				taxRates.put(taxRateFlat.getTaxDefinitionKey(), taxRateFlat.getRate());
 			}
 		}
-		logger.debug("taxRates: " + taxRates);
+		logger.debug("Initialized with " + taxRates.size() + " taxRates");
 		
 		// Setup taxDefinition to expenditureCategories map
 		taxDefinitionExpenditureCategories = new HashMap<String, List<String>>();
@@ -71,14 +71,14 @@ public class SalesTaxCalculator implements TaxCalculator {
 				taxDefinitionExpenditureCategories.get(taxDefinitionKey).addAll(expenditureCategoryGroup.getExpenditureCategoryKeys());
 			}
 		});
-		logger.debug("taxDefinitionExpenditureCategories: " + taxDefinitionExpenditureCategories);
-		
+		logger.debug("Initialized with " + taxDefinitionExpenditureCategories.size() + " taxDefinitionExpenditureCategories");
+
 		// Setup consumerExpenditureProfiles
 		consumerExpenditureProfiles = new HashMap<String, Map<String, BigDecimal>>();
 		consumerExpenditureProfileRepository.findAll().forEach(k -> {
 			consumerExpenditureProfiles.put(k.getConsumerExpenditureProfileKey(), k.getConsumerExpenditureProfileEntries());
 		});
-		logger.debug("consumerExpenditureProfiles: " + consumerExpenditureProfiles);
+		logger.debug("Initialized with " + consumerExpenditureProfiles.size() + " consumerExpenditureProfiles");
 	}
 	
 	@Override

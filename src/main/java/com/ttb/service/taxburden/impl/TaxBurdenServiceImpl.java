@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-//@RefreshScope
 @Service
 public class TaxBurdenServiceImpl implements TaxBurdenService {
 	private static final Logger logger = LoggerFactory.getLogger(TaxBurdenServiceImpl.class);
