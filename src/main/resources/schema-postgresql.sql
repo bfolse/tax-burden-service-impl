@@ -58,7 +58,6 @@ DROP TABLE IF EXISTS public.tax_rate_set CASCADE;
 -- Table: public.tax_rate_set_tax_rates
 DROP TABLE IF EXISTS public.tax_rate_set_tax_rates;
 
-
 -- Sequence: public.hibernate_sequence
 CREATE SEQUENCE public.hibernate_sequence
   INCREMENT 1

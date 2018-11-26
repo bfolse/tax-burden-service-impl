@@ -52,7 +52,7 @@ INSERT INTO public.expenditure_category(
     (1, 'EDUCATION'),
     (1, 'TOBACCO'),
     (1, 'MISC'),
-	(1, 'FOOD_AWAY_FROM_HOME'),    
+	(2, 'FOOD_AWAY_FROM_HOME'),
     (2, 'FOOD_AT_HOME'),
     (2, 'ALCOHOL'),
     (2, 'HOUSING_SHELTER'),
