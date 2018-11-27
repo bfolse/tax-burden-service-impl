@@ -24,11 +24,10 @@ import com.ttb.service.taxburden.entities.MonetaryAmountEntity;
 import com.ttb.service.taxburden.entities.TaxPayerProfileEntity;
 import com.ttb.service.taxburden.repositories.ConsumerExpenditureProfileRepository;
 import com.ttb.service.taxburden.repositories.TaxPayerProfileRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class ConsumerExpenditureProfileRepositoryTest {
 	@Autowired
 	private ConsumerExpenditureProfileRepository consumerExpenditureProfileRepository;

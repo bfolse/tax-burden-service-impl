@@ -30,9 +30,9 @@ import com.ttb.service.taxburden.entities.TaxRateEntity;
 import com.ttb.service.taxburden.domain.MonetaryAmount;
 import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.repositories.TaxRateFlatRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(locations = { "classpath:application-test.properties" })
+@RunWith(SpringRunner.class)
 public class IncomeTaxFlatRateCalculatorTest {
 
 	private IncomeTaxFlatRateCalculator incomeTaxFlatRateCalculator;

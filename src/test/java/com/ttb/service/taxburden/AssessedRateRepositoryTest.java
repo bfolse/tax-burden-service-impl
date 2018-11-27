@@ -6,9 +6,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,14 +19,12 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class AssessedRateRepositoryTest {
 	@Autowired 
 	private AssessedRateRepository assessedRateRepository;
-	
+
 	@Test
 	public void saveTest() {
 		AssessedRateEntity assessedRateOne = new AssessedRateEntity("TEST_TAX_DEFINITION_NAME_ONE", BigDecimal.valueOf(0.05));

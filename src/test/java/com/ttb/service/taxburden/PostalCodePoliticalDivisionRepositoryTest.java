@@ -17,12 +17,10 @@ import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import com.ttb.service.taxburden.entities.PostalCodePoliticalDivisionEntity;
 import com.ttb.service.taxburden.repositories.PoliticalDivisionRepository;
 import com.ttb.service.taxburden.repositories.PostalCodePoliticalDivisionRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
-
 public class PostalCodePoliticalDivisionRepositoryTest {
 	
 	@Autowired

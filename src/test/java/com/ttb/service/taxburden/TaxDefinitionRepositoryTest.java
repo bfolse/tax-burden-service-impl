@@ -21,11 +21,10 @@ import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import com.ttb.service.taxburden.entities.TaxDefinitionEntity;
 import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.repositories.TaxDefinitionRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class TaxDefinitionRepositoryTest {
 	@Autowired 
 	private TaxDefinitionRepository taxDefinitionRepository;

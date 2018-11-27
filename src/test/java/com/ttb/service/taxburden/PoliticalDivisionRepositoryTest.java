@@ -15,12 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import com.ttb.service.taxburden.repositories.PoliticalDivisionRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
-
 public class PoliticalDivisionRepositoryTest {
 	
 	@Autowired

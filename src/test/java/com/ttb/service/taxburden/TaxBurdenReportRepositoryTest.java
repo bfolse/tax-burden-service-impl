@@ -24,11 +24,10 @@ import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.repositories.PoliticalDivisionRepository;
 import com.ttb.service.taxburden.repositories.TaxBurdenReportRepository;
 import com.ttb.service.taxburden.repositories.TaxPayerProfileRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class TaxBurdenReportRepositoryTest {
 
 	@Autowired

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,9 +20,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class TaxBurdenServiceImplTest {
 	@Autowired
 	private TaxBurdenServiceImpl taxBurdenServiceImpl;

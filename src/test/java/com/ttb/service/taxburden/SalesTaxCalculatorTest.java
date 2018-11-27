@@ -33,9 +33,9 @@ import com.ttb.service.taxburden.repositories.ConsumerExpenditureProfileReposito
 import com.ttb.service.taxburden.repositories.ExpenditureCategoryGroupRepository;
 import com.ttb.service.taxburden.repositories.TaxDefinitionExpenditureCategoryRepository;
 import com.ttb.service.taxburden.repositories.TaxRateFlatRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(locations = { "classpath:application-test.properties" })
+@RunWith(SpringRunner.class)
 public class SalesTaxCalculatorTest {
 
 	private SalesTaxCalculator salesTaxCalculator;

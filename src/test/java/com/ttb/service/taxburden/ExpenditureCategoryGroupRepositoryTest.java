@@ -22,11 +22,10 @@ import com.ttb.service.taxburden.entities.ExpenditureCategoryEntity;
 import com.ttb.service.taxburden.entities.ExpenditureCategoryGroupEntity;
 import com.ttb.service.taxburden.repositories.ExpenditureCategoryGroupRepository;
 import com.ttb.service.taxburden.repositories.ExpenditureCategoryRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class ExpenditureCategoryGroupRepositoryTest {
 
 	@Autowired 

@@ -17,11 +17,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ttb.service.taxburden.entities.TaxRateEntity;
 import com.ttb.service.taxburden.repositories.TaxRateFlatRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration
-@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class TaxRateFlatRepositoryTest {
 	@Autowired 
 	private TaxRateFlatRepository taxRateFlatRepository;
