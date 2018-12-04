@@ -2,6 +2,7 @@ package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.repositories.BoundaryCountyRepository;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import java.time.Duration;
 
 import static org.junit.Assert.*;
-
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ContextConfiguration(initializers = {BoundaryCountyRepositoryTest.Initializer.class})

@@ -358,3 +358,31 @@ WITH (
 );
 ALTER TABLE public.consumer_expenditure_profile_entry
   OWNER TO ttbdev;
+
+--
+-- Postgis Spatial Data Schema
+--
+SET CLIENT_ENCODING TO UTF8;
+SET STANDARD_CONFORMING_STRINGS TO ON;
+-- SELECT DropGeometryColumn('public','boundary_county','geom');
+DROP TABLE IF EXISTS public.boundary_county;
+CREATE TABLE public.boundary_county
+(
+    gid serial,
+    statefp varchar(2),
+    countyfp varchar(3),
+    countyns varchar(8),
+    affgeoid varchar(14),
+    geoid varchar(5),
+    name varchar(100),
+    lsad varchar(2),
+    aland float8,
+    awater float8,
+    CONSTRAINT boundary_county_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_county','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_county
+  OWNER TO ttbdev;

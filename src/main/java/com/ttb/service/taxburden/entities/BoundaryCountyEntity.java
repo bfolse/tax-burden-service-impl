@@ -13,8 +13,7 @@ import com.vividsolutions.jts.geom.Geometry;
 @Table(name = "boundary_county")
 public class BoundaryCountyEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long gid;
 //    @Type(type = "org.hibernate.spatial.GeometryType")
     private Geometry geom;
     private String statefp;
@@ -45,8 +44,8 @@ public class BoundaryCountyEntity {
         this.awater = awater;
     }
 
-    public Long getId() {
-        return id;
+    public Long getGid() {
+        return gid;
     }
 
     public Geometry getGeom() {
@@ -154,7 +153,7 @@ public class BoundaryCountyEntity {
     @Override
     public String toString() {
         return "BoundaryCountyEntity{" +
-                "id=" + id +
+                "gid=" + gid +
                 ", geom=" + geom +
                 ", statefp='" + statefp + '\'' +
                 ", countyfp='" + countyfp + '\'' +

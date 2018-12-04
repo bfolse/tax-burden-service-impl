@@ -17,8 +17,13 @@ public class PoliticalDivisionLookupController {
 	@Autowired
 	TaxBurdenServiceImpl taxBurdenServiceImpl;
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public @ResponseBody List<String> politicalDivisionLookup(@RequestParam(value="postalCode") String postalCode) {
+	@RequestMapping(value="/postal-code", method=RequestMethod.GET)
+	public @ResponseBody List<String> politicalDivisionLookupByPostalCode(@RequestParam(value="postalCode") String postalCode) {
 		return taxBurdenServiceImpl.findAllPoliticalDivisionsByPostalCode(postalCode);
+	}
+
+	@RequestMapping(value="/latitude-longitude", method=RequestMethod.GET)
+	public @ResponseBody List<String> politicalDivisionLookupByLatitudeLongitude(@RequestParam(value="latitude") String latitude, @RequestParam(value="longitude") String longitude) {
+		return taxBurdenServiceImpl.findAllPoliticalDivisionsByLatitudeLongitude(latitude, longitude);
 	}
 }

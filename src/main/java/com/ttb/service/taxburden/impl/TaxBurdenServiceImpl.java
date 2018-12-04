@@ -8,6 +8,10 @@ import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxPayerProfile;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.*;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.PrecisionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +25,16 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	private static final Logger logger = LoggerFactory.getLogger(TaxBurdenServiceImpl.class);
 
 	private static final int MAX_TAX_DEFINITION_ORDINAL = 10;
-	
+	private static final int SRID = 4326;
+
+	private static final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), SRID);
+
 	@Autowired
 	PoliticalDivisionRepository politicalDivisionRepository;
 	@Autowired
 	PostalCodePoliticalDivisionRepository postalCodePoliticalDivisionRepository;
+	@Autowired
+	BoundaryCountyRepository boundaryCountyRepository;
 	@Autowired
 	TaxBurdenReportRepository taxBurdenReportRepository;
 	@Autowired
@@ -47,7 +56,23 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		logger.info("End findAllPoliticalDivisionsByPostalCode");
 		return foundPoliticalDivisionKeys;
 	}
-	
+
+	public List<String> findAllPoliticalDivisionsByLatitudeLongitude(String latitude, String longitude) {
+		logger.info("Begin findAllPoliticalDivisionsByLatitudeLongitude");
+		logger.debug("latitude: " + latitude + " longitude: " + longitude);
+		List<String> foundPoliticalDivisionKeys = new ArrayList<String>();
+		if (latitude != null && !"".equals(latitude) && longitude != null && !"".equals(longitude)) {
+			List<BoundaryCountyEntity>	boundaryCountyEntities = new ArrayList<BoundaryCountyEntity>();
+			Coordinate coordinate = new Coordinate(Double.parseDouble(longitude), Double.parseDouble(latitude));
+			Point point = geometryFactory.createPoint(coordinate);
+			boundaryCountyEntities = boundaryCountyRepository.contains(point);
+			boundaryCountyEntities.forEach(p -> foundPoliticalDivisionKeys.add(createPoliticalDivisionKey(p.getStatefp(), p.getCountyfp())));
+			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisionKeys);
+		}
+		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");
+		return foundPoliticalDivisionKeys;
+	}
+
 	public TaxBurdenReport createReport(TaxPayerProfile taxPayerProfile) {
 		TaxBurdenReport taxBurdenReport = null;
 		if (taxPayerProfile != null) {
@@ -158,4 +183,8 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	public void setTaxCalculatorFactory(TaxCalculatorFactory taxCalculatorFactory) {
 		this.taxCalculatorFactory = taxCalculatorFactory;
 	}
+
+	private String createPoliticalDivisionKey(String stateFips, String countyFips) {
+	    return stateFips + countyFips;
+    }
 }

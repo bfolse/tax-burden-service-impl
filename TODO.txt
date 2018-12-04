@@ -13,3 +13,9 @@ WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4269));
 SELECT name, statefp, countyfp, name
 FROM boundary_county
 WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4269));
+
+Create SQL from Shape File:
+shp2pgsql -s 4269 -d cb_2017_us_county_500k.shp public.boundary_county > boundary_county.sql
+
+Add unit tests for spatial repositories
+Add integration tests for lat/lon methods in service impl

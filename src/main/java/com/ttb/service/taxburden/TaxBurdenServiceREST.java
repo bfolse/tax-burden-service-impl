@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public interface TaxBurdenServiceREST {
-	@RequestMapping(path="/political-division-lookup", method=RequestMethod.GET)
-	public @ResponseBody List<String> politicalDivisionLookup(@RequestParam(value = "postalCode") String postalCode);
+	@RequestMapping(path="/political-division-lookup/postal-code", method=RequestMethod.GET)
+	public @ResponseBody List<String> politicalDivisionLookupByPostalCode(@RequestParam(value = "postalCode") String postalCode);
+
+    @RequestMapping(path="/political-division-lookup/latitude-longitude", method=RequestMethod.GET)
+    public @ResponseBody List<String> politicalDivisionLookupByLatitudeLongitude(@RequestParam(value = "latitude") String latitude, @RequestParam(value = "longitude") String longitude);
 
     @RequestMapping(path="/tax-burden", method=RequestMethod.GET)
     public @ResponseBody TaxBurdenReport getReport(@RequestParam(value = "key", required = true) String key);
