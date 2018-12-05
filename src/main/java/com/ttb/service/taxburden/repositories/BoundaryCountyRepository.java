@@ -11,7 +11,7 @@ public interface BoundaryCountyRepository extends CrudRepository<BoundaryCountyE
 //    FROM boundary_place
 //    WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4326));
 
-    @Query(value = "select bce from #{#entityName} bce where contains(bce.geom, :location) = true")
+    @Query(value = "select bce from #{#entityName} bce where st_contains(bce.geom, :location) = true")
     List<BoundaryCountyEntity> contains(Geometry location);
 
     BoundaryCountyEntity findByName(String name);
