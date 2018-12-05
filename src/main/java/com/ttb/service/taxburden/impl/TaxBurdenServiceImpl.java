@@ -66,7 +66,17 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 			Coordinate coordinate = new Coordinate(Double.parseDouble(longitude), Double.parseDouble(latitude));
 			Point point = geometryFactory.createPoint(coordinate);
 			boundaryCountyEntities = boundaryCountyRepository.contains(point);
-			boundaryCountyEntities.forEach(p -> foundPoliticalDivisionKeys.add(createPoliticalDivisionKey(p.getStatefp(), p.getCountyfp())));
+			for (BoundaryCountyEntity bce : boundaryCountyEntities) {
+			    // State
+                if (!foundPoliticalDivisionKeys.contains(bce.getStatefp())) {
+                    foundPoliticalDivisionKeys.add(bce.getStatefp());
+                }
+                // County
+                String countyFips = createPoliticalDivisionKey(bce.getStatefp(), bce.getCountyfp());
+                if (!foundPoliticalDivisionKeys.contains(countyFips)) {
+                    foundPoliticalDivisionKeys.add(countyFips);
+                }
+            }
 			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisionKeys);
 		}
 		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");
