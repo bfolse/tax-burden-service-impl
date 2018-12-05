@@ -14,7 +14,6 @@ import com.vividsolutions.jts.geom.Geometry;
 public class BoundaryCountyEntity {
     @Id
     private Long gid;
-//    @Type(type = "org.hibernate.spatial.GeometryType")
     private Geometry geom;
     private String statefp;
     private String countyfp;

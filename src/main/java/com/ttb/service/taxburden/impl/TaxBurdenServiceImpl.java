@@ -36,6 +36,8 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	@Autowired
 	BoundaryCountyRepository boundaryCountyRepository;
 	@Autowired
+	BoundaryPlaceRepository boundaryPlaceRepository;
+	@Autowired
 	TaxBurdenReportRepository taxBurdenReportRepository;
 	@Autowired
 	TaxPayerProfileRepository taxPayerProfileRepository;
@@ -62,9 +64,10 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		logger.debug("latitude: " + latitude + " longitude: " + longitude);
 		List<String> foundPoliticalDivisionKeys = new ArrayList<String>();
 		if (latitude != null && !"".equals(latitude) && longitude != null && !"".equals(longitude)) {
-			List<BoundaryCountyEntity>	boundaryCountyEntities = new ArrayList<BoundaryCountyEntity>();
 			Coordinate coordinate = new Coordinate(Double.parseDouble(longitude), Double.parseDouble(latitude));
 			Point point = geometryFactory.createPoint(coordinate);
+			// County and State
+			List<BoundaryCountyEntity> boundaryCountyEntities = new ArrayList<BoundaryCountyEntity>();
 			boundaryCountyEntities = boundaryCountyRepository.contains(point);
 			for (BoundaryCountyEntity bce : boundaryCountyEntities) {
 			    // State
@@ -77,6 +80,15 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
                     foundPoliticalDivisionKeys.add(countyFips);
                 }
             }
+            // Place (city, town, borough, etc.
+			List<BoundaryPlaceEntity> boundaryPlaceEntities = new ArrayList<BoundaryPlaceEntity>();
+			boundaryPlaceEntities = boundaryPlaceRepository.contains(point);
+			for (BoundaryPlaceEntity bpe : boundaryPlaceEntities) {
+				String placeFips = createPoliticalDivisionKey(bpe.getStatefp(), bpe.getPlacefp());
+				if (!foundPoliticalDivisionKeys.contains(placeFips)) {
+					foundPoliticalDivisionKeys.add(placeFips);
+				}
+			}
 			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisionKeys);
 		}
 		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");
