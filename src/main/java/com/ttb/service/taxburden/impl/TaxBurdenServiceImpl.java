@@ -4,6 +4,7 @@ import com.ttb.service.taxburden.TaxBurdenService;
 import com.ttb.service.taxburden.calculation.TaxCalculator;
 import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
 import com.ttb.service.taxburden.domain.MonetaryAmount;
+import com.ttb.service.taxburden.domain.PoliticalDivision;
 import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxPayerProfile;
 import com.ttb.service.taxburden.entities.*;
@@ -46,60 +47,55 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	@Autowired
 	TaxCalculatorFactory taxCalculatorFactory;
 
-	public List<String> findAllPoliticalDivisionsByPostalCode(String postalCode) {
+	public List<PoliticalDivision> findAllPoliticalDivisionsByPostalCode(String postalCode) {
 		logger.info("Begin findAllPoliticalDivisionsByPostalCode");
 		logger.debug("postalCode: " + postalCode);
-		List<String> foundPoliticalDivisionKeys = new ArrayList<String>();
+		List<PoliticalDivision> foundPoliticalDivisions = new ArrayList<PoliticalDivision>();
 		if (postalCode != null && !"".equals(postalCode)) {
 			List<PostalCodePoliticalDivisionEntity>	postalCodePoliticalDivisionEntities = new ArrayList<PostalCodePoliticalDivisionEntity>();
-			postalCodePoliticalDivisionEntities = postalCodePoliticalDivisionRepository.findAllByPostalCode(postalCode);
-			postalCodePoliticalDivisionEntities.forEach(p -> foundPoliticalDivisionKeys.add(p.getPoliticalDivisionKey()));
+            // County
+            List<PoliticalDivisionEntity> countyPoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+            countyPoliticalDivisionEntities = boundaryCountyRepository.contains(postalCode);
+			countyPoliticalDivisionEntities.forEach(cpde -> foundPoliticalDivisions.add(cpde.toPoliticalDivision()));
+            // Place (city, town, borough, etc.
+            List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+            placePoliticalDivisionEntities = boundaryPlaceRepository.contains(postalCode);
+			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
+            logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByPostalCode");
-		return foundPoliticalDivisionKeys;
+		return foundPoliticalDivisions;
 	}
 
-	public List<String> findAllPoliticalDivisionsByLatitudeLongitude(String latitude, String longitude) {
+	public List<PoliticalDivision> findAllPoliticalDivisionsByLatitudeLongitude(String latitude, String longitude) {
 		logger.info("Begin findAllPoliticalDivisionsByLatitudeLongitude");
 		logger.debug("latitude: " + latitude + " longitude: " + longitude);
-		List<String> foundPoliticalDivisionKeys = new ArrayList<String>();
+		List<PoliticalDivision> foundPoliticalDivisions = new ArrayList<PoliticalDivision>();
 		if (latitude != null && !"".equals(latitude) && longitude != null && !"".equals(longitude)) {
 			Coordinate coordinate = new Coordinate(Double.parseDouble(longitude), Double.parseDouble(latitude));
 			Point point = geometryFactory.createPoint(coordinate);
-			// County and State
-			List<BoundaryCountyEntity> boundaryCountyEntities = new ArrayList<BoundaryCountyEntity>();
-			boundaryCountyEntities = boundaryCountyRepository.contains(point);
-			for (BoundaryCountyEntity bce : boundaryCountyEntities) {
-			    // State
-                if (!foundPoliticalDivisionKeys.contains(bce.getStatefp())) {
-                    foundPoliticalDivisionKeys.add(bce.getStatefp());
-                }
-                // County
-                String countyFips = createPoliticalDivisionKey(bce.getStatefp(), bce.getCountyfp());
-                if (!foundPoliticalDivisionKeys.contains(countyFips)) {
-                    foundPoliticalDivisionKeys.add(countyFips);
-                }
-            }
+			// County
+			List<PoliticalDivisionEntity> countyPoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+			countyPoliticalDivisionEntities = boundaryCountyRepository.contains(point);
+			countyPoliticalDivisionEntities.forEach(cpde -> foundPoliticalDivisions.add(cpde.toPoliticalDivision()));
             // Place (city, town, borough, etc.
-			List<BoundaryPlaceEntity> boundaryPlaceEntities = new ArrayList<BoundaryPlaceEntity>();
-			boundaryPlaceEntities = boundaryPlaceRepository.contains(point);
-			for (BoundaryPlaceEntity bpe : boundaryPlaceEntities) {
-				String placeFips = createPoliticalDivisionKey(bpe.getStatefp(), bpe.getPlacefp());
-				if (!foundPoliticalDivisionKeys.contains(placeFips)) {
-					foundPoliticalDivisionKeys.add(placeFips);
-				}
-			}
-			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisionKeys);
+			List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+			placePoliticalDivisionEntities = boundaryPlaceRepository.contains(point);
+			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
+			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");
-		return foundPoliticalDivisionKeys;
+		return foundPoliticalDivisions;
 	}
 
 	public TaxBurdenReport createReport(TaxPayerProfile taxPayerProfile) {
 		TaxBurdenReport taxBurdenReport = null;
 		if (taxPayerProfile != null) {
-			TaxPayerProfileEntity taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile);
-			taxPayerProfileRepository.save(taxPayerProfileEntity);
+			TaxPayerProfileEntity taxPayerProfileEntity = taxPayerProfileRepository.findByTaxPayerProfileKey(taxPayerProfile.getTaxPayerProfileKey());
+			if (taxPayerProfileEntity == null) {
+				taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(), taxPayerProfile.getPostalCode(), findPoliticalDivisionEntities(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()));
+				taxPayerProfileEntity = taxPayerProfileRepository.save(taxPayerProfileEntity);
+			}
 			TaxBurdenReportEntity taxBurdenReportEntity = new TaxBurdenReportEntity(taxPayerProfileEntity);
 			calculateTaxes(taxPayerProfileEntity, taxBurdenReportEntity);
 			taxBurdenReportRepository.save(taxBurdenReportEntity);
@@ -120,11 +116,29 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	}
 
 	public TaxPayerProfile createTaxPayerProfile(String postalCode, List<String> politicalDivisionKeys, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue) {
-		TaxPayerProfile taxPayerProfile = new TaxPayerProfile(postalCode, politicalDivisionKeys, annualIncome, mortgageInterest, realPropertyMarketValue);
-		addTaxPayerProfile(new TaxPayerProfileEntity(taxPayerProfile));
-		return taxPayerProfile;
+		TaxPayerProfileEntity taxPayerProfileEntity = new TaxPayerProfileEntity(postalCode, findPoliticalDivisionEntitiesByKeys(politicalDivisionKeys), new MonetaryAmountEntity(annualIncome), new MonetaryAmountEntity(mortgageInterest), new MonetaryAmountEntity(realPropertyMarketValue));
+		TaxPayerProfileEntity savedTaxPayerProfileEntity = taxPayerProfileRepository.save(taxPayerProfileEntity);
+		return savedTaxPayerProfileEntity.toTaxPayerProfile();
 	}
-	
+
+	private List<PoliticalDivisionEntity> findPoliticalDivisionEntitiesByKeys(List<String> politicalDivisonKeys) {
+		List<PoliticalDivisionEntity> politicalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+		for (String politicalDivisionKey : politicalDivisonKeys) {
+			PoliticalDivisionEntity politicalDivisionEntity = politicalDivisionRepository.findByFips(politicalDivisionKey);
+			politicalDivisionEntities.add(politicalDivisionEntity);
+		}
+		return politicalDivisionEntities;
+	}
+
+	private List<PoliticalDivisionEntity> findPoliticalDivisionEntities(List<PoliticalDivision> politicalDivisons) {
+		List<PoliticalDivisionEntity> politicalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+		for (PoliticalDivision politicalDivision : politicalDivisons) {
+			PoliticalDivisionEntity politicalDivisionEntity = politicalDivisionRepository.findByFips(politicalDivision.getFips());
+			politicalDivisionEntities.add(politicalDivisionEntity);
+		}
+		return politicalDivisionEntities;
+	}
+
 	public TaxPayerProfile findTaxPayerProfileByKey(String taxPayerProfileKey) {
 		logger.info("Begin findTaxPayerProfileByKey");
 		logger.debug("taxPayerProfileKey: " + taxPayerProfileKey);
@@ -140,20 +154,16 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		return foundTaxPayerProfile;
 	}
 
-	private void addTaxPayerProfile(TaxPayerProfileEntity taxPayerProfile) {
-		taxPayerProfileRepository.save(taxPayerProfile);
-	}
-
 	private void calculateTaxes(TaxPayerProfileEntity taxPayerProfile, TaxBurdenReportEntity taxBurdenReport) {
 		logger.info("Begin calculateTaxes");
 		logger.debug("taxpayerProfile: " + taxPayerProfile);
 		// Find all applicable taxDefinitions based on taxPayerProfile
 		List<TaxDefinitionEntity> taxDefinitions = new ArrayList<TaxDefinitionEntity>();
-		if (taxPayerProfile.getPoliticalDivisionKeys() != null) {
-			for (String politicalDivisionKey : taxPayerProfile.getPoliticalDivisionKeys()) {
-				logger.debug("politicalDivisionKey: " + politicalDivisionKey);
-				if (politicalDivisionKey != null) {
-					taxDefinitions.addAll(taxDefinitionRepository.findAllByPoliticalDivisionKey(politicalDivisionKey));
+		if (taxPayerProfile.getPoliticalDivisions() != null) {
+			for (PoliticalDivisionEntity politicalDivision : taxPayerProfile.getPoliticalDivisions()) {
+				logger.debug("politicalDivision: " + politicalDivision);
+				if (politicalDivision != null) {
+					taxDefinitions.addAll(taxDefinitionRepository.findAllByPoliticalDivisionKey(politicalDivision.getFips()));
 				}
 			}
 		}

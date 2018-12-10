@@ -57,3 +57,15 @@ DROP TABLE IF EXISTS public.tax_rate_set CASCADE;
 
 -- Table: public.tax_rate_set_tax_rates
 DROP TABLE IF EXISTS public.tax_rate_set_tax_rates;
+
+-- Table: public.boundary_county
+ALTER TABLE IF EXISTS public.boundary_county DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_county;
+
+-- Table: public.boundary_place
+ALTER TABLE IF EXISTS public.boundary_place DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_place;
+
+-- Table: public.boundary_postal_code
+ALTER TABLE IF EXISTS public.boundary_postal_code DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_postal_code;

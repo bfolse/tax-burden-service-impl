@@ -11,7 +11,7 @@ public class TaxPayerProfile {
 	private String taxPayerProfileKey;
 	private Date timestamp;
 	private String postalCode;
-	private List<String> politicalDivisionKeys;
+	private List<PoliticalDivision> politicalDivisions;
 	private MonetaryAmount annualIncome;
 	private MonetaryAmount mortgageInterest;
 	private MonetaryAmount realPropertyMarketValue;
@@ -28,19 +28,17 @@ public class TaxPayerProfile {
 	}
 
 	/**
-	 * @param taxPayerProfileKey
-	 * @param timestamp
 	 * @param postalCode
-	 * @param politicalDivisionKeys
+	 * @param politicalDivisions
 	 * @param annualIncome
 	 * @param mortgageInterest
 	 */
-	public TaxPayerProfile(String postalCode, List<String> politicalDivisionKeys, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue) {
+	public TaxPayerProfile(String postalCode, List<PoliticalDivision> politicalDivisions, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue) {
 		super();
 		this.timestamp = new Date();
 		this.taxPayerProfileKey = UUID.randomUUID().toString();
 		this.postalCode = postalCode;
-		this.politicalDivisionKeys = politicalDivisionKeys;
+		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
@@ -48,19 +46,17 @@ public class TaxPayerProfile {
 	}
 
 	/**
-	 * @param taxPayerProfileKey
-	 * @param timestamp
 	 * @param postalCode
-	 * @param politicalDivisionKeys
+	 * @param politicalDivisions
 	 * @param annualIncome
 	 * @param mortgageInterest
 	 */
-	public TaxPayerProfile(String postalCode, List<String> politicalDivisionKeys, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey) {
+	public TaxPayerProfile(String postalCode, List<PoliticalDivision> politicalDivisions, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey) {
 		super();
 		this.timestamp = new Date();
 		this.taxPayerProfileKey = UUID.randomUUID().toString();
 		this.postalCode = postalCode;
-		this.politicalDivisionKeys = politicalDivisionKeys;
+		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
@@ -71,12 +67,12 @@ public class TaxPayerProfile {
 	 * @param taxPayerProfileKey
 	 * @param timestamp
 	 * @param postalCode
-	 * @param politicalDivisionKeys
+	 * @param politicalDivisions
 	 * @param annualIncome
 	 * @param mortgageInterest
 	 */
 	public TaxPayerProfile(String taxPayerProfileKey, Date timestamp, String postalCode,
-			List<String> politicalDivisionKeys, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey) {
+						   List<PoliticalDivision> politicalDivisions, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey) {
 		super();
 		if (taxPayerProfileKey == null) {
 			this.taxPayerProfileKey = UUID.randomUUID().toString();
@@ -89,7 +85,7 @@ public class TaxPayerProfile {
 			this.timestamp = timestamp;
 		}
 		this.postalCode = postalCode;
-		this.politicalDivisionKeys = politicalDivisionKeys;
+		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
@@ -139,17 +135,17 @@ public class TaxPayerProfile {
 	}
 
 	/**
-	 * @return the politicalDivisionKeys
+	 * @return the politicalDivisions
 	 */
-	public List<String> getPoliticalDivisionKeys() {
-		return politicalDivisionKeys;
+	public List<PoliticalDivision> getPoliticalDivisions() {
+		return politicalDivisions;
 	}
 
 	/**
-	 * @param politicalDivisionKeys the politicalDivisionKeys to set
+	 * @param politicalDivisions the politicalDivisions to set
 	 */
-	public void setPoliticalDivisionKeys(List<String> politicalDivisionKeys) {
-		this.politicalDivisionKeys = politicalDivisionKeys;
+	public void setPoliticalDivisions(List<PoliticalDivision> politicalDivisions) {
+		this.politicalDivisions = politicalDivisions;
 	}
 
 	/**
@@ -218,7 +214,7 @@ public class TaxPayerProfile {
 		if (taxPayerProfileKey != null ? !taxPayerProfileKey.equals(that.taxPayerProfileKey) : that.taxPayerProfileKey != null)
 			return false;
 		if (postalCode != null ? !postalCode.equals(that.postalCode) : that.postalCode != null) return false;
-		if (politicalDivisionKeys != null ? !politicalDivisionKeys.equals(that.politicalDivisionKeys) : that.politicalDivisionKeys != null)
+		if (politicalDivisions != null ? !politicalDivisions.equals(that.politicalDivisions) : that.politicalDivisions != null)
 			return false;
 		if (annualIncome != null ? !annualIncome.equals(that.annualIncome) : that.annualIncome != null) return false;
 		if (mortgageInterest != null ? !mortgageInterest.equals(that.mortgageInterest) : that.mortgageInterest != null)
@@ -235,7 +231,7 @@ public class TaxPayerProfile {
 		int result = super.hashCode();
 		result = 31 * result + (taxPayerProfileKey != null ? taxPayerProfileKey.hashCode() : 0);
 		result = 31 * result + (postalCode != null ? postalCode.hashCode() : 0);
-		result = 31 * result + (politicalDivisionKeys != null ? politicalDivisionKeys.hashCode() : 0);
+		result = 31 * result + (politicalDivisions != null ? politicalDivisions.hashCode() : 0);
 		result = 31 * result + (annualIncome != null ? annualIncome.hashCode() : 0);
 		result = 31 * result + (mortgageInterest != null ? mortgageInterest.hashCode() : 0);
 		result = 31 * result + (realPropertyMarketValue != null ? realPropertyMarketValue.hashCode() : 0);
@@ -249,7 +245,7 @@ public class TaxPayerProfile {
 				"taxPayerProfileKey='" + taxPayerProfileKey + '\'' +
 				", timestamp=" + timestamp +
 				", postalCode='" + postalCode + '\'' +
-				", politicalDivisionKeys=" + politicalDivisionKeys +
+				", politicalDivisions=" + politicalDivisions +
 				", annualIncome=" + annualIncome +
 				", mortgageInterest=" + mortgageInterest +
 				", realPropertyMarketValue=" + realPropertyMarketValue +

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
+import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class TaxPayerProfileRepositoryTest {
 	
 	@Test
 	public void politicalDivisionsTest() {
-		taxPayerProfileOne.addPoliticalDivisionKey("13");
+		PoliticalDivisionEntity politicalDivisionEntityThirteen = new PoliticalDivisionEntity("13", "Georgia", "test description", "STATE");
+		taxPayerProfileOne.addPoliticalDivision(politicalDivisionEntityThirteen);
 		taxPayerProfileRepository.save(taxPayerProfileOne);
 		taxPayerProfileRepository.delete(taxPayerProfileOne);
 	}

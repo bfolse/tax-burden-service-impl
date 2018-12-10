@@ -2,6 +2,7 @@ package com.ttb.service.taxburden.controllers;
 
 import java.util.List;
 
+import com.ttb.service.taxburden.domain.PoliticalDivision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,12 @@ public class PoliticalDivisionLookupController {
 	TaxBurdenServiceImpl taxBurdenServiceImpl;
 	
 	@RequestMapping(value="/postal-code", method=RequestMethod.GET)
-	public @ResponseBody List<String> politicalDivisionLookupByPostalCode(@RequestParam(value="postalCode") String postalCode) {
+	public @ResponseBody List<PoliticalDivision> politicalDivisionLookupByPostalCode(@RequestParam(value="postalCode") String postalCode) {
 		return taxBurdenServiceImpl.findAllPoliticalDivisionsByPostalCode(postalCode);
 	}
 
 	@RequestMapping(value="/latitude-longitude", method=RequestMethod.GET)
-	public @ResponseBody List<String> politicalDivisionLookupByLatitudeLongitude(@RequestParam(value="latitude") String latitude, @RequestParam(value="longitude") String longitude) {
+	public @ResponseBody List<PoliticalDivision> politicalDivisionLookupByLatitudeLongitude(@RequestParam(value="latitude") String latitude, @RequestParam(value="longitude") String longitude) {
 		return taxBurdenServiceImpl.findAllPoliticalDivisionsByLatitudeLongitude(latitude, longitude);
 	}
 }

@@ -298,3 +298,80 @@ WITH (
 );
 ALTER TABLE public.consumer_expenditure_profile_entry
   OWNER TO postgres;
+
+--
+-- Postgis Spatial Data Schema
+--
+SET CLIENT_ENCODING TO UTF8;
+SET STANDARD_CONFORMING_STRINGS TO ON;
+
+  -- Table: public.boundary_county
+
+ALTER TABLE IF EXISTS public.boundary_county DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_county;
+CREATE TABLE public.boundary_county
+(
+    gid serial,
+    statefp varchar(2),
+    countyfp varchar(3),
+    countyns varchar(8),
+    affgeoid varchar(14),
+    geoid varchar(5),
+    name varchar(100),
+    lsad varchar(2),
+    aland float8,
+    awater float8,
+    CONSTRAINT boundary_county_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_county','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_county
+  OWNER TO ttbdev;
+
+  -- Table: public.boundary_place
+
+ALTER TABLE IF EXISTS public.boundary_place DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_place;
+CREATE TABLE public.boundary_place
+(
+    gid serial,
+    statefp varchar(2),
+    placefp varchar(5),
+    placens varchar(8),
+    affgeoid varchar(16),
+    geoid varchar(7),
+    name varchar(100),
+    lsad varchar(2),
+    aland float8,
+    awater float8,
+    CONSTRAINT boundary_place_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_place','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_place
+  OWNER TO ttbdev;
+
+  -- Table: public.boundary_postal_code
+
+ALTER TABLE IF EXISTS public.boundary_postal_code DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_postal_code;
+CREATE TABLE public.boundary_postal_code
+(
+    gid serial,
+    zcta5ce10 varchar(5),
+    affgeoid10 varchar(14),
+    geoid10 varchar(5),
+    aland10 float8,
+    awater10 float8,
+    CONSTRAINT boundary_postal_code_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_postal_code','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_postal_code
+  OWNER TO ttbdev;

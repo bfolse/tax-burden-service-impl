@@ -16,8 +16,12 @@ DROP TABLE IF EXISTS public.expenditure_category_group_expenditure_category_key;
 -- Table: public.expenditure_category_group
 DROP TABLE IF EXISTS public.expenditure_category_group;
 
- -- Table: public.tax_payer_profile_political_division_keys
+-- TEMPORARY --
+-- Table: public.tax_payer_profile_political_division_keys
 DROP TABLE IF EXISTS public.tax_payer_profile_political_division_keys;
+
+ -- Table: public.tax_payer_profile_political_divisions
+DROP TABLE IF EXISTS public.tax_payer_profile_political_divisions;
 
 -- Table: public.tax_burden_report_tax_entries
 DROP TABLE IF EXISTS public.tax_burden_report_tax_entries;
@@ -194,22 +198,27 @@ WITH (
 ALTER TABLE public.expenditure_category_group_expenditure_category_key
   OWNER TO ttbdev;
 
-  -- Table: public.tax_payer_profile_political_division_keys
-CREATE TABLE public.tax_payer_profile_political_division_keys
+-- Table: public.tax_payer_profile_political_divisions
+CREATE TABLE public.tax_payer_profile_political_divisions
 (
-  tax_payer_profile_id bigint NOT NULL,
-  political_division_keys character varying(255),
-  CONSTRAINT fksqnc5c3b3unltrehccod6jf87 FOREIGN KEY (tax_payer_profile_id)
-      REFERENCES public.tax_payer_profile (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+    tax_payer_profile_id bigint NOT NULL,
+    political_divisions_id bigint NOT NULL,
+    CONSTRAINT fkaj05cbwth5uduljjuokuuum8l FOREIGN KEY (tax_payer_profile_id)
+        REFERENCES public.tax_payer_profile (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fki8r1w43xd9k8ah3x6ou6yty27 FOREIGN KEY (political_divisions_id)
+        REFERENCES public.political_division (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 WITH (
-  OIDS=FALSE
+    OIDS = FALSE
 );
-ALTER TABLE public.tax_payer_profile_political_division_keys
-  OWNER TO ttbdev;
+ALTER TABLE public.tax_payer_profile_political_divisions
+    OWNER to ttbdev;
 
--- Table: public.tax_burden_report
+  -- Table: public.tax_burden_report
 CREATE TABLE public.tax_burden_report
 (
   id bigint NOT NULL,
@@ -367,7 +376,7 @@ SET STANDARD_CONFORMING_STRINGS TO ON;
 
   -- Table: public.boundary_county
 
--- SELECT DropGeometryColumn('public','boundary_county','geom');
+ALTER TABLE IF EXISTS public.boundary_county DROP COLUMN IF EXISTS geom;
 DROP TABLE IF EXISTS public.boundary_county;
 CREATE TABLE public.boundary_county
 (
@@ -392,7 +401,7 @@ ALTER TABLE public.boundary_county
 
   -- Table: public.boundary_place
 
--- SELECT DropGeometryColumn('public','boundary_place','geom');
+ALTER TABLE IF EXISTS public.boundary_place DROP COLUMN IF EXISTS geom;
 DROP TABLE IF EXISTS public.boundary_place;
 CREATE TABLE public.boundary_place
 (
@@ -413,4 +422,25 @@ WITH (
 );
 SELECT AddGeometryColumn('public','boundary_place','geom','4326','MULTIPOLYGON',2);
 ALTER TABLE public.boundary_place
+  OWNER TO ttbdev;
+
+  -- Table: public.boundary_postal_code
+
+ALTER TABLE IF EXISTS public.boundary_postal_code DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_postal_code;
+CREATE TABLE public.boundary_postal_code
+(
+    gid serial,
+    zcta5ce10 varchar(5),
+    affgeoid10 varchar(14),
+    geoid10 varchar(5),
+    aland10 float8,
+    awater10 float8,
+    CONSTRAINT boundary_postal_code_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_postal_code','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_postal_code
   OWNER TO ttbdev;

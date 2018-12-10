@@ -4,7 +4,9 @@ import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
 import com.ttb.service.taxburden.domain.MonetaryAmount;
 import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxPayerProfile;
+import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import com.ttb.service.taxburden.impl.TaxBurdenServiceImpl;
+import com.ttb.service.taxburden.repositories.PoliticalDivisionRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class TaxBurdenServiceImplTest {
 	@Autowired
 	private TaxBurdenServiceImpl taxBurdenServiceImpl;
 
+	@Autowired
+	PoliticalDivisionRepository politicalDivisionRepository;
+
 	@MockBean 
 	private TaxCalculatorFactory mockTaxCalculatorFactory;
 	
@@ -35,9 +40,13 @@ public class TaxBurdenServiceImplTest {
         .willReturn(new MockTaxCalculator());
 		taxBurdenServiceImpl.setTaxCalculatorFactory(mockTaxCalculatorFactory);
 
+		PoliticalDivisionEntity politicalDivisionEntity = new PoliticalDivisionEntity("13", "Georgia", "State of Georgia", "STATE");
+		politicalDivisionRepository.save(politicalDivisionEntity);
+
         ArrayList<String> politicalDivisionKeys = new ArrayList<String>();
 		politicalDivisionKeys.add("13");
 		TaxPayerProfile taxPayerProfile = taxBurdenServiceImpl.createTaxPayerProfile("30306", politicalDivisionKeys, new MonetaryAmount(new BigDecimal(100000.00)), new MonetaryAmount(new BigDecimal(5000.00)), new MonetaryAmount(new BigDecimal(100000.00)));
+System.out.println("TaxPayerProfile: " + taxPayerProfile);
 		TaxBurdenReport taxBurdenReport = taxBurdenServiceImpl.createReport(taxPayerProfile);
 		assertNotNull(taxBurdenReport);
 		System.out.println(taxBurdenReport);

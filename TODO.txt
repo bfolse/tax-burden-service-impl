@@ -19,3 +19,5 @@ shp2pgsql -s 4269:4326 -I -d cb_2017_us_county_500k.shp public.boundary_county >
 
 Add unit tests for spatial repositories
 Add integration tests for lat/lon methods in service impl
+
+Fix consumerExpenditureProfileKey in TaxPayerProfileEntity
