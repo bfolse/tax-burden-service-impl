@@ -39,6 +39,8 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	@Autowired
 	BoundaryPlaceRepository boundaryPlaceRepository;
 	@Autowired
+    BoundaryStateRepository boundaryStateRepository;
+	@Autowired
 	TaxBurdenReportRepository taxBurdenReportRepository;
 	@Autowired
 	TaxPayerProfileRepository taxPayerProfileRepository;
@@ -61,7 +63,11 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
             List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             placePoliticalDivisionEntities = boundaryPlaceRepository.contains(postalCode);
 			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
-            logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisions);
+			// State
+            List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+            statePoliticalDivisionEntities = boundaryStateRepository.contains(postalCode);
+            statePoliticalDivisionEntities.forEach(spde -> foundPoliticalDivisions.add(spde.toPoliticalDivision()));
+            logger.debug("foundPoliticalDivisions: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByPostalCode");
 		return foundPoliticalDivisions;
@@ -82,7 +88,11 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 			List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
 			placePoliticalDivisionEntities = boundaryPlaceRepository.contains(point);
 			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
-			logger.debug("foundPoliticalDivisionKeys: " + foundPoliticalDivisions);
+            // State
+            List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+            statePoliticalDivisionEntities = boundaryStateRepository.contains(point);
+            statePoliticalDivisionEntities.forEach(spde -> foundPoliticalDivisions.add(spde.toPoliticalDivision()));
+			logger.debug("foundPoliticalDivisions: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");
 		return foundPoliticalDivisions;

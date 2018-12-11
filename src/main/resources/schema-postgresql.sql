@@ -16,10 +16,6 @@ DROP TABLE IF EXISTS public.expenditure_category_group_expenditure_category_key;
 -- Table: public.expenditure_category_group
 DROP TABLE IF EXISTS public.expenditure_category_group;
 
--- TEMPORARY --
--- Table: public.tax_payer_profile_political_division_keys
-DROP TABLE IF EXISTS public.tax_payer_profile_political_division_keys;
-
  -- Table: public.tax_payer_profile_political_divisions
 DROP TABLE IF EXISTS public.tax_payer_profile_political_divisions;
 
@@ -443,4 +439,29 @@ WITH (
 );
 SELECT AddGeometryColumn('public','boundary_postal_code','geom','4326','MULTIPOLYGON',2);
 ALTER TABLE public.boundary_postal_code
+  OWNER TO ttbdev;
+
+  -- Table: public.boundary_state
+
+ALTER TABLE IF EXISTS public.boundary_state DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_state;
+CREATE TABLE public.boundary_state
+(
+    gid serial,
+    statefp varchar(2),
+    statens varchar(8),
+    affgeoid varchar(11),
+    geoid varchar(2),
+    stusps varchar(2),
+    name varchar(100),
+    lsad varchar(2),
+    aland float8,
+    awater float8,
+    CONSTRAINT boundary_state_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_state','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_state
   OWNER TO ttbdev;

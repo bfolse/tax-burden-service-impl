@@ -69,3 +69,7 @@ DROP TABLE IF EXISTS public.boundary_place;
 -- Table: public.boundary_postal_code
 ALTER TABLE IF EXISTS public.boundary_postal_code DROP COLUMN IF EXISTS geom;
 DROP TABLE IF EXISTS public.boundary_postal_code;
+
+-- Table: public.boundary_state
+ALTER TABLE IF EXISTS public.boundary_state DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_state;

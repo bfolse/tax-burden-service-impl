@@ -2,7 +2,6 @@ Add unit test for PropertyTaxFlatRateCalculator
 Break down property tax components for separate city, state, school district, etc.
  (currently using SmartAsset.com median percentage values based on full appraisal value)
 Figure out how to calculate county/city combined property tax
-Remove Drools dependency
 
 Query for contains:
 
@@ -17,7 +16,18 @@ WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4326));
 Create SQL from Shape File:
 shp2pgsql -s 4269:4326 -I -d cb_2017_us_county_500k.shp public.boundary_county > boundary_county.sql
 
-Add unit tests for spatial repositories
+Add unit tests for spatial repositories - need PostGis embedded DB (not currently available)
 Add integration tests for lat/lon methods in service impl
 
 Fix consumerExpenditureProfileKey in TaxPayerProfileEntity
+
+Add address search to map
+
+Add Integration tests to Code Pipeline
+Add development branch to Git, switch Code Pipeline awsdev to use development branch
+Add Code Pipeline and AWS environments for prod, use master branch
+Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
+
+Explore using Flyway or Liquibase for DB mgmt and migration
+Private Github repo?
+
