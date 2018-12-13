@@ -7,6 +7,7 @@ INSERT INTO public.political_division
   type
   )
 VALUES
+(nextval('public.hibernate_sequence'),'United States','US','US','FEDERAL'),
 (nextval('public.hibernate_sequence'),'Alabama','AL','01','STATE'),
 (nextval('public.hibernate_sequence'),'Alaska','AK','02','STATE'),
 (nextval('public.hibernate_sequence'),'Arizona','AZ','04','STATE'),
@@ -2479,7 +2480,6 @@ INSERT INTO public.tax_rate(
 (nextval('public.hibernate_sequence'),'WILKES_GA_COUNTY_PROPERTY',0.0093,null,null),
 (nextval('public.hibernate_sequence'),'WILKINSON_GA_COUNTY_PROPERTY',0.0093,null,null),
 (nextval('public.hibernate_sequence'),'WORTH_GA_COUNTY_PROPERTY',0.0094,null,null)
-
 ;
 
 INSERT INTO public.assessed_rate(
@@ -2645,6 +2645,22 @@ INSERT INTO public.assessed_rate(
 (nextval('public.hibernate_sequence'),'WILKINSON_GA_COUNTY_PROPERTY', 1.00),
 (nextval('public.hibernate_sequence'),'WORTH_GA_COUNTY_PROPERTY', 1.00)
 ;
+
+-- tax_definition_fuel.sql
+INSERT INTO public.tax_definition(
+            id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)
+    VALUES
+(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel Tax','fuelTaxCalculator','FUEL_FEDERAL',5),
+(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel Tax','fuelTaxCalculator','FUEL_STATE',5)
+;
+
+-- tax_rate_fuel.sql
+INSERT INTO public.tax_rate(
+            id, tax_definition_key, rate, range_low, range_high)
+    VALUES
+    (nextval('public.hibernate_sequence'), 'US_FEDERAL_FUEL_TAX', 0.184, null, null),
+    (nextval('public.hibernate_sequence'), 'GA_STATE_FUEL_TAX', 0.3159, null, null)
+    ;
 
 -- expenditure_category.sql
 INSERT INTO public.expenditure_category(
@@ -2897,10 +2913,10 @@ INSERT INTO public.consumer_expenditure_profile(
 
 INSERT INTO public.consumer_expenditure_profile_entry(
             consumer_expenditure_profile_id, expenditure_category_key, percentage)
-    VALUES (1, 'FOOD_AT_HOME', 0.072),
+    VALUES (1, 'FOOD_AT_HOME', 0.071),
     (1, 'FOOD_AWAY_FROM_HOME', 0.054),
     (1, 'ALCOHOL', 0.009),
-    (1, 'HOUSING_SHELTER', 0.0192),
+    (1, 'HOUSING_SHELTER', 0.192),
     (1, 'HOUSING_UTILITIES', 0.069),
     (1, 'HOUSING_OPERATIONS', 0.023),
     (1, 'HOUSING_HOUSEKEEPING_SUPPLIES', 0.012),
@@ -2917,7 +2933,8 @@ INSERT INTO public.consumer_expenditure_profile_entry(
     (1, 'EDUCATION', 0.023),
     (1, 'TOBACCO', 0.006),
     (1, 'MISC', 0.016),
-    (1, 'SAVINGS', 0.032),
+    (1, 'CHARITY_AND_GIFTS', 0.032),
+    (1, 'SAVINGS', 0.022),
     (1, 'PERSONAL_INSURANCE', 0.006),
-    (1, 'PENSIONS', 0.0107)
+    (1, 'PENSIONS_AND_SS', 0.106)
     ;

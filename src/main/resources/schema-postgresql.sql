@@ -465,3 +465,21 @@ WITH (
 SELECT AddGeometryColumn('public','boundary_state','geom','4326','MULTIPOLYGON',2);
 ALTER TABLE public.boundary_state
   OWNER TO ttbdev;
+
+-- Table: public.boundary_country
+ALTER TABLE IF EXISTS public.boundary_country DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_country;
+CREATE TABLE public.boundary_country
+(
+    gid serial,
+    affgeoid varchar(9),
+    geoid varchar(2),
+    name varchar(100),
+    CONSTRAINT boundary_country_pkey PRIMARY KEY (gid)
+)
+WITH (
+  OIDS=FALSE
+);
+SELECT AddGeometryColumn('public','boundary_country','geom','4326','MULTIPOLYGON',2);
+ALTER TABLE public.boundary_country
+  OWNER TO ttbdev;

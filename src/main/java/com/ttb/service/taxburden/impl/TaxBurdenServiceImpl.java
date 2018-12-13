@@ -41,6 +41,8 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	@Autowired
     BoundaryStateRepository boundaryStateRepository;
 	@Autowired
+	BoundaryCountryRepository boundaryCountryRepository;
+	@Autowired
 	TaxBurdenReportRepository taxBurdenReportRepository;
 	@Autowired
 	TaxPayerProfileRepository taxPayerProfileRepository;
@@ -67,6 +69,10 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
             List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             statePoliticalDivisionEntities = boundaryStateRepository.contains(postalCode);
             statePoliticalDivisionEntities.forEach(spde -> foundPoliticalDivisions.add(spde.toPoliticalDivision()));
+			// Country
+			List<PoliticalDivisionEntity> countryPoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+			countryPoliticalDivisionEntities = boundaryCountryRepository.contains(postalCode);
+			countryPoliticalDivisionEntities.forEach(cpde -> foundPoliticalDivisions.add(cpde.toPoliticalDivision()));
             logger.debug("foundPoliticalDivisions: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByPostalCode");
@@ -92,6 +98,10 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
             List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             statePoliticalDivisionEntities = boundaryStateRepository.contains(point);
             statePoliticalDivisionEntities.forEach(spde -> foundPoliticalDivisions.add(spde.toPoliticalDivision()));
+			// Country
+			List<PoliticalDivisionEntity> countryPoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
+			countryPoliticalDivisionEntities = boundaryCountryRepository.contains(point);
+			countryPoliticalDivisionEntities.forEach(cpde -> foundPoliticalDivisions.add(cpde.toPoliticalDivision()));
 			logger.debug("foundPoliticalDivisions: " + foundPoliticalDivisions);
 		}
 		logger.info("End findAllPoliticalDivisionsByLatitudeLongitude");

@@ -31,3 +31,5 @@ Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
 
+US Federal boundary lookup? Temporarily adding US political division in tax-burden-web GeoController
+
