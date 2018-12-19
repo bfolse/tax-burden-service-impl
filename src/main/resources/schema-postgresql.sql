@@ -34,6 +34,9 @@ DROP TABLE IF EXISTS public.tax_payer_profile;
 -- Table: public.expenditure_category
 DROP TABLE IF EXISTS public.expenditure_category;
 
+-- Table: public.income_tax_definition
+DROP TABLE IF EXISTS public.income_tax_definition;
+
 -- Table: public.tax_definition
 DROP TABLE IF EXISTS public.tax_definition;
 
@@ -104,18 +107,30 @@ CREATE TABLE public.tax_payer_profile
 (
     id bigint NOT NULL,
     consumer_expenditure_profile_key character varying(255) COLLATE pg_catalog."default",
+    dependents integer,
     postal_code character varying(255) COLLATE pg_catalog."default",
+    tax_filing_status character varying(255) COLLATE pg_catalog."default",
     tax_payer_profile_key character varying(255) COLLATE pg_catalog."default",
     "timestamp" timestamp without time zone,
     annual_income_id bigint,
     mortgage_interest_id bigint,
+    other_itemized_deductions_id bigint,
+    pre_tax_contributions_id bigint,
     real_property_market_value_id bigint,
     CONSTRAINT tax_payer_profile_pkey PRIMARY KEY (id),
+    CONSTRAINT fk8rp52h7epwqygvo0xrri1qpmr FOREIGN KEY (other_itemized_deductions_id)
+        REFERENCES public.monetary_amount (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fkleh6a51j5j3l33agkrvxdqtqs FOREIGN KEY (mortgage_interest_id)
         REFERENCES public.monetary_amount (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT fkn0kwv8atsd7ovr2sa44stlyp6 FOREIGN KEY (real_property_market_value_id)
+        REFERENCES public.monetary_amount (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fknwboy4ss1vxm4561n7kxgua6s FOREIGN KEY (pre_tax_contributions_id)
         REFERENCES public.monetary_amount (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -148,6 +163,27 @@ WITH (
 );
 ALTER TABLE public.tax_definition
   OWNER TO ttbdev;
+
+-- Table: public.income_tax_definition
+CREATE TABLE public.income_tax_definition
+(
+    id bigint NOT NULL,
+    deduct_itemized boolean NOT NULL,
+    deduct_pre_tax_contributions boolean NOT NULL,
+    dependent_exemption integer,
+    personal_exemption_joint integer,
+    personal_exemption_single integer,
+    standard_deduction_joint integer,
+    standard_deduction_single integer,
+    tax_definition_key character varying(255),
+    CONSTRAINT income_tax_definition_pkey PRIMARY KEY (id),
+    CONSTRAINT uk_ilqi08ug4qe9235vtlt59q3id UNIQUE (tax_definition_key)
+)
+WITH (
+    OIDS = FALSE
+);
+ALTER TABLE public.income_tax_definition
+    OWNER to ttbdev;
 
 -- Table: public.expenditure_category
 CREATE TABLE public.expenditure_category
@@ -275,19 +311,53 @@ ALTER TABLE public.tax_burden_report_tax_entries
 -- Table: public.tax_rate
 CREATE TABLE public.tax_rate
 (
-  id bigint NOT NULL,
-  range_high integer,
-  range_low integer,
-  rate numeric(19,6),
-  tax_definition_key character varying(255),
-  CONSTRAINT tax_rate_pkey PRIMARY KEY (id),
-  CONSTRAINT uk_fssqkiah11hqcy91qier4yeh3 UNIQUE (tax_definition_key)
+    id bigint NOT NULL,
+    range_high numeric(19,2),
+    range_low numeric(19,2),
+    rate numeric(19,2),
+    tax_definition_key character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT tax_rate_pkey PRIMARY KEY (id)
+
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.tax_rate
   OWNER TO ttbdev;
+
+-- Table: public.tax_rate_set
+CREATE TABLE public.tax_rate_set
+(
+    id bigint NOT NULL,
+    tax_definition_key character varying(255),
+    tax_filing_status character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT tax_rate_set_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+);
+ALTER TABLE public.tax_rate_set
+    OWNER to ttbdev;
+
+-- Table: public.tax_rate_set_tax_rates
+CREATE TABLE public.tax_rate_set_tax_rates
+(
+    tax_rate_set_id bigint NOT NULL,
+    tax_rate_id bigint NOT NULL,
+    CONSTRAINT fk22ufvla7kvbc7hwwmirp0xuta FOREIGN KEY (tax_rate_id)
+        REFERENCES public.tax_rate (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkhn23vy37930pefi7jx0hvid8r FOREIGN KEY (tax_rate_set_id)
+        REFERENCES public.tax_rate_set (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+);
+ALTER TABLE public.tax_rate_set_tax_rates
+    OWNER to ttbdev;
 
 -- Table: public.assessed_rate
 CREATE TABLE public.assessed_rate
@@ -466,7 +536,8 @@ SELECT AddGeometryColumn('public','boundary_state','geom','4326','MULTIPOLYGON',
 ALTER TABLE public.boundary_state
   OWNER TO ttbdev;
 
--- Table: public.boundary_country
+  -- Table: public.boundary_country
+
 ALTER TABLE IF EXISTS public.boundary_country DROP COLUMN IF EXISTS geom;
 DROP TABLE IF EXISTS public.boundary_country;
 CREATE TABLE public.boundary_country

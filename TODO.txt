@@ -1,8 +1,4 @@
-Add unit test for PropertyTaxFlatRateCalculator
-Break down property tax components for separate city, state, school district, etc.
- (currently using SmartAsset.com median percentage values based on full appraisal value)
-Figure out how to calculate county/city combined property tax
-
+== HOW TO ==
 Query for contains:
 
 SELECT name, statefp, placefp, name
@@ -15,6 +11,12 @@ WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4326));
 
 Create SQL from Shape File:
 shp2pgsql -s 4269:4326 -I -d cb_2017_us_county_500k.shp public.boundary_county > boundary_county.sql
+
+== TO DO ==
+Add unit test for PropertyTaxFlatRateCalculator
+Break down property tax components for separate city, state, school district, etc.
+ (currently using SmartAsset.com median percentage values based on full appraisal value)
+Figure out how to calculate county/city combined property tax
 
 Add unit tests for spatial repositories - need PostGis embedded DB (not currently available)
 Add integration tests for lat/lon methods in service impl
@@ -30,6 +32,27 @@ Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
 
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
+Change GA income tax calculator to use tax brackets
 
-US Federal boundary lookup? Temporarily adding US political division in tax-burden-web GeoController
+Add tax types:
+  Federal Income
+  Alcohol/Tobacco
+  Corporate
+  Payroll (SS, Medicare, etc.)
+Add other states
+
+@Ignore in TaxDefinitionRepositoryTest
+
+!!Add tax definitions with tax rate sets for Fed and GA Income taxes!!
+Add helper in Web to calculate pre-tax deductions based on % of annual income
+
+Re-work handling of money:
+  http://www.javapractices.com/topic/TopicAction.do?Id=13
+  Joda-money?
+
+Enum for political division type
+
+Add error page
+
+Validate taxPayerProfile in controller
 

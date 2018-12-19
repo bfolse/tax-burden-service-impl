@@ -31,18 +31,18 @@ public class TaxDefinitionEntity {
 	
 	/**
 	 * @param taxType
-	 * @param politicalDivision
+	 * @param politicalDivisionKey
 	 * @param taxCalcStrategy
 	 * @param taxDefinitionKey
 	 * @param description
 	 * @param ordinal
 	 */
-	public TaxDefinitionEntity(TaxType taxType, String politicalDivisionKey, String taxCalcStrategy, String name, String description, int ordinal) {
+	public TaxDefinitionEntity(TaxType taxType, String politicalDivisionKey, String taxCalcStrategy, String taxDefinitionKey, String description, int ordinal) {
 		super();
 		this.taxType = taxType;
 		this.politicalDivisionKey = politicalDivisionKey;
 		this.taxCalcStrategy = taxCalcStrategy;
-		this.taxDefinitionKey = name;
+		this.taxDefinitionKey = taxDefinitionKey;
 		this.description = description;
 		this.ordinal = ordinal;
 	}

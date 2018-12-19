@@ -1,6 +1,9 @@
 package com.ttb.service.taxburden.entities;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +14,8 @@ import javax.persistence.Table;
 
 /**
  * A tax rate for either a flat tax assigned to a specific tax definition, or an entry in a TaxRateSetEntity with a low and high range.
- * Low range is exclusive (greater than) and high range is inclusive (less than or equal to).  For an unbounded range, set either
- * high or low to null.
+ * Low range is exclusive (greater than) and high range is inclusive (less than or equal to).  Lowest rangeLow should always be 0.
+ * For an unbounded rangeHigh, set to null.
  */
 @Entity
 @Table(name="tax_rate")
@@ -20,18 +23,16 @@ public class TaxRateEntity {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	@Column(unique=true)
 	private String taxDefinitionKey;
 	private BigDecimal rate;
-	private Integer rangeLow;
-	private Integer rangeHigh;
+	private BigInteger rangeLow;
+	private BigInteger rangeHigh;
 
 	public TaxRateEntity() {
 		super();
 	}
 
 	/**
-	 * @param id
 	 * @param taxDefinitionKey
 	 * @param rate
 	 */
@@ -44,13 +45,12 @@ public class TaxRateEntity {
 	}
 
 	/**
-	 * @param id
 	 * @param taxDefinitionKey
 	 * @param rate
 	 * @param rangeLow
 	 * @param rangeHigh
 	 */
-	public TaxRateEntity(String taxDefinitionKey, BigDecimal rate, Integer rangeLow, Integer rangeHigh) {
+	public TaxRateEntity(String taxDefinitionKey, BigDecimal rate, BigInteger rangeLow, BigInteger rangeHigh) {
 		super();
 		this.taxDefinitionKey = taxDefinitionKey;
 		this.rate = rate;
@@ -96,28 +96,28 @@ public class TaxRateEntity {
 	/**
 	 * @return the rangeLow
 	 */
-	public Integer getRangeLow() {
+	public BigInteger getRangeLow() {
 		return rangeLow;
 	}
 
 	/**
 	 * @param rangeLow the rangeLow to set
 	 */
-	public void setRangeLow(Integer rangeLow) {
+	public void setRangeLow(BigInteger rangeLow) {
 		this.rangeLow = rangeLow;
 	}
 
 	/**
 	 * @return the rangeHigh
 	 */
-	public Integer getRangeHigh() {
+	public BigInteger getRangeHigh() {
 		return rangeHigh;
 	}
 
 	/**
 	 * @param rangeHigh the rangeHigh to set
 	 */
-	public void setRangeHigh(Integer rangeHigh) {
+	public void setRangeHigh(BigInteger rangeHigh) {
 		this.rangeHigh = rangeHigh;
 	}
 
@@ -184,6 +184,4 @@ public class TaxRateEntity {
 		return "TaxRateEntity [id=" + id + ", taxDefinitionKey=" + taxDefinitionKey + ", rate=" + rate + ", rangeLow="
 				+ rangeLow + ", rangeHigh=" + rangeHigh + "]";
 	}
-
-
 }

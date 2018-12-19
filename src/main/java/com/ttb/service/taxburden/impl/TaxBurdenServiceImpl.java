@@ -1,6 +1,7 @@
 package com.ttb.service.taxburden.impl;
 
 import com.ttb.service.taxburden.TaxBurdenService;
+import com.ttb.service.taxburden.calculation.TaxCalculationException;
 import com.ttb.service.taxburden.calculation.TaxCalculator;
 import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
 import com.ttb.service.taxburden.domain.MonetaryAmount;
@@ -113,7 +114,17 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		if (taxPayerProfile != null) {
 			TaxPayerProfileEntity taxPayerProfileEntity = taxPayerProfileRepository.findByTaxPayerProfileKey(taxPayerProfile.getTaxPayerProfileKey());
 			if (taxPayerProfileEntity == null) {
-				taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(), taxPayerProfile.getPostalCode(), findPoliticalDivisionEntities(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()));
+				taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile.getTaxPayerProfileKey(),
+						taxPayerProfile.getTimestamp(),
+						taxPayerProfile.getPostalCode(),
+						findPoliticalDivisionEntities(taxPayerProfile.getPoliticalDivisions()),
+						new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()),
+						new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()),
+						new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()),
+						taxPayerProfile.getTaxFilingStatus(),
+						new MonetaryAmountEntity(taxPayerProfile.getPreTaxContributions()),
+						new MonetaryAmountEntity(taxPayerProfile.getOtherItemizedDeductions()),
+						taxPayerProfile.getDependents());
 				taxPayerProfileEntity = taxPayerProfileRepository.save(taxPayerProfileEntity);
 			}
 			TaxBurdenReportEntity taxBurdenReportEntity = new TaxBurdenReportEntity(taxPayerProfileEntity);
@@ -198,7 +209,9 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 					PoliticalDivisionEntity politicalDivision = politicalDivisionRepository.findByFips(taxDefinition.getPoliticalDivisionKey());
 					logger.debug("politicalDivision: " + politicalDivision);
 					TaxEntryEntity taxEntry = createTaxEntry(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);
-					taxBurdenReport.addTaxEntry(taxEntry);
+					if (taxEntry != null) {
+                        taxBurdenReport.addTaxEntry(taxEntry);
+                    }
 				}
 			}
 		}
@@ -215,8 +228,12 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		if (taxCalculator == null) {
 			logger.warn("TaxCalculator not found taxCalcStrategy: " + taxDefinition.getTaxCalcStrategy());
 		} else {
-			MonetaryAmountEntity calculatedTax = taxCalculator.calculate(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);
-			taxEntry = new TaxEntryEntity(taxDefinition.getTaxType(), politicalDivision, calculatedTax);
+		    try {
+                MonetaryAmountEntity calculatedTax = taxCalculator.calculate(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);
+                taxEntry = new TaxEntryEntity(taxDefinition.getTaxType(), politicalDivision, calculatedTax);
+            } catch (TaxCalculationException e) {
+                logger.error("Error calculating tax for: {} {}", politicalDivision.getFips(), taxDefinition.getTaxType(), e);
+            }
 		}
 		
 		return taxEntry;

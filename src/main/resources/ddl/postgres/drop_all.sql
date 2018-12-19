@@ -16,8 +16,8 @@ DROP TABLE public.expenditure_category_group_expenditure_category_key;
 -- Table: public.expenditure_category_group
 DROP TABLE public.expenditure_category_group;
 
- -- Table: public.tax_payer_profile_political_division_keys
-DROP TABLE IF EXISTS public.tax_payer_profile_political_division_keys;
+ -- Table: public.tax_payer_profile_political_divisions
+DROP TABLE IF EXISTS public.tax_payer_profile_political_divisions;
   
 -- Table: public.tax_burden_report_tax_entries
 DROP TABLE IF EXISTS public.tax_burden_report_tax_entries;
@@ -33,6 +33,9 @@ DROP TABLE IF EXISTS public.tax_payer_profile;
 
 -- Table: public.expenditure_category
 DROP TABLE IF EXISTS public.expenditure_category;
+
+-- Table: public.income_tax_definition
+DROP TABLE IF EXISTS public.income_tax_definition;
 
 -- Table: public.tax_definition
 DROP TABLE IF EXISTS public.tax_definition;
@@ -73,3 +76,7 @@ DROP TABLE IF EXISTS public.boundary_postal_code;
 -- Table: public.boundary_state
 ALTER TABLE IF EXISTS public.boundary_state DROP COLUMN IF EXISTS geom;
 DROP TABLE IF EXISTS public.boundary_state;
+
+-- Table: public.boundary_country
+ALTER TABLE IF EXISTS public.boundary_country DROP COLUMN IF EXISTS geom;
+DROP TABLE IF EXISTS public.boundary_country;

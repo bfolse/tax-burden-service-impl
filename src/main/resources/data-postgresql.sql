@@ -1804,12 +1804,95 @@ VALUES
 (nextval('public.hibernate_sequence'),'31999','13')
 ;
 
--- tax_definition.sql
+-- tax_definition state income
 INSERT INTO public.tax_definition(
             id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
-    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', 'GA State Income', 'incomeTaxFlatRateCalculator', 'INCOME_STATE', 13, 1),
+    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', 'GA State Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_STATE', 13, 1),
     (nextval('public.hibernate_sequence'), 'PA_STATE_INCOME', 'PA State Income', 'incomeTaxFlatRateCalculator', 'INCOME_STATE', 42, 1)
     ;
+
+-- income_tax_definition
+INSERT INTO public.income_tax_definition(
+	id, tax_definition_key, deduct_itemized, deduct_pre_tax_contributions, standard_deduction_single, standard_deduction_joint, personal_exemption_single, personal_exemption_joint, dependent_exemption)
+	VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', false, false, 2300, 3000, 2700, 7400, 3000);
+
+-- tax_rate_set GA state income
+INSERT INTO public.tax_rate_set(
+	id, tax_definition_key, tax_filing_status)
+	VALUES
+	(1, 'GA_STATE_INCOME', 'SINGLE'),
+	(2, 'GA_STATE_INCOME', 'JOINT'),
+	(3, 'GA_STATE_INCOME', 'MARRIED_SEPARATE'),
+	(4, 'GA_STATE_INCOME', 'HEAD_OF_HOUSEHOLD')
+	;
+
+-- tax_rate state income
+INSERT INTO public.tax_rate(
+            id, tax_definition_key, rate, range_low, range_high)
+    VALUES
+    -- Single
+    (1, 'GA_STATE_INCOME', 0.01, 0, 750),
+    (2, 'GA_STATE_INCOME', 0.02, 750, 2250),
+    (3, 'GA_STATE_INCOME', 0.03, 2250, 3750),
+    (4, 'GA_STATE_INCOME', 0.04, 3750, 5250),
+    (5, 'GA_STATE_INCOME', 0.05, 5250, 7000),
+    (6, 'GA_STATE_INCOME', 0.06, 7000, null),
+    -- Joint
+    (7, 'GA_STATE_INCOME', 0.01, 0, 1000),
+    (8, 'GA_STATE_INCOME', 0.02, 1000, 3000),
+    (9, 'GA_STATE_INCOME', 0.03, 3000, 5000),
+    (10, 'GA_STATE_INCOME', 0.04, 5000, 7000),
+    (11, 'GA_STATE_INCOME', 0.05, 7000, 10000),
+    (12, 'GA_STATE_INCOME', 0.06, 10000, null),
+    -- Married Separate
+    (13, 'GA_STATE_INCOME', 0.01, 0, 750),
+    (14, 'GA_STATE_INCOME', 0.02, 750, 2250),
+    (15, 'GA_STATE_INCOME', 0.03, 2250, 3750),
+    (16, 'GA_STATE_INCOME', 0.04, 3750, 5250),
+    (17, 'GA_STATE_INCOME', 0.05, 5250, 7000),
+    (18, 'GA_STATE_INCOME', 0.06, 7000, null),
+    -- Head of Household
+    (19, 'GA_STATE_INCOME', 0.01, 0, 1000),
+    (20, 'GA_STATE_INCOME', 0.02, 1000, 3000),
+    (21, 'GA_STATE_INCOME', 0.03, 3000, 5000),
+    (22, 'GA_STATE_INCOME', 0.04, 5000, 7000),
+    (23, 'GA_STATE_INCOME', 0.05, 7000, 10000),
+    (24, 'GA_STATE_INCOME', 0.06, 10000, null)
+    ;
+
+-- tax_rate_set_tax_rates
+INSERT INTO public.tax_rate_set_tax_rates(
+	tax_rate_set_id, tax_rate_id)
+	VALUES
+	-- GA State Income - Single
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(1, 4),
+	(1, 5),
+	(1, 6),
+	-- GA State Income - Joint
+	(2, 7),
+	(2, 8),
+	(2, 9),
+	(2, 10),
+	(2, 11),
+	(2, 12),
+	-- GA State Income - Married Separate
+	(3, 13),
+	(3, 14),
+	(3, 15),
+	(3, 16),
+	(3, 17),
+	(3, 18),
+	-- GA State Income - Head of Household
+	(4, 19),
+	(4, 20),
+	(4, 21),
+	(4, 22),
+	(4, 23),
+	(4, 24)
+	;
 
 -- tax_definition_sales_GA.sql
 INSERT INTO public.tax_definition(
@@ -2143,17 +2226,10 @@ INSERT INTO public.tax_definition(
 (nextval('public.hibernate_sequence'),'13321','WORTH_GA_COUNTY_PROPERTY','Worth County GA Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5)
 ;
 
--- tax_rate.sql
-INSERT INTO public.tax_rate(
-            id, tax_definition_key, rate, range_low, range_high)
-    VALUES
-    (nextval('public.hibernate_sequence'), 'PA_STATE_INCOME', 0.0307, null, null)
-    ;
-
 -- tax_rate_sales_GA.sql
 INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
-    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', 0.05, null, null),
+    VALUES
     (nextval('public.hibernate_sequence'), 'GA_STATE_SALES', 0.04, null, null),
 (nextval('public.hibernate_sequence'),'APPLING_GA_COUNTY_SALES', 0.08,null,null),
 (nextval('public.hibernate_sequence'),'ATKINSON_GA_COUNTY_SALES', 0.07,null,null),
@@ -2707,10 +2783,7 @@ INSERT INTO public.expenditure_category(
     (1, 'HOUSING_FURNISHINGS'),
     (1, 'APPAREL'),
     (1, 'TRANSPORTATION_VEHICLE_PURCHASE'),
-    (1, 'TRANSPORTATION_FUEL'),
     (1, 'TRANSPORTATION_VEHICLE_OTHER'),
-    (1, 'TRANSPORTATION_PUBLIC'),
-    (1, 'HEALTHCARE'),
     (1, 'ENTERTAINMENT'),
     (1, 'PERSONAL_CARE'),
     (1, 'READING'),
@@ -2729,8 +2802,6 @@ INSERT INTO public.expenditure_category(
     (2, 'TRANSPORTATION_VEHICLE_PURCHASE'),
     (2, 'TRANSPORTATION_FUEL'),
     (2, 'TRANSPORTATION_VEHICLE_OTHER'),
-    (2, 'TRANSPORTATION_PUBLIC'),
-    (2, 'HEALTHCARE'),
     (2, 'ENTERTAINMENT'),
     (2, 'PERSONAL_CARE'),
     (2, 'READING'),

@@ -9,5 +9,5 @@ import com.ttb.service.taxburden.entities.TaxPayerProfileEntity;
 public interface TaxCalculator {
 
 	public MonetaryAmountEntity calculate(TaxPayerProfileEntity taxPayerProfile, PoliticalDivisionEntity politicalDivision, 
-			TaxDefinitionEntity taxDefinition, TaxBurdenReportEntity taxBurdenReport);
+			TaxDefinitionEntity taxDefinition, TaxBurdenReportEntity taxBurdenReport) throws TaxCalculationException;
 }

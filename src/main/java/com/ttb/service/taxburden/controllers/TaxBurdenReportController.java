@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxPayerProfile;
-import com.ttb.service.taxburden.entities.TaxBurdenReportEntity;
 import com.ttb.service.taxburden.impl.TaxBurdenServiceImpl;
 
 /**

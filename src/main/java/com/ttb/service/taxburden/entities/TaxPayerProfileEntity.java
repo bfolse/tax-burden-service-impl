@@ -1,14 +1,10 @@
 package com.ttb.service.taxburden.entities;
 
-import com.ttb.service.taxburden.domain.PoliticalDivision;
-import com.ttb.service.taxburden.domain.TaxEntry;
-import com.ttb.service.taxburden.domain.TaxPayerProfile;
+import com.ttb.service.taxburden.domain.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * 
@@ -28,13 +24,21 @@ public class TaxPayerProfileEntity {
 	        joinColumns=@JoinColumn(name="tax_payer_profile_id"))
 	private List<PoliticalDivisionEntity> politicalDivisions;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private MonetaryAmountEntity annualIncome;
+	private MonetaryAmountEntity annualIncome = new MonetaryAmountEntity(BigDecimal.ZERO);
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private MonetaryAmountEntity mortgageInterest;
+	private MonetaryAmountEntity mortgageInterest = new MonetaryAmountEntity(BigDecimal.ZERO);
 
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private MonetaryAmountEntity realPropertyMarketValue;
+	private MonetaryAmountEntity realPropertyMarketValue = new MonetaryAmountEntity(BigDecimal.ZERO);
 	private String consumerExpenditureProfileKey;
+	@Enumerated(EnumType.STRING)
+	private TaxFilingStatus taxFilingStatus;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private MonetaryAmountEntity preTaxContributions = new MonetaryAmountEntity(BigDecimal.ZERO);
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private MonetaryAmountEntity otherItemizedDeductions = new MonetaryAmountEntity(BigDecimal.ZERO);
+	private Integer dependents;
+
 
 	/**
 	 * 
@@ -132,6 +136,38 @@ public class TaxPayerProfileEntity {
 		this.consumerExpenditureProfileKey="BASIC";
 	}
 
+	public TaxPayerProfileEntity(String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+		super();
+		this.timestamp = new Date();
+		this.taxPayerProfileKey = UUID.randomUUID().toString();
+		this.postalCode = postalCode;
+		this.politicalDivisions = politicalDivisions;
+		this.annualIncome = annualIncome;
+		this.mortgageInterest = mortgageInterest;
+		this.realPropertyMarketValue = realPropertyMarketValue;
+		this.consumerExpenditureProfileKey="BASIC";
+		this.taxFilingStatus = taxFilingStatus;
+		this.preTaxContributions = preTaxContributions;
+		this.otherItemizedDeductions = otherItemizedDeductions;
+		this.dependents = dependents;
+	}
+
+	public TaxPayerProfileEntity(String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+		super();
+		this.timestamp = new Date();
+		this.taxPayerProfileKey = UUID.randomUUID().toString();
+		this.postalCode = postalCode;
+		this.politicalDivisions = politicalDivisions;
+		this.annualIncome = annualIncome;
+		this.mortgageInterest = mortgageInterest;
+		this.realPropertyMarketValue = realPropertyMarketValue;
+		this.consumerExpenditureProfileKey = consumerExpenditureProfileKey;
+		this.taxFilingStatus = taxFilingStatus;
+		this.preTaxContributions = preTaxContributions;
+		this.otherItemizedDeductions = otherItemizedDeductions;
+		this.dependents = dependents;
+	}
+
 	/**
 	 * @param taxPayerProfileKey
 	 * @param timestamp
@@ -182,8 +218,16 @@ public class TaxPayerProfileEntity {
 	}
 
 	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue) {
-		this.taxPayerProfileKey = taxPayerProfileKey;
-		this.timestamp = timestamp;
+		if (taxPayerProfileKey == null) {
+			this.taxPayerProfileKey = UUID.randomUUID().toString();
+		} else {
+			this.taxPayerProfileKey = taxPayerProfileKey;
+		}
+		if (timestamp == null) {
+			this.timestamp = new Date();
+		} else {
+			this.timestamp = timestamp;
+		}
 		this.postalCode = postalCode;
 		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
@@ -192,12 +236,58 @@ public class TaxPayerProfileEntity {
 		this.consumerExpenditureProfileKey="BASIC";
 	}
 
+	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+		if (taxPayerProfileKey == null) {
+			this.taxPayerProfileKey = UUID.randomUUID().toString();
+		} else {
+			this.taxPayerProfileKey = taxPayerProfileKey;
+		}
+		if (timestamp == null) {
+			this.timestamp = new Date();
+		} else {
+			this.timestamp = timestamp;
+		}
+		this.postalCode = postalCode;
+		this.politicalDivisions = politicalDivisions;
+		this.annualIncome = annualIncome;
+		this.mortgageInterest = mortgageInterest;
+		this.realPropertyMarketValue = realPropertyMarketValue;
+		this.consumerExpenditureProfileKey = "BASIC";
+		this.taxFilingStatus = taxFilingStatus;
+		this.preTaxContributions = preTaxContributions;
+		this.otherItemizedDeductions = otherItemizedDeductions;
+		this.dependents = dependents;
+	}
+
+	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+		if (taxPayerProfileKey == null) {
+			this.taxPayerProfileKey = UUID.randomUUID().toString();
+		} else {
+			this.taxPayerProfileKey = taxPayerProfileKey;
+		}
+		if (timestamp == null) {
+			this.timestamp = new Date();
+		} else {
+			this.timestamp = timestamp;
+		}
+		this.postalCode = postalCode;
+		this.politicalDivisions = politicalDivisions;
+		this.annualIncome = annualIncome;
+		this.mortgageInterest = mortgageInterest;
+		this.realPropertyMarketValue = realPropertyMarketValue;
+		this.consumerExpenditureProfileKey = consumerExpenditureProfileKey;
+		this.taxFilingStatus = taxFilingStatus;
+		this.preTaxContributions = preTaxContributions;
+		this.otherItemizedDeductions = otherItemizedDeductions;
+		this.dependents = dependents;
+	}
+
 	public TaxPayerProfileEntity(TaxPayerProfile taxPayerProfile) {
-		this(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(),taxPayerProfile.getPostalCode(), politicalDivisionListToPoliticalDivisionEntityList(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()), taxPayerProfile.getConsumerExpenditureProfileKey());
+		this(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(),taxPayerProfile.getPostalCode(), politicalDivisionListToPoliticalDivisionEntityList(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()), taxPayerProfile.getConsumerExpenditureProfileKey(), taxPayerProfile.getTaxFilingStatus(), new MonetaryAmountEntity(taxPayerProfile.getPreTaxContributions()), new MonetaryAmountEntity(taxPayerProfile.getOtherItemizedDeductions()), taxPayerProfile.getDependents());
 	}
 	
 	public TaxPayerProfile toTaxPayerProfile() {
-		return new TaxPayerProfile(this.getTaxPayerProfileKey(), this.getTimestamp(), this.getPostalCode(), politicalDivisionEntityListToPoliticalDivisionList(this.getPoliticalDivisions()), this.getAnnualIncome().toMonetaryAmount(), this.getMortgageInterest().toMonetaryAmount(), this.getRealPropertyMarketValue().toMonetaryAmount(), this.getConsumerExpenditureProfileKey());
+		return new TaxPayerProfile(this.getTaxPayerProfileKey(), this.getTimestamp(), this.getPostalCode(), politicalDivisionEntityListToPoliticalDivisionList(this.getPoliticalDivisions()), this.getAnnualIncome().toMonetaryAmount(), this.getMortgageInterest().toMonetaryAmount(), this.getRealPropertyMarketValue().toMonetaryAmount(), this.getConsumerExpenditureProfileKey(), this.getTaxFilingStatus(), this.getPreTaxContributions().toMonetaryAmount(), this.getOtherItemizedDeductions().toMonetaryAmount(), this.getDependents());
 	}
 
 	public static List<PoliticalDivisionEntity> politicalDivisionListToPoliticalDivisionEntityList(List<PoliticalDivision> politicalDivisions) {
@@ -330,77 +420,78 @@ public class TaxPayerProfileEntity {
 		this.realPropertyMarketValue = realPropertyMarketValue;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	public TaxFilingStatus getTaxFilingStatus() {
+		return taxFilingStatus;
+	}
+
+	public void setTaxFilingStatus(TaxFilingStatus taxFilingStatus) {
+		this.taxFilingStatus = taxFilingStatus;
+	}
+
+	public MonetaryAmountEntity getPreTaxContributions() {
+		return preTaxContributions;
+	}
+
+	public void setPreTaxContributions(MonetaryAmountEntity preTaxContributions) {
+		this.preTaxContributions = preTaxContributions;
+	}
+
+	public MonetaryAmountEntity getOtherItemizedDeductions() {
+		return otherItemizedDeductions;
+	}
+
+	public void setOtherItemizedDeductions(MonetaryAmountEntity otherItemizedDeductions) {
+		this.otherItemizedDeductions = otherItemizedDeductions;
+	}
+
+	public Integer getDependents() {
+		return dependents;
+	}
+
+	public void setDependents(Integer dependents) {
+		this.dependents = dependents;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof TaxPayerProfileEntity)) return false;
+		TaxPayerProfileEntity that = (TaxPayerProfileEntity) o;
+		return Objects.equals(taxPayerProfileKey, that.taxPayerProfileKey) &&
+				Objects.equals(timestamp, that.timestamp) &&
+				Objects.equals(postalCode, that.postalCode) &&
+				Objects.equals(politicalDivisions, that.politicalDivisions) &&
+				Objects.equals(annualIncome, that.annualIncome) &&
+				Objects.equals(mortgageInterest, that.mortgageInterest) &&
+				Objects.equals(realPropertyMarketValue, that.realPropertyMarketValue) &&
+				Objects.equals(consumerExpenditureProfileKey, that.consumerExpenditureProfileKey) &&
+				taxFilingStatus == that.taxFilingStatus &&
+				Objects.equals(preTaxContributions, that.preTaxContributions) &&
+				Objects.equals(otherItemizedDeductions, that.otherItemizedDeductions) &&
+				Objects.equals(dependents, that.dependents);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((annualIncome == null) ? 0 : annualIncome.hashCode());
-		result = prime * result
-				+ ((consumerExpenditureProfileKey == null) ? 0 : consumerExpenditureProfileKey.hashCode());
-		result = prime * result + ((mortgageInterest == null) ? 0 : mortgageInterest.hashCode());
-		result = prime * result + ((politicalDivisions == null) ? 0 : politicalDivisions.hashCode());
-		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
-		result = prime * result + ((taxPayerProfileKey == null) ? 0 : taxPayerProfileKey.hashCode());
-		return result;
+		return Objects.hash(taxPayerProfileKey, timestamp, postalCode, politicalDivisions, annualIncome, mortgageInterest, realPropertyMarketValue, consumerExpenditureProfileKey, taxFilingStatus, preTaxContributions, otherItemizedDeductions, dependents);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TaxPayerProfileEntity other = (TaxPayerProfileEntity) obj;
-		if (annualIncome == null) {
-			if (other.annualIncome != null)
-				return false;
-		} else if (!annualIncome.equals(other.annualIncome))
-			return false;
-		if (consumerExpenditureProfileKey == null) {
-			if (other.consumerExpenditureProfileKey != null)
-				return false;
-		} else if (!consumerExpenditureProfileKey.equals(other.consumerExpenditureProfileKey))
-			return false;
-		if (mortgageInterest == null) {
-			if (other.mortgageInterest != null)
-				return false;
-		} else if (!mortgageInterest.equals(other.mortgageInterest))
-			return false;
-		if (politicalDivisions == null) {
-			if (other.politicalDivisions != null)
-				return false;
-		} else if (!politicalDivisions.equals(other.politicalDivisions))
-			return false;
-		if (postalCode == null) {
-			if (other.postalCode != null)
-				return false;
-		} else if (!postalCode.equals(other.postalCode))
-			return false;
-		if (taxPayerProfileKey == null) {
-			if (other.taxPayerProfileKey != null)
-				return false;
-		} else if (!taxPayerProfileKey.equals(other.taxPayerProfileKey))
-			return false;
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "TaxPayerProfileEntity [id=" + id + ", taxPayerProfileKey=" + taxPayerProfileKey + ", timestamp="
-				+ timestamp + ", postalCode=" + postalCode + ", politicalDivisions=" + politicalDivisions
-				+ ", annualIncome=" + annualIncome + ", mortgageInterest=" + mortgageInterest
-				+ ", consumerExpenditureProfileKey=" + consumerExpenditureProfileKey + "]";
+		return "TaxPayerProfileEntity{" +
+				"id=" + id +
+				", taxPayerProfileKey='" + taxPayerProfileKey + '\'' +
+				", timestamp=" + timestamp +
+				", postalCode='" + postalCode + '\'' +
+				", politicalDivisions=" + politicalDivisions +
+				", annualIncome=" + annualIncome +
+				", mortgageInterest=" + mortgageInterest +
+				", realPropertyMarketValue=" + realPropertyMarketValue +
+				", consumerExpenditureProfileKey='" + consumerExpenditureProfileKey + '\'' +
+				", taxFilingStatus=" + taxFilingStatus +
+				", preTaxContributions=" + preTaxContributions +
+				", otherItemizedDeductions=" + otherItemizedDeductions +
+				", dependents=" + dependents +
+				'}';
 	}
-
 }
