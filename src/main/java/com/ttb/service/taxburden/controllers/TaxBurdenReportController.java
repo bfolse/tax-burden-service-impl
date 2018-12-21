@@ -2,6 +2,7 @@ package com.ttb.service.taxburden.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.ttb.service.taxburden.domain.InvalidTaxPayerProfileException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +40,7 @@ public class TaxBurdenReportController {
     // Generate report from POST
     @RequestMapping(method=RequestMethod.POST, consumes="application/json", produces="application/json")
     public @ResponseBody TaxBurdenReport createReport(@RequestBody TaxPayerProfile taxPayerProfile) {
-    	// TODO Validate taxPayerProfile
-    	
+    	// Create the Tax Burden Report
     	TaxBurdenReport taxBurdenReport = taxBurdenServiceImpl.createReport(taxPayerProfile);
     	
     	return taxBurdenReport;

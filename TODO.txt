@@ -32,7 +32,6 @@ Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
 
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
-Change GA income tax calculator to use tax brackets
 
 Add tax types:
   Federal Income
@@ -43,7 +42,7 @@ Add other states
 
 @Ignore in TaxDefinitionRepositoryTest
 
-!!Add tax definitions with tax rate sets for Fed and GA Income taxes!!
+!!Add tax definitions with tax rate sets for Fed Income taxes!!
 Add helper in Web to calculate pre-tax deductions based on % of annual income
 
 Re-work handling of money:

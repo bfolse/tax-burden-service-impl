@@ -1,6 +1,7 @@
 package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
+import com.ttb.service.taxburden.domain.InvalidTaxPayerProfileException;
 import com.ttb.service.taxburden.domain.MonetaryAmount;
 import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxPayerProfile;
@@ -12,8 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -51,4 +50,11 @@ System.out.println("TaxPayerProfile: " + taxPayerProfile);
 		assertNotNull(taxBurdenReport);
 		System.out.println(taxBurdenReport);
 	}
+
+    @Test(expected = InvalidTaxPayerProfileException.class)
+    public void createReportWithInvalidProfileTest() {
+	    TaxPayerProfile badTaxPayerProfile = new TaxPayerProfile();
+	    badTaxPayerProfile.setAnnualIncome(new MonetaryAmount(BigDecimal.ZERO));
+        taxBurdenServiceImpl.createReport(badTaxPayerProfile);
+    }
 }

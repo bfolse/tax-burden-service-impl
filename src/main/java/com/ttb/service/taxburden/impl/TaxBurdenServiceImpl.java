@@ -4,10 +4,7 @@ import com.ttb.service.taxburden.TaxBurdenService;
 import com.ttb.service.taxburden.calculation.TaxCalculationException;
 import com.ttb.service.taxburden.calculation.TaxCalculator;
 import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
-import com.ttb.service.taxburden.domain.MonetaryAmount;
-import com.ttb.service.taxburden.domain.PoliticalDivision;
-import com.ttb.service.taxburden.domain.TaxBurdenReport;
-import com.ttb.service.taxburden.domain.TaxPayerProfile;
+import com.ttb.service.taxburden.domain.*;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.*;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -111,7 +108,9 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 
 	public TaxBurdenReport createReport(TaxPayerProfile taxPayerProfile) {
 		TaxBurdenReport taxBurdenReport = null;
-		if (taxPayerProfile != null) {
+		if (taxPayerProfile == null || !taxPayerProfile.isValid()) {
+			throw new InvalidTaxPayerProfileException("taxPayerProfile is null or invalid");
+		} else {
 			TaxPayerProfileEntity taxPayerProfileEntity = taxPayerProfileRepository.findByTaxPayerProfileKey(taxPayerProfile.getTaxPayerProfileKey());
 			if (taxPayerProfileEntity == null) {
 				taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile.getTaxPayerProfileKey(),
