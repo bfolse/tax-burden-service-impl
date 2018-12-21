@@ -11,13 +11,12 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class IncomeTaxBracketedMarginalRateCalculator implements TaxCalculator {
+public class IncomeTaxBracketedMarginalRateCalculator extends MarginalTaxRateCalculator implements TaxCalculator {
 	private static final Logger logger = LoggerFactory.getLogger(IncomeTaxBracketedMarginalRateCalculator.class);
 
 	@Autowired
@@ -81,7 +80,7 @@ public class IncomeTaxBracketedMarginalRateCalculator implements TaxCalculator {
         }
 
         // Calculate income tax using bracketed marginal rates
-        BigDecimal incomeTax = calculateIncomeTax(taxableIncome, taxRateSet);
+        BigDecimal incomeTax = calculateMarginalTax(taxableIncome, taxRateSet);
 
 		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax);
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
@@ -127,36 +126,6 @@ public class IncomeTaxBracketedMarginalRateCalculator implements TaxCalculator {
 	    return taxableIncome;
     }
 
-    private BigDecimal calculateIncomeTax(BigDecimal taxableIncome, List<TaxRateEntity> rates) {
-	    // TODO
-        BigDecimal incomeTax = BigDecimal.ZERO;
-        if (!(taxableIncome.compareTo(BigDecimal.ZERO) <= 0)) {
-            // Sort tax rates low to high
-            rates.sort(new TaxRateComparator());
-            logger.debug("Sorted tax rates: {}" + rates);
-            // Rate list
-            for (TaxRateEntity rate : rates) {
-                BigDecimal rangeHigh;
-                if (rate.getRangeHigh() == null) {
-                    // Null rangeHigh signifies open ended range, substitute with max value
-                    rangeHigh = BigDecimal.valueOf(Double.MAX_VALUE);
-                } else {
-                    rangeHigh = new BigDecimal(rate.getRangeHigh());
-                }
-                BigDecimal rangeLow = new BigDecimal(rate.getRangeLow());
-                if (taxableIncome.compareTo(rangeHigh) >= 0) {
-                    // taxableIncome >= high end of range for this rate
-                    incomeTax = incomeTax.add(rangeHigh.subtract(rangeLow).multiply(rate.getRate()));
-                } else {
-                    // taxableIncome < high end of range for this rate
-                    incomeTax = incomeTax.add(taxableIncome.subtract(rangeLow).multiply(rate.getRate()));
-                    break;
-                }
-            }
-        }
-        return incomeTax;
-    }
-
     public void setTaxRateSetRepository(TaxRateSetRepository taxRateSetRepository) {
 		this.taxRateSetRepository = taxRateSetRepository;
 	}
@@ -165,10 +134,4 @@ public class IncomeTaxBracketedMarginalRateCalculator implements TaxCalculator {
         this.incomeTaxDefinitionRepository = incomeTaxDefinitionRepository;
     }
 
-    private class TaxRateComparator implements Comparator<TaxRateEntity> {
-        @Override
-        public int compare(TaxRateEntity o1, TaxRateEntity o2) {
-            return o1.getRangeLow().subtract(o2.getRangeLow()).intValue();
-        }
-    }
 }

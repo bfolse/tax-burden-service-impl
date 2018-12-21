@@ -50,8 +50,5 @@ Re-work handling of money:
   Joda-money?
 
 Enum for political division type
-
-Add error page
-
-Validate taxPayerProfile in controller
-
+Add Payroll tax (SS, Medicare)
+Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes

@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.util.Currency;
 
 public class MonetaryAmount {
-	private Currency currency;
+	private static final String DEFAULT_CURRENCY_CODE = "USD";
+
+	private Currency currency = Currency.getInstance(DEFAULT_CURRENCY_CODE);
 	private BigDecimal amount;
-	
-	private final String DEFAULT_CURRENCY_CODE = "USD";
-	
+
 	/**
 	 * 
 	 */

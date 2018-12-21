@@ -12,6 +12,8 @@ import java.util.*;
 @Entity
 @Table(name="tax_payer_profile")
 public class TaxPayerProfileEntity {
+	@Transient
+	public static final String BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY = "BASIC";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +41,6 @@ public class TaxPayerProfileEntity {
 	private MonetaryAmountEntity otherItemizedDeductions = new MonetaryAmountEntity(BigDecimal.ZERO);
 	private Integer dependents;
 
-
 	/**
 	 * 
 	 */
@@ -48,7 +49,7 @@ public class TaxPayerProfileEntity {
 		this.timestamp = new Date();
 		this.taxPayerProfileKey = UUID.randomUUID().toString();
 		this.politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
-		this.consumerExpenditureProfileKey = "BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class TaxPayerProfileEntity {
 		this.postalCode = postalCode;
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
-		this.consumerExpenditureProfileKey = "BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class TaxPayerProfileEntity {
 		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
-		this.consumerExpenditureProfileKey = "BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 	}
 
 	/**
@@ -133,7 +134,7 @@ public class TaxPayerProfileEntity {
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
-		this.consumerExpenditureProfileKey="BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 	}
 
 	public TaxPayerProfileEntity(String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
@@ -145,7 +146,7 @@ public class TaxPayerProfileEntity {
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
-		this.consumerExpenditureProfileKey="BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 		this.taxFilingStatus = taxFilingStatus;
 		this.preTaxContributions = preTaxContributions;
 		this.otherItemizedDeductions = otherItemizedDeductions;
@@ -233,7 +234,7 @@ public class TaxPayerProfileEntity {
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
-		this.consumerExpenditureProfileKey="BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 	}
 
 	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, String postalCode, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
@@ -252,7 +253,7 @@ public class TaxPayerProfileEntity {
 		this.annualIncome = annualIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
-		this.consumerExpenditureProfileKey = "BASIC";
+		this.consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
 		this.taxFilingStatus = taxFilingStatus;
 		this.preTaxContributions = preTaxContributions;
 		this.otherItemizedDeductions = otherItemizedDeductions;
