@@ -64,9 +64,9 @@ public class PayrollTaxBracketedMarginalRateCalculator extends MarginalTaxRateCa
         }
 
         // Calculate income tax using bracketed marginal rates
-        BigDecimal incomeTax = calculateMarginalTax(annualIncome.getAmount(), taxRateSet);
+        BigDecimal payrollTax = calculateMarginalTax(annualIncome.getAmount(), taxRateSet);
 
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax);
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), payrollTax);
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}

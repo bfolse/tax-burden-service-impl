@@ -49,6 +49,9 @@ Re-work handling of money:
   http://www.javapractices.com/topic/TopicAction.do?Id=13
   Joda-money?
 
+!! Fix Payroll tax - only one entry added to report, should be Soc Sec and Medicare
+  Add Tax Definition description to TaxEntry
+
 Enum for political division type
-Add Payroll tax (SS, Medicare)
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes
+Add corporate portion of payroll tax

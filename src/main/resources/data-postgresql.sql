@@ -1860,7 +1860,7 @@ INSERT INTO public.tax_rate(
     (24, 'GA_STATE_INCOME', 0.06, 10000, null)
     ;
 
--- tax_rate_set_tax_rates
+-- tax_rate_set_tax_rates state income
 INSERT INTO public.tax_rate_set_tax_rates(
 	tax_rate_set_id, tax_rate_id)
 	VALUES
@@ -1893,6 +1893,61 @@ INSERT INTO public.tax_rate_set_tax_rates(
 	(4, 23),
 	(4, 24)
 	;
+
+-- tax_definition US federal payroll
+INSERT INTO public.tax_definition(
+            id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
+    VALUES (nextval('public.hibernate_sequence'), 'US_PAYROLL_SOC_SEC', 'US Federal Payroll Social Security', 'payrollTaxBracketedMarginalRateCalculator', 'PAYROLL_FEDERAL', 'US', 1),
+    (nextval('public.hibernate_sequence'), 'US_PAYROLL_MEDICARE', 'US Federal Payroll Medicare', 'payrollTaxBracketedMarginalRateCalculator', 'PAYROLL_FEDERAL', 'US', 1)
+    ;
+
+-- tax_rate_set US federal payroll
+INSERT INTO public.tax_rate_set(
+	id, tax_definition_key, tax_filing_status)
+	VALUES
+	(101, 'US_PAYROLL_SOC_SEC', null),
+	(102, 'US_PAYROLL_MEDICARE', 'SINGLE'),
+	(103, 'US_PAYROLL_MEDICARE', 'JOINT'),
+	(104, 'US_PAYROLL_MEDICARE', 'MARRIED_SEPARATE'),
+	(105, 'US_PAYROLL_MEDICARE', 'HEAD_OF_HOUSEHOLD')
+	;
+
+-- tax_rate US federal payroll
+INSERT INTO public.tax_rate(
+            id, tax_definition_key, rate, range_low, range_high)
+    VALUES
+    -- Social Security
+    (1001, 'US_PAYROLL_SOC_SEC', 0.062, 0, 127200),
+    -- Medicare Married filing separate
+    (1002, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
+    (1003, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),
+    -- Medicare Single and Head of Household
+    (1004, 'US_PAYROLL_MEDICARE', 0.0145, 0, 200000),
+    (1005, 'US_PAYROLL_MEDICARE', 0.0235, 200000, null),
+    -- Medicare Joint
+    (1006, 'US_PAYROLL_MEDICARE', 0.0145, 0, 250000),
+    (1007, 'US_PAYROLL_MEDICARE', 0.0235, 250000, null)
+    ;
+
+-- tax_rate_set_tax_rates federal payroll
+INSERT INTO public.tax_rate_set_tax_rates(
+	tax_rate_set_id, tax_rate_id)
+	VALUES
+	-- US Federal Payroll - Social Security
+	(101, 1001),
+	-- US Federal Payroll - Medicare Married Filing Separate
+	(104, 1002),
+	(104, 1003),
+	-- US Federal Payroll - Medicare Single
+	(102, 1004),
+	(102, 1005),
+	-- US Federal Payroll - Medicare Head of Household
+	(105, 1004),
+	(105, 1005),
+	-- US Federal Payroll - Medicare Joint
+	(103, 1006),
+	(103, 1007)
+    ;
 
 -- tax_definition_sales_GA.sql
 INSERT INTO public.tax_definition(

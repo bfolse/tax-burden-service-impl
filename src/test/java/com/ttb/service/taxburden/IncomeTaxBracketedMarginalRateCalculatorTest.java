@@ -26,8 +26,8 @@ import static org.mockito.BDDMockito.given;
 @RunWith(SpringRunner.class)
 public class IncomeTaxBracketedMarginalRateCalculatorTest {
 
-	public static final String TEST_INCOME_TAX_ONE = "TEST_INCOME_TAX_ONE";
-	public static final String TEST_INCOME_TAX_TWO = "TEST_INCOME_TAX_TWO";
+	public static final String TEST_INCOME_TAX_ONE = "TEST_PAYROLL_TAX_ONE";
+	public static final String TEST_INCOME_TAX_TWO = "TEST_PAYROLL_TAX_TWO";
 
 	private IncomeTaxBracketedMarginalRateCalculator incomeTaxBracketedMarginalRateCalculator;
 
@@ -133,7 +133,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 	}
 
 	@Test
-	public void calculateDefaultJointTaxFilingStatusTest() {
+	public void calculateJointTaxFilingStatusTest() {
 		incomeTaxBracketedMarginalRateCalculator = new IncomeTaxBracketedMarginalRateCalculator();
 		incomeTaxBracketedMarginalRateCalculator.setTaxRateSetRepository(mockTaxRateSetRepository);
 		incomeTaxBracketedMarginalRateCalculator.setIncomeTaxDefinitionRepository(mockIncomeTaxDefinitionRepository);
