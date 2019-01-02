@@ -29,6 +29,7 @@ Add Integration tests to Code Pipeline
 Add development branch to Git, switch Code Pipeline awsdev to use development branch
 Add Code Pipeline and AWS environments for prod, use master branch
 Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
+Get SSL Cert
 
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
@@ -37,7 +38,6 @@ Add tax types:
   Federal Income
   Alcohol/Tobacco
   Corporate
-  Payroll (SS, Medicare, etc.)
 Add other states
 
 @Ignore in TaxDefinitionRepositoryTest
@@ -48,9 +48,6 @@ Add helper in Web to calculate pre-tax deductions based on % of annual income
 Re-work handling of money:
   http://www.javapractices.com/topic/TopicAction.do?Id=13
   Joda-money?
-
-!! Fix Payroll tax - only one entry added to report, should be Soc Sec and Medicare
-  Add Tax Definition description to TaxEntry
 
 Enum for political division type
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes

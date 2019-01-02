@@ -275,6 +275,7 @@ CREATE TABLE public.tax_entry
   tax_type integer,
   amount_id bigint,
   political_division_id bigint,
+  description character varying(255),
   CONSTRAINT tax_entry_pkey PRIMARY KEY (id),
   CONSTRAINT fkf3adhtjr00xfr5y0ricg8q4s9 FOREIGN KEY (political_division_id)
       REFERENCES public.political_division (id) MATCH SIMPLE

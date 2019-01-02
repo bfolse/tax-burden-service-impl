@@ -229,7 +229,7 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		} else {
 		    try {
                 MonetaryAmountEntity calculatedTax = taxCalculator.calculate(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);
-                taxEntry = new TaxEntryEntity(taxDefinition.getTaxType(), politicalDivision, calculatedTax);
+                taxEntry = new TaxEntryEntity(taxDefinition.getTaxType(), politicalDivision, taxDefinition.getDescription(), calculatedTax);
             } catch (TaxCalculationException e) {
                 logger.error("Error calculating tax for: {} {}", politicalDivision.getFips(), taxDefinition.getTaxType(), e);
             }

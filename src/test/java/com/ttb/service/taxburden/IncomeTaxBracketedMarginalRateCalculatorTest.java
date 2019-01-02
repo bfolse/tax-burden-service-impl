@@ -117,7 +117,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		politicalDivisions.add(politicalDivisionGA);
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_STATE, politicalDivisionGA.getFips(), "incomeTaxBracketedMarginalRateCalculator", TEST_INCOME_TAX_ONE, "test description", 1);
 
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, taxDefinition.getDescription(), new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
 		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),
@@ -146,7 +146,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		politicalDivisions.add(politicalDivisionGA);
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_STATE, politicalDivisionGA.getFips(), "incomeTaxBracketedMarginalRateCalculator", TEST_INCOME_TAX_TWO, "test description", 1);
 
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, taxDefinition.getDescription(), new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
 		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),

@@ -106,7 +106,7 @@ public class SalesTaxCalculatorTest {
 		
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
 		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", "COUNTRY");
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, "TEST", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
 		TaxPayerProfileEntity taxPayerProfileBasic = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(10000)), 

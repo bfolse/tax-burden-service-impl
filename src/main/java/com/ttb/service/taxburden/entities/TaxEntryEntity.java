@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import com.ttb.service.taxburden.domain.TaxEntry;
 import com.ttb.service.taxburden.domain.TaxType;
 
+import java.util.Objects;
+
 @Entity
 @Table(name="tax_entry")
 public class TaxEntryEntity {
@@ -25,6 +27,7 @@ public class TaxEntryEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="POLITICAL_DIVISION_ID")
 	private PoliticalDivisionEntity politicalDivision;
+	private String description;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MonetaryAmountEntity amount;
 	
@@ -32,23 +35,24 @@ public class TaxEntryEntity {
 	
 	/**
 	 * @param taxType
-	 * @param politicalDivisionId
-	 * @param politicalDivisionName
+	 * @param politicalDivision
+	 * @param description
 	 * @param amount
 	 */
-	public TaxEntryEntity(TaxType taxType, PoliticalDivisionEntity politicalDivision, MonetaryAmountEntity amount) {
+	public TaxEntryEntity(TaxType taxType, PoliticalDivisionEntity politicalDivision, String description, MonetaryAmountEntity amount) {
 		super();
 		this.taxType = taxType;
 		this.politicalDivision = politicalDivision;
+		this.description = description;
 		this.amount = amount;
 	}
 	
 	public TaxEntryEntity(TaxEntry taxEntry) {
-		this(taxEntry.getTaxType(), new PoliticalDivisionEntity(taxEntry.getPoliticalDivision()), new MonetaryAmountEntity(taxEntry.getAmount()));
+		this(taxEntry.getTaxType(), new PoliticalDivisionEntity(taxEntry.getPoliticalDivision()), taxEntry.getDescription(), new MonetaryAmountEntity(taxEntry.getAmount()));
 	}
 	
 	public TaxEntry toTaxEntry() {
-		return new TaxEntry(this.getTaxType(), this.getPoliticalDivision().toPoliticalDivision(), this.getAmount().toMonetaryAmount());
+		return new TaxEntry(this.getTaxType(), this.getPoliticalDivision().toPoliticalDivision(), this.getDescription(), this.getAmount().toMonetaryAmount());
 	}
 	
 	/**
@@ -100,53 +104,38 @@ public class TaxEntryEntity {
 		this.amount = amount;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof TaxEntryEntity)) return false;
+		TaxEntryEntity that = (TaxEntryEntity) o;
+		return taxType == that.taxType &&
+				Objects.equals(politicalDivision, that.politicalDivision) &&
+				Objects.equals(description, that.description) &&
+				Objects.equals(amount, that.amount);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((politicalDivision == null) ? 0 : politicalDivision.hashCode());
-		result = prime * result + ((taxType == null) ? 0 : taxType.hashCode());
-		return result;
+		return Objects.hash(taxType, politicalDivision, description, amount);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TaxEntryEntity other = (TaxEntryEntity) obj;
-		if (amount == null) {
-			if (other.amount != null)
-				return false;
-		} else if (!amount.equals(other.amount))
-			return false;
-		if (politicalDivision == null) {
-			if (other.politicalDivision != null)
-				return false;
-		} else if (!politicalDivision.equals(other.politicalDivision))
-			return false;
-		if (taxType != other.taxType)
-			return false;
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "TaxEntryEntity [id=" + id + ", taxType=" + taxType + ", politicalDivision=" + politicalDivision + ", amount="
-				+ amount + "]";
+		return "TaxEntryEntity{" +
+				"id=" + id +
+				", taxType=" + taxType +
+				", politicalDivision=" + politicalDivision +
+				", description='" + description + '\'' +
+				", amount=" + amount +
+				'}';
 	}
-
 }

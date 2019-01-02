@@ -53,7 +53,7 @@ public class TaxBurdenReportRepositoryTest {
 		System.out.println("Begin saveTest()");
 		//taxPayerProfileRepository.save(taxPayerProfileOne);
 		PoliticalDivisionEntity politicalDivision13 = politicalDivisionRepository.findByFips("13");
-		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, new MonetaryAmountEntity(new BigDecimal(1000.00)));
+		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, "TEST", new MonetaryAmountEntity(new BigDecimal(1000.00)));
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity(taxPayerProfileOne);
 		taxBurdenReport.addTaxEntry(taxEntryOne);
 		repository.save(taxBurdenReport);
@@ -66,7 +66,7 @@ public class TaxBurdenReportRepositoryTest {
 		System.out.println("Begin findByReportKeyTest()");
 		//taxPayerProfileRepository.save(taxPayerProfileOne);
 		PoliticalDivisionEntity politicalDivision13 = politicalDivisionRepository.findByFips("13");
-		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, new MonetaryAmountEntity(new BigDecimal(1000.00)));
+		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, "TEST", new MonetaryAmountEntity(new BigDecimal(1000.00)));
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity(taxPayerProfileOne);
 		taxBurdenReport.addTaxEntry(taxEntryOne);
 		repository.save(taxBurdenReport);
@@ -82,8 +82,8 @@ public class TaxBurdenReportRepositoryTest {
 	public void getTaxEntryTest() {
 		System.out.println("Begin getTaxEntryTest()");
 		PoliticalDivisionEntity politicalDivision13 = politicalDivisionRepository.findByFips("13");
-		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, new MonetaryAmountEntity(new BigDecimal(1000.00)));
-		TaxEntryEntity taxEntryTwo = new TaxEntryEntity(TaxType.SALES_STATE, politicalDivision13, new MonetaryAmountEntity(new BigDecimal(100.00)));
+		TaxEntryEntity taxEntryOne = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivision13, "TEST", new MonetaryAmountEntity(new BigDecimal(1000.00)));
+		TaxEntryEntity taxEntryTwo = new TaxEntryEntity(TaxType.SALES_STATE, politicalDivision13, "TEST", new MonetaryAmountEntity(new BigDecimal(100.00)));
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity(taxPayerProfileOne);
 		taxBurdenReport.addTaxEntry(taxEntryOne);
 		taxBurdenReport.addTaxEntry(taxEntryTwo);
