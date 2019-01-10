@@ -31,8 +31,6 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	@Autowired
 	PoliticalDivisionRepository politicalDivisionRepository;
 	@Autowired
-	PostalCodePoliticalDivisionRepository postalCodePoliticalDivisionRepository;
-	@Autowired
 	BoundaryCountyRepository boundaryCountyRepository;
 	@Autowired
 	BoundaryPlaceRepository boundaryPlaceRepository;
@@ -54,7 +52,6 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		logger.debug("postalCode: " + postalCode);
 		List<PoliticalDivision> foundPoliticalDivisions = new ArrayList<PoliticalDivision>();
 		if (postalCode != null && !"".equals(postalCode)) {
-			List<PostalCodePoliticalDivisionEntity>	postalCodePoliticalDivisionEntities = new ArrayList<PostalCodePoliticalDivisionEntity>();
             // County
             List<PoliticalDivisionEntity> countyPoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             countyPoliticalDivisionEntities = boundaryCountyRepository.contains(postalCode);
