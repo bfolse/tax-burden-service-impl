@@ -31,6 +31,7 @@ public class TaxRateSetEntity {
     public TaxRateSetEntity(String taxDefinitionKey, List<TaxRateEntity> taxRates) {
         this.taxDefinitionKey = taxDefinitionKey;
         this.taxRates = taxRates;
+        this.taxFilingStatus = TaxFilingStatus.NONE;
     }
 
     public TaxRateSetEntity(String taxDefinitionKey, TaxFilingStatus taxFilingStatus, List<TaxRateEntity> taxRates) {

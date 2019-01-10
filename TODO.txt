@@ -28,21 +28,30 @@ Add address search to map
 Add Integration tests to Code Pipeline
 Add development branch to Git, switch Code Pipeline awsdev to use development branch
 Add Code Pipeline and AWS environments for prod, use master branch
-Point totaltaxburden.com DNS to AWS prod (registry is with Go Daddy)
-Get SSL Cert
+Redirect http to https
 
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
 
 Add tax types:
   Federal Income
+    Capital Gains
+    AMT
+    Small Business (Qualified Business Income Deduction)
+    Student Loan interest adjustment to income
   Alcohol/Tobacco
   Corporate
 Add other states
 
 @Ignore in TaxDefinitionRepositoryTest
+Add tests for isDeductItemized and isDeductPreTaxContributions
 
-!!Add tax definitions with tax rate sets for Fed Income taxes!!
+Remove postal_code_political_division
+
+Re-work IncomeTaxFlatRateCalculator to use IncomeTaxDefinition (isDeductItemized and isDeductPreTaxContributions)
+Make AVERAGE_FUEL_PRICE_PER_GALLON dynamic in FuelTaxCalculator
+Add cap ($118,500) to Social Security payroll tax
+
 Add helper in Web to calculate pre-tax deductions based on % of annual income
 
 Re-work handling of money:

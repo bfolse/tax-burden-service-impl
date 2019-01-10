@@ -52,18 +52,15 @@ public class FuelTaxCalculator implements TaxCalculator {
 		logger.debug("Begin tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition);
 		BigDecimal taxPerGallon = taxRates.get(taxDefinition.getTaxDefinitionKey());
 		
-		MonetaryAmountEntity annualIncome = taxPayerProfile.getAnnualIncome();
-		if (annualIncome == null) {
-			annualIncome = new MonetaryAmountEntity(0.0);
-		}
+		BigDecimal adjustedGrossIncome = TaxCalculatorUtils.calculateAdjustedGrossIncome(taxPayerProfile, taxBurdenReport);
 		// Get consumer expenditure profile
 		ConsumerExpenditureProfileEntity consumerExpenditureProfile = consumerExpenditureProfileRepository.findByConsumerExpenditureProfileKey(taxPayerProfile.getConsumerExpenditureProfileKey());
 		// Calculate fuel expenditure
-		BigDecimal fuelExpenditure = consumerExpenditureProfile.getConsumerExpenditureProfileEntries().get(TRANSPORTATION_FUEL).multiply(annualIncome.getAmount());
+		BigDecimal fuelExpenditure = consumerExpenditureProfile.getConsumerExpenditureProfileEntries().get(TRANSPORTATION_FUEL).multiply(adjustedGrossIncome);
 		// Determine gallons of fuel used based on fuel expenditure and fuel price per gallon
 		BigDecimal gallons = fuelExpenditure.divide(AVERAGE_FUEL_PRICE_PER_GALLON, MathContext.DECIMAL32);
 		BigDecimal calculatedTax = gallons.multiply(taxPerGallon, MathContext.DECIMAL32).setScale(2, RoundingMode.HALF_UP);
-		MonetaryAmountEntity returnTax = new MonetaryAmountEntity(annualIncome.getCurrency(), calculatedTax);
+		MonetaryAmountEntity returnTax = new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome().getCurrency(), calculatedTax);
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " returnTax: " + returnTax);
 		return returnTax;
 	}

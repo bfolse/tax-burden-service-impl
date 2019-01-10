@@ -106,22 +106,22 @@ public class SalesTaxCalculatorTest {
 		
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
 		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", "COUNTRY");
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, "TEST", new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.PAYROLL_FEDERAL, politicalDivision, "payroll tax", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
-		TaxPayerProfileEntity taxPayerProfileBasic = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(10000)), 
+		TaxPayerProfileEntity taxPayerProfileBasic = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(50000)),
 				new MonetaryAmountEntity(BigDecimal.valueOf(0)), "BASIC");
 		TaxDefinitionEntity taxDefinitionOne = new TaxDefinitionEntity(TaxType.SALES_STATE, null, "salesTaxCalculator", "TD_ONE", "test description one", 1);
 		MonetaryAmountEntity resultOne = salesTaxCalculator.calculate(taxPayerProfileBasic, null, taxDefinitionOne, taxBurdenReport);
 		assertNotNull(resultOne);
-		assertEquals(30, resultOne.getAmount().longValue());
+		assertEquals(BigDecimal.valueOf(125.55), resultOne.getAmount());
 
-		TaxPayerProfileEntity taxPayerProfileSpender = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(10000)), 
+		TaxPayerProfileEntity taxPayerProfileSpender = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(100000)),
 				new MonetaryAmountEntity(BigDecimal.valueOf(0)), "SPENDER");
 		TaxDefinitionEntity taxDefinitionTwo = new TaxDefinitionEntity(TaxType.SALES_STATE, null, "salesTaxCalculator", "TD_TWO", "test description two", 1);
 		MonetaryAmountEntity resultTwo = salesTaxCalculator.calculate(taxPayerProfileSpender, null, taxDefinitionTwo, taxBurdenReport);
 		assertNotNull(resultTwo);
-		assertEquals(5, resultTwo.getAmount().longValue());
+		assertEquals(BigDecimal.valueOf(42.75), resultTwo.getAmount());
 }
 	
 }

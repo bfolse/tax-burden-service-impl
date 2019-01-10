@@ -1,5 +1,6 @@
 package com.ttb.service.taxburden.calculation;
 
+import com.ttb.service.taxburden.domain.TaxEntry;
 import com.ttb.service.taxburden.domain.TaxFilingStatus;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.IncomeTaxDefinitionRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +69,7 @@ public class IncomeTaxBracketedMarginalRateCalculator extends MarginalTaxRateCal
 
 		// Calculate taxable income
         BigDecimal taxableIncome = null;
-		taxableIncome = calculateTaxableIncome(taxPayerProfile, incomeTaxDefinitions.get(taxDefinition.getTaxDefinitionKey()));
+		taxableIncome = calculateTaxableIncome(taxPayerProfile, incomeTaxDefinitions.get(taxDefinition.getTaxDefinitionKey()), taxBurdenReport);
 
 		// Determine taxRateSet to use
         List<TaxRateEntity> taxRateSet;
@@ -78,44 +80,77 @@ public class IncomeTaxBracketedMarginalRateCalculator extends MarginalTaxRateCal
             // Use the taxRateSet for the taxFilingStatus from the taxPayerProfile
             taxRateSet = taxRateSets.get(taxDefinition.getTaxDefinitionKey()).get(taxPayerProfile.getTaxFilingStatus());
         }
+        if (taxRateSet == null) {
+            String msg = "Could not determine a tax rate set for taxDefinition: " + taxDefinition.getTaxDefinitionKey() + " taxFilingStatus: " + taxPayerProfile.getTaxFilingStatus();
+            logger.error(msg);
+            throw new TaxCalculationException(msg);
+        }
 
         // Calculate income tax using bracketed marginal rates
         BigDecimal incomeTax = calculateMarginalTax(taxableIncome, taxRateSet);
 
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax);
+        // Tax Credits
+        // TODO
+
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax.setScale(2, RoundingMode.HALF_UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}
 
-    private BigDecimal calculateTaxableIncome(TaxPayerProfileEntity taxPayerProfile, IncomeTaxDefinitionEntity incomeTaxDefinitionEntity) throws TaxCalculationException {
-        BigDecimal annualIncome = taxPayerProfile.getAnnualIncome().getAmount();
-        BigDecimal taxableIncome;
+    private BigDecimal calculateTaxableIncome(TaxPayerProfileEntity taxPayerProfile, IncomeTaxDefinitionEntity incomeTaxDefinitionEntity, TaxBurdenReportEntity taxBurdenReportEntity) throws TaxCalculationException {
+        BigDecimal taxableIncome = TaxCalculatorUtils.calculateAdjustedGrossIncome(taxPayerProfile, taxBurdenReportEntity);
+        BigDecimal exemptionAmount = BigDecimal.ZERO;
+        BigDecimal standardDeduction = BigDecimal.ZERO;
 
         switch (taxPayerProfile.getTaxFilingStatus()) {
-            case SINGLE : {
-                taxableIncome = annualIncome.subtract(BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionSingle()))
-                        .subtract(BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionSingle()));
+            case SINGLE: {
+                exemptionAmount = BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionSingle());
+                standardDeduction = BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionSingle());
                 break;
             }
-            case JOINT : {
-                taxableIncome = annualIncome.subtract(BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionJoint()))
-                        .subtract(BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionJoint()));
+            case JOINT: {
+                exemptionAmount = BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionJoint());
+                standardDeduction = BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionJoint());
                 break;
             }
-            default : {
+            case MARRIED_SEPARATE: {
+                exemptionAmount = BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionMarriedFilingSeparate());
+                standardDeduction = BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionMarriedFilingSeparate());
+                break;
+            }
+            case HEAD_OF_HOUSEHOLD: {
+                exemptionAmount = BigDecimal.valueOf(incomeTaxDefinitionEntity.getPersonalExemptionHeadOfHousehold());
+                standardDeduction = BigDecimal.valueOf(incomeTaxDefinitionEntity.getStandardDeductionHeadOfHousehold());
+                break;
+            }
+            default: {
                 String errorMessage = "Invalid tax filing status: " + taxPayerProfile.getTaxFilingStatus();
                 logger.error(errorMessage);
                 throw new TaxCalculationException(errorMessage);
             }
         }
+
+        // Exemptions
+        taxableIncome = taxableIncome.subtract(exemptionAmount);
+
         // Dependents
         taxableIncome = taxableIncome.subtract(BigDecimal.valueOf(incomeTaxDefinitionEntity.getDependentExemption() * taxPayerProfile.getDependents()));
 
-        // Itemized Deductions
+        // Standard or Itemized Deductions
+        BigDecimal deductionAmount = standardDeduction;
         if (incomeTaxDefinitionEntity.isDeductItemized()) {
-            taxableIncome = taxableIncome.subtract(taxPayerProfile.getMortgageInterest().getAmount())
-                    .subtract(taxPayerProfile.getOtherItemizedDeductions().getAmount());
+            // State and Local taxes
+            BigDecimal stateAndLocalTaxes = determineStateAndLocalTaxes(taxBurdenReportEntity);
+            // Use greater of totalItemizedDeductions or standardDeduction
+            BigDecimal totalItemizedDeductions = taxPayerProfile.getMortgageInterest().getAmount()
+                    .add(taxPayerProfile.getOtherItemizedDeductions().getAmount()
+                    .add(stateAndLocalTaxes));
+            if (totalItemizedDeductions.compareTo(standardDeduction) > 0) {
+                deductionAmount = totalItemizedDeductions;
+            }
         }
+        taxableIncome = taxableIncome.subtract(deductionAmount);
+
         // Pre-tax Contribution Deductions
         if (incomeTaxDefinitionEntity.isDeductPreTaxContributions()) {
             taxableIncome = taxableIncome.subtract(taxPayerProfile.getPreTaxContributions().getAmount());
@@ -124,6 +159,49 @@ public class IncomeTaxBracketedMarginalRateCalculator extends MarginalTaxRateCal
             taxableIncome = BigDecimal.ZERO;
         }
 	    return taxableIncome;
+    }
+
+    /*
+     * Determine deduction for state and local taxes paid. Also known as the SALT deduction, it allows taxpayers
+     * to deduct the entirety of any state and local property taxes plus the entirety of either income or generalized sales
+     * taxes that they paid that tax year.
+     */
+    private BigDecimal determineStateAndLocalTaxes(TaxBurdenReportEntity taxBurdenReportEntity) {
+	    BigDecimal stateAndLocalTaxes = BigDecimal.ZERO;
+        BigDecimal propertyTaxes = BigDecimal.ZERO;
+	    BigDecimal incomeTaxes = BigDecimal.ZERO;
+	    BigDecimal salesTaxes = BigDecimal.ZERO;
+	    for (TaxEntryEntity taxEntry : taxBurdenReportEntity.getTaxEntries()) {
+            switch (taxEntry.getTaxType()) {
+                case PROPERTY_STATE:
+                case PROPERTY_COUNTY:
+                case PROPERTY_CITY: {
+                    propertyTaxes = propertyTaxes.add(taxEntry.getAmount().getAmount());
+                    break;
+                }
+                case INCOME_STATE:
+                case INCOME_CITY: {
+                    incomeTaxes = incomeTaxes.add(taxEntry.getAmount().getAmount());
+                    break;
+                }
+                case SALES_STATE:
+                case SALES_COUNTY:
+                case SALES_CITY: {
+                    salesTaxes = salesTaxes.add(taxEntry.getAmount().getAmount());
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+        stateAndLocalTaxes = stateAndLocalTaxes.add(propertyTaxes);
+        if (incomeTaxes.compareTo(salesTaxes) > 0) {
+            stateAndLocalTaxes = stateAndLocalTaxes.add(incomeTaxes);
+        } else {
+            stateAndLocalTaxes = stateAndLocalTaxes.add(salesTaxes);
+        }
+	    return stateAndLocalTaxes;
     }
 
     public void setTaxRateSetRepository(TaxRateSetRepository taxRateSetRepository) {

@@ -34,7 +34,7 @@ public class IncomeTaxDefinitionRepositoryTest {
     
 	@Test
 	public void saveTest() {
-		IncomeTaxDefinitionEntity incomeTaxDefinitionEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_KEY", 1000, 3000, 2000, 4000, 3000);
+		IncomeTaxDefinitionEntity incomeTaxDefinitionEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_KEY", 1000, 3000, 1000, 1000, 2000, 4000, 2000, 2000, 3000);
 		IncomeTaxDefinitionEntity savedIncomeTaxDefinition = incomeTaxDefinitionRepository.save(incomeTaxDefinitionEntity);
 		System.out.println("savedIncomeTaxDefinition:" + savedIncomeTaxDefinition);
 		incomeTaxDefinitionRepository.delete(savedIncomeTaxDefinition);
@@ -42,7 +42,7 @@ public class IncomeTaxDefinitionRepositoryTest {
 
 	@Test
 	public void findByTaxDefinitionKeyTest() {
-		IncomeTaxDefinitionEntity incomeTaxDefinitionEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_KEY", 1000, 3000, 2000, 4000, 3000);
+		IncomeTaxDefinitionEntity incomeTaxDefinitionEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_KEY", 1000, 3000, 1000, 1000, 2000, 4000, 2000, 2000, 3000);
 		IncomeTaxDefinitionEntity savedIncomeTaxDefinition = incomeTaxDefinitionRepository.save(incomeTaxDefinitionEntity);
 		System.out.println("savedIncomeTaxDefinition:" + savedIncomeTaxDefinition);
 
@@ -54,9 +54,9 @@ public class IncomeTaxDefinitionRepositoryTest {
 
 	@Test
 	public void findAllTest() {
-		IncomeTaxDefinitionEntity incomeTaxDefinitionOneEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_ONE_KEY", 1000, 3000, 2000, 4000, 3000);
+		IncomeTaxDefinitionEntity incomeTaxDefinitionOneEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_ONE_KEY", 1000, 3000, 1000, 1000, 2000, 4000, 2000,2000, 3000);
 		IncomeTaxDefinitionEntity savedIncomeTaxDefinitionOne = incomeTaxDefinitionRepository.save(incomeTaxDefinitionOneEntity);
-		IncomeTaxDefinitionEntity incomeTaxDefinitionTwoEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_TWO_KEY", 1000, 3000, 2000, 4000, 3000);
+		IncomeTaxDefinitionEntity incomeTaxDefinitionTwoEntity = new IncomeTaxDefinitionEntity("TEST_TAX_DEFINITION_TWO_KEY", 1000, 3000, 1000, 1000, 2000, 4000, 2000, 2000, 3000);
 		IncomeTaxDefinitionEntity savedIncomeTaxDefinitionTwo = incomeTaxDefinitionRepository.save(incomeTaxDefinitionTwoEntity);
 
 		List<IncomeTaxDefinitionEntity> incomeTaxDefinitionList = new ArrayList<>();

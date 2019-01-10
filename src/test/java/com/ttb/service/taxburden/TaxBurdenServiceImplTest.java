@@ -44,7 +44,7 @@ public class TaxBurdenServiceImplTest {
 
         ArrayList<String> politicalDivisionKeys = new ArrayList<String>();
 		politicalDivisionKeys.add("13");
-		TaxPayerProfile taxPayerProfile = taxBurdenServiceImpl.createTaxPayerProfile("30306", politicalDivisionKeys, new MonetaryAmount(new BigDecimal(100000.00)), new MonetaryAmount(new BigDecimal(5000.00)), new MonetaryAmount(new BigDecimal(100000.00)));
+		TaxPayerProfile taxPayerProfile = taxBurdenServiceImpl.createTaxPayerProfile("30306", politicalDivisionKeys, new MonetaryAmount(BigDecimal.valueOf(100000.00)), new MonetaryAmount(BigDecimal.valueOf(5000.00)), new MonetaryAmount(BigDecimal.valueOf(100000.00)));
 System.out.println("TaxPayerProfile: " + taxPayerProfile);
 		TaxBurdenReport taxBurdenReport = taxBurdenServiceImpl.createReport(taxPayerProfile);
 		assertNotNull(taxBurdenReport);

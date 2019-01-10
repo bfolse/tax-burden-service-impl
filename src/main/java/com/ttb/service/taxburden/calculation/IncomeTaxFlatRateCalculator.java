@@ -41,13 +41,10 @@ public class IncomeTaxFlatRateCalculator implements TaxCalculator {
 	public MonetaryAmountEntity calculate(TaxPayerProfileEntity taxPayerProfile, PoliticalDivisionEntity politicalDivision, TaxDefinitionEntity taxDefinition, TaxBurdenReportEntity taxBurdenReport) {
 		logger.debug("Begin tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition);
 		BigDecimal rate = taxRates.get(taxDefinition.getTaxDefinitionKey());
-		
-		MonetaryAmountEntity annualIncome = taxPayerProfile.getAnnualIncome();
-		if (annualIncome == null) {
-			annualIncome = new MonetaryAmountEntity(0.0);
-		}
+		BigDecimal adjustedGrossIncome = TaxCalculatorUtils.calculateAdjustedGrossIncome(taxPayerProfile, taxBurdenReport);
+
 		MonetaryAmountEntity mortgageInterest = taxPayerProfile.getMortgageInterest();
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), annualIncome.getAmount().subtract(mortgageInterest.getAmount()).multiply(rate).setScale(2, RoundingMode.UP));
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome().getCurrency(), adjustedGrossIncome.subtract(mortgageInterest.getAmount()).multiply(rate).setScale(2, RoundingMode.UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}

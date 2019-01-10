@@ -1804,26 +1804,124 @@ VALUES
 (nextval('public.hibernate_sequence'),'31999','13')
 ;
 
+-- tax_definition US federal income
+INSERT INTO public.tax_definition(
+            id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
+    VALUES (nextval('public.hibernate_sequence'), 'US_FEDERAL_INCOME', 'US Federal Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_FEDERAL', 'US', 10)
+    ;
+
+-- income_tax_definition US federal income
+INSERT INTO public.income_tax_definition(
+	id, tax_definition_key, deduct_itemized, deduct_pre_tax_contributions, standard_deduction_single, standard_deduction_joint, standard_deduction_married_filing_separate, standard_deduction_head_of_household, personal_exemption_single, personal_exemption_joint, personal_exemption_married_filing_separate, personal_exemption_head_of_household, dependent_exemption)
+	VALUES (nextval('public.hibernate_sequence'), 'US_FEDERAL_INCOME', true, true, 12200, 24400, 12200, 18350, 0, 0, 0, 0, 0)
+	;
+
+-- tax_rate_set US federal income
+INSERT INTO public.tax_rate_set(
+	id, tax_definition_key, tax_filing_status)
+	VALUES
+	(11, 'US_FEDERAL_INCOME', 'SINGLE'),
+	(12, 'US_FEDERAL_INCOME', 'JOINT'),
+	(13, 'US_FEDERAL_INCOME', 'MARRIED_SEPARATE'),
+	(14, 'US_FEDERAL_INCOME', 'HEAD_OF_HOUSEHOLD')
+	;
+
+-- tax_rate US federal income
+INSERT INTO public.tax_rate(
+            id, tax_definition_key, rate, range_low, range_high)
+    VALUES
+    -- Single
+    (11, 'US_FEDERAL_INCOME', 0.10, 0, 9700),
+    (12, 'US_FEDERAL_INCOME', 0.12, 9700, 39475),
+    (13, 'US_FEDERAL_INCOME', 0.22, 39475, 84200),
+    (14, 'US_FEDERAL_INCOME', 0.24, 84200, 160725),
+    (15, 'US_FEDERAL_INCOME', 0.32, 160725, 204100),
+    (16, 'US_FEDERAL_INCOME', 0.35, 204100, 510300),
+    (17, 'US_FEDERAL_INCOME', 0.37, 510300, null),
+    -- Joint
+    (18, 'US_FEDERAL_INCOME', 0.10, 0, 19400),
+    (19, 'US_FEDERAL_INCOME', 0.12, 19400, 78950),
+    (20, 'US_FEDERAL_INCOME', 0.22, 78950, 168400),
+    (21, 'US_FEDERAL_INCOME', 0.24, 168400, 321450),
+    (22, 'US_FEDERAL_INCOME', 0.32, 321450, 408200),
+    (23, 'US_FEDERAL_INCOME', 0.35, 408200, 612350),
+    (24, 'US_FEDERAL_INCOME', 0.37, 612350, null),
+    -- Married Separate
+    (25, 'US_FEDERAL_INCOME', 0.10, 0, 9700),
+    (26, 'US_FEDERAL_INCOME', 0.12, 9700, 39475),
+    (27, 'US_FEDERAL_INCOME', 0.22, 39475, 84200),
+    (28, 'US_FEDERAL_INCOME', 0.24, 84200, 160725),
+    (29, 'US_FEDERAL_INCOME', 0.32, 160725, 204100),
+    (30, 'US_FEDERAL_INCOME', 0.35, 204100, 306175),
+    (31, 'US_FEDERAL_INCOME', 0.37, 306175, null),
+    -- Head of Household
+    (32, 'US_FEDERAL_INCOME', 0.10, 0, 13850),
+    (33, 'US_FEDERAL_INCOME', 0.12, 13850, 52850),
+    (34, 'US_FEDERAL_INCOME', 0.22, 52850, 84200),
+    (35, 'US_FEDERAL_INCOME', 0.24, 84200, 160700),
+    (36, 'US_FEDERAL_INCOME', 0.32, 160700, 204100),
+    (37, 'US_FEDERAL_INCOME', 0.35, 204100, 510300),
+    (38, 'US_FEDERAL_INCOME', 0.37, 510300, null)
+    ;
+
+-- tax_rate_set_tax_rates US federal income
+INSERT INTO public.tax_rate_set_tax_rates(
+	tax_rate_set_id, tax_rate_id)
+	VALUES
+	-- GA State Income - Single
+	(11, 11),
+	(11, 12),
+	(11, 13),
+	(11, 14),
+	(11, 15),
+	(11, 16),
+	(11, 17),
+	-- GA State Income - Joint
+	(12, 18),
+	(12, 19),
+	(12, 20),
+	(12, 21),
+	(12, 22),
+	(12, 23),
+	(12, 24),
+	-- GA State Income - Married Separate
+	(13, 25),
+	(13, 26),
+	(13, 27),
+	(13, 28),
+	(13, 29),
+	(13, 30),
+	(13, 31),
+	-- GA State Income - Head of Household
+	(14, 32),
+	(14, 33),
+	(14, 34),
+	(14, 35),
+	(14, 36),
+	(14, 37),
+	(14, 38)
+	;
+
 -- tax_definition state income
 INSERT INTO public.tax_definition(
             id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
-    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', 'GA State Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_STATE', 13, 1),
-    (nextval('public.hibernate_sequence'), 'PA_STATE_INCOME', 'PA State Income', 'incomeTaxFlatRateCalculator', 'INCOME_STATE', 42, 1)
+    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', 'GA State Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_STATE', 13, 10),
+    (nextval('public.hibernate_sequence'), 'PA_STATE_INCOME', 'PA State Income', 'incomeTaxFlatRateCalculator', 'INCOME_STATE', 42, 10)
     ;
 
 -- income_tax_definition
 INSERT INTO public.income_tax_definition(
-	id, tax_definition_key, deduct_itemized, deduct_pre_tax_contributions, standard_deduction_single, standard_deduction_joint, personal_exemption_single, personal_exemption_joint, dependent_exemption)
-	VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', false, false, 2300, 3000, 2700, 7400, 3000);
+	id, tax_definition_key, deduct_itemized, deduct_pre_tax_contributions, standard_deduction_single, standard_deduction_joint, standard_deduction_married_filing_separate, standard_deduction_head_of_household, personal_exemption_single, personal_exemption_joint, personal_exemption_married_filing_separate, personal_exemption_head_of_household, dependent_exemption)
+	VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_INCOME', false, false, 2300, 3000, 2300, 2300, 2700, 7400, 2700, 2700, 3000);
 
 -- tax_rate_set GA state income
 INSERT INTO public.tax_rate_set(
 	id, tax_definition_key, tax_filing_status)
 	VALUES
-	(1, 'GA_STATE_INCOME', 'SINGLE'),
-	(2, 'GA_STATE_INCOME', 'JOINT'),
-	(3, 'GA_STATE_INCOME', 'MARRIED_SEPARATE'),
-	(4, 'GA_STATE_INCOME', 'HEAD_OF_HOUSEHOLD')
+	(13001, 'GA_STATE_INCOME', 'SINGLE'),
+	(13002, 'GA_STATE_INCOME', 'JOINT'),
+	(13003, 'GA_STATE_INCOME', 'MARRIED_SEPARATE'),
+	(13004, 'GA_STATE_INCOME', 'HEAD_OF_HOUSEHOLD')
 	;
 
 -- tax_rate state income
@@ -1831,33 +1929,33 @@ INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
     VALUES
     -- Single
-    (1, 'GA_STATE_INCOME', 0.01, 0, 750),
-    (2, 'GA_STATE_INCOME', 0.02, 750, 2250),
-    (3, 'GA_STATE_INCOME', 0.03, 2250, 3750),
-    (4, 'GA_STATE_INCOME', 0.04, 3750, 5250),
-    (5, 'GA_STATE_INCOME', 0.05, 5250, 7000),
-    (6, 'GA_STATE_INCOME', 0.06, 7000, null),
+    (13001, 'GA_STATE_INCOME', 0.01, 0, 750),
+    (13002, 'GA_STATE_INCOME', 0.02, 750, 2250),
+    (13003, 'GA_STATE_INCOME', 0.03, 2250, 3750),
+    (13004, 'GA_STATE_INCOME', 0.04, 3750, 5250),
+    (13005, 'GA_STATE_INCOME', 0.05, 5250, 7000),
+    (13006, 'GA_STATE_INCOME', 0.06, 7000, null),
     -- Joint
-    (7, 'GA_STATE_INCOME', 0.01, 0, 1000),
-    (8, 'GA_STATE_INCOME', 0.02, 1000, 3000),
-    (9, 'GA_STATE_INCOME', 0.03, 3000, 5000),
-    (10, 'GA_STATE_INCOME', 0.04, 5000, 7000),
-    (11, 'GA_STATE_INCOME', 0.05, 7000, 10000),
-    (12, 'GA_STATE_INCOME', 0.06, 10000, null),
+    (13007, 'GA_STATE_INCOME', 0.01, 0, 1000),
+    (13008, 'GA_STATE_INCOME', 0.02, 1000, 3000),
+    (13009, 'GA_STATE_INCOME', 0.03, 3000, 5000),
+    (13010, 'GA_STATE_INCOME', 0.04, 5000, 7000),
+    (13011, 'GA_STATE_INCOME', 0.05, 7000, 10000),
+    (13012, 'GA_STATE_INCOME', 0.06, 10000, null),
     -- Married Separate
-    (13, 'GA_STATE_INCOME', 0.01, 0, 750),
-    (14, 'GA_STATE_INCOME', 0.02, 750, 2250),
-    (15, 'GA_STATE_INCOME', 0.03, 2250, 3750),
-    (16, 'GA_STATE_INCOME', 0.04, 3750, 5250),
-    (17, 'GA_STATE_INCOME', 0.05, 5250, 7000),
-    (18, 'GA_STATE_INCOME', 0.06, 7000, null),
+    (13013, 'GA_STATE_INCOME', 0.01, 0, 750),
+    (13014, 'GA_STATE_INCOME', 0.02, 750, 2250),
+    (13015, 'GA_STATE_INCOME', 0.03, 2250, 3750),
+    (13016, 'GA_STATE_INCOME', 0.04, 3750, 5250),
+    (13017, 'GA_STATE_INCOME', 0.05, 5250, 7000),
+    (13018, 'GA_STATE_INCOME', 0.06, 7000, null),
     -- Head of Household
-    (19, 'GA_STATE_INCOME', 0.01, 0, 1000),
-    (20, 'GA_STATE_INCOME', 0.02, 1000, 3000),
-    (21, 'GA_STATE_INCOME', 0.03, 3000, 5000),
-    (22, 'GA_STATE_INCOME', 0.04, 5000, 7000),
-    (23, 'GA_STATE_INCOME', 0.05, 7000, 10000),
-    (24, 'GA_STATE_INCOME', 0.06, 10000, null)
+    (13019, 'GA_STATE_INCOME', 0.01, 0, 1000),
+    (13020, 'GA_STATE_INCOME', 0.02, 1000, 3000),
+    (13021, 'GA_STATE_INCOME', 0.03, 3000, 5000),
+    (13022, 'GA_STATE_INCOME', 0.04, 5000, 7000),
+    (13023, 'GA_STATE_INCOME', 0.05, 7000, 10000),
+    (13024, 'GA_STATE_INCOME', 0.06, 10000, null)
     ;
 
 -- tax_rate_set_tax_rates state income
@@ -1865,33 +1963,33 @@ INSERT INTO public.tax_rate_set_tax_rates(
 	tax_rate_set_id, tax_rate_id)
 	VALUES
 	-- GA State Income - Single
-	(1, 1),
-	(1, 2),
-	(1, 3),
-	(1, 4),
-	(1, 5),
-	(1, 6),
+	(13001, 13001),
+	(13001, 13002),
+	(13001, 13003),
+	(13001, 13004),
+	(13001, 13005),
+	(13001, 13006),
 	-- GA State Income - Joint
-	(2, 7),
-	(2, 8),
-	(2, 9),
-	(2, 10),
-	(2, 11),
-	(2, 12),
+	(13002, 13007),
+	(13002, 13008),
+	(13002, 13009),
+	(13002, 13010),
+	(13002, 13011),
+	(13002, 13012),
 	-- GA State Income - Married Separate
-	(3, 13),
-	(3, 14),
-	(3, 15),
-	(3, 16),
-	(3, 17),
-	(3, 18),
+	(13003, 13013),
+	(13003, 13014),
+	(13003, 13015),
+	(13003, 13016),
+	(13003, 13017),
+	(13003, 13018),
 	-- GA State Income - Head of Household
-	(4, 19),
-	(4, 20),
-	(4, 21),
-	(4, 22),
-	(4, 23),
-	(4, 24)
+	(13004, 13019),
+	(13004, 13020),
+	(13004, 13021),
+	(13004, 13022),
+	(13004, 13023),
+	(13004, 13024)
 	;
 
 -- tax_definition US federal payroll
@@ -1905,11 +2003,11 @@ INSERT INTO public.tax_definition(
 INSERT INTO public.tax_rate_set(
 	id, tax_definition_key, tax_filing_status)
 	VALUES
-	(101, 'US_PAYROLL_SOC_SEC', null),
-	(102, 'US_PAYROLL_MEDICARE', 'SINGLE'),
-	(103, 'US_PAYROLL_MEDICARE', 'JOINT'),
-	(104, 'US_PAYROLL_MEDICARE', 'MARRIED_SEPARATE'),
-	(105, 'US_PAYROLL_MEDICARE', 'HEAD_OF_HOUSEHOLD')
+	(1, 'US_PAYROLL_SOC_SEC', null),
+	(2, 'US_PAYROLL_MEDICARE', 'SINGLE'),
+	(3, 'US_PAYROLL_MEDICARE', 'JOINT'),
+	(4, 'US_PAYROLL_MEDICARE', 'MARRIED_SEPARATE'),
+	(5, 'US_PAYROLL_MEDICARE', 'HEAD_OF_HOUSEHOLD')
 	;
 
 -- tax_rate US federal payroll
@@ -1917,16 +2015,16 @@ INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
     VALUES
     -- Social Security
-    (1001, 'US_PAYROLL_SOC_SEC', 0.062, 0, 127200),
+    (1, 'US_PAYROLL_SOC_SEC', 0.062, 0, 127200),
     -- Medicare Married filing separate
-    (1002, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
-    (1003, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),
+    (2, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
+    (3, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),
     -- Medicare Single and Head of Household
-    (1004, 'US_PAYROLL_MEDICARE', 0.0145, 0, 200000),
-    (1005, 'US_PAYROLL_MEDICARE', 0.0235, 200000, null),
+    (4, 'US_PAYROLL_MEDICARE', 0.0145, 0, 200000),
+    (5, 'US_PAYROLL_MEDICARE', 0.0235, 200000, null),
     -- Medicare Joint
-    (1006, 'US_PAYROLL_MEDICARE', 0.0145, 0, 250000),
-    (1007, 'US_PAYROLL_MEDICARE', 0.0235, 250000, null)
+    (6, 'US_PAYROLL_MEDICARE', 0.0145, 0, 250000),
+    (7, 'US_PAYROLL_MEDICARE', 0.0235, 250000, null)
     ;
 
 -- tax_rate_set_tax_rates federal payroll
@@ -1934,19 +2032,19 @@ INSERT INTO public.tax_rate_set_tax_rates(
 	tax_rate_set_id, tax_rate_id)
 	VALUES
 	-- US Federal Payroll - Social Security
-	(101, 1001),
+	(1, 1),
 	-- US Federal Payroll - Medicare Married Filing Separate
-	(104, 1002),
-	(104, 1003),
+	(4, 2),
+	(4, 3),
 	-- US Federal Payroll - Medicare Single
-	(102, 1004),
-	(102, 1005),
+	(2, 4),
+	(2, 5),
 	-- US Federal Payroll - Medicare Head of Household
-	(105, 1004),
-	(105, 1005),
+	(5, 4),
+	(5, 5),
 	-- US Federal Payroll - Medicare Joint
-	(103, 1006),
-	(103, 1007)
+	(3, 6),
+	(3, 7)
     ;
 
 -- tax_definition_sales_GA.sql
@@ -2781,8 +2879,8 @@ INSERT INTO public.assessed_rate(
 INSERT INTO public.tax_definition(
             id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)
     VALUES
-(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel Tax','fuelTaxCalculator','FUEL_FEDERAL',5),
-(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel Tax','fuelTaxCalculator','FUEL_STATE',5)
+(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel Tax','fuelTaxCalculator','FUEL_FEDERAL',6),
+(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel Tax','fuelTaxCalculator','FUEL_STATE',6)
 ;
 
 -- tax_rate_fuel.sql

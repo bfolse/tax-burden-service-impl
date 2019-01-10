@@ -3,6 +3,7 @@ package com.ttb.service.taxburden.domain;
 public enum TaxType {
 	INCOME_FEDERAL,
 	INCOME_STATE,
+	INCOME_CITY,
 	PROPERTY_STATE,
 	PROPERTY_COUNTY,
 	PROPERTY_CITY,

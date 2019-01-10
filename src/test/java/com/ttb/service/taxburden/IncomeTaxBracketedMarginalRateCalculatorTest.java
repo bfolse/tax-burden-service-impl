@@ -26,8 +26,9 @@ import static org.mockito.BDDMockito.given;
 @RunWith(SpringRunner.class)
 public class IncomeTaxBracketedMarginalRateCalculatorTest {
 
-	public static final String TEST_INCOME_TAX_ONE = "TEST_PAYROLL_TAX_ONE";
-	public static final String TEST_INCOME_TAX_TWO = "TEST_PAYROLL_TAX_TWO";
+	public static final String TEST_INCOME_TAX_ONE = "TEST_INCOME_TAX_ONE";
+	public static final String TEST_INCOME_TAX_TWO = "TEST_INCOME_TAX_TWO";
+    public static final String TEST_INCOME_TAX_THREE = "TEST_INCOME_TAX_THREE";
 
 	private IncomeTaxBracketedMarginalRateCalculator incomeTaxBracketedMarginalRateCalculator;
 
@@ -90,15 +91,33 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		TaxRateSetEntity taxRateSetJOINT = new TaxRateSetEntity(TEST_INCOME_TAX_TWO, TaxFilingStatus.JOINT, taxRateListJOINT);
 		taxRateSets.add(taxRateSetJOINT);
 
+        TaxRateEntity taxRateOneHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.05), BigInteger.valueOf(0), BigInteger.valueOf(17000));
+        TaxRateEntity taxRateTwoHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.10), BigInteger.valueOf(17000), BigInteger.valueOf(30000));
+        TaxRateEntity taxRateThreeHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.15), BigInteger.valueOf(30000), BigInteger.valueOf(70000));
+        TaxRateEntity taxRateFourHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.20), BigInteger.valueOf(70000), BigInteger.valueOf(160000));
+        TaxRateEntity taxRateFiveHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.30), BigInteger.valueOf(160000), BigInteger.valueOf(275000));
+        TaxRateEntity taxRateSixHOH = new TaxRateEntity(TEST_INCOME_TAX_THREE, BigDecimal.valueOf(0.35), BigInteger.valueOf(275000), null);
+        ArrayList<TaxRateEntity> taxRateListHOH = new ArrayList<TaxRateEntity>();
+        taxRateListHOH.add(taxRateOneHOH);
+        taxRateListHOH.add(taxRateTwoHOH);
+        taxRateListHOH.add(taxRateThreeHOH);
+        taxRateListHOH.add(taxRateFourHOH);
+        taxRateListHOH.add(taxRateFiveHOH);
+        taxRateListHOH.add(taxRateSixHOH);
+        TaxRateSetEntity taxRateSetHOH = new TaxRateSetEntity(TEST_INCOME_TAX_THREE, TaxFilingStatus.NONE, taxRateListHOH);
+        taxRateSets.add(taxRateSetHOH);
+
         given(this.mockTaxRateSetRepository.findAll())
 				.willReturn(taxRateSets);
 
         // Setup IncomeTaxDefinition
 		ArrayList<IncomeTaxDefinitionEntity> incomeTaxDefinitions = new ArrayList<IncomeTaxDefinitionEntity>();
-		IncomeTaxDefinitionEntity incomeTaxDefinitionEntityOne = new IncomeTaxDefinitionEntity(TEST_INCOME_TAX_ONE, Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(3000));
+		IncomeTaxDefinitionEntity incomeTaxDefinitionEntityOne = new IncomeTaxDefinitionEntity(TEST_INCOME_TAX_ONE, Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(2000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(1000), Integer.valueOf(3000));
 		incomeTaxDefinitions.add(incomeTaxDefinitionEntityOne);
-		IncomeTaxDefinitionEntity incomeTaxDefinitionEntityTwo = new IncomeTaxDefinitionEntity(TEST_INCOME_TAX_TWO, Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(3000));
+		IncomeTaxDefinitionEntity incomeTaxDefinitionEntityTwo = new IncomeTaxDefinitionEntity(TEST_INCOME_TAX_TWO, Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(2000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(1000), Integer.valueOf(3000));
 		incomeTaxDefinitions.add(incomeTaxDefinitionEntityTwo);
+        IncomeTaxDefinitionEntity incomeTaxDefinitionEntityThree = new IncomeTaxDefinitionEntity(TEST_INCOME_TAX_THREE, Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(2000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(1000), Integer.valueOf(1000), Integer.valueOf(3000), true, true);
+        incomeTaxDefinitions.add(incomeTaxDefinitionEntityThree);
 		given(this.mockIncomeTaxDefinitionRepository.findAll())
 				.willReturn(incomeTaxDefinitions);
 	}
@@ -117,7 +136,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		politicalDivisions.add(politicalDivisionGA);
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_STATE, politicalDivisionGA.getFips(), "incomeTaxBracketedMarginalRateCalculator", TEST_INCOME_TAX_ONE, "test description", 1);
 
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, taxDefinition.getDescription(), new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.PAYROLL_FEDERAL, politicalDivisionUS, "payroll tax", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
 		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),
@@ -129,7 +148,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 			fail("Unexpected TaxCalculationException");
 		}
 		assertNotNull(result);
-		assertEquals(11700, result.getAmount().longValue());
+		assertEquals(7700, result.getAmount().longValue());
 	}
 
 	@Test
@@ -146,7 +165,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		politicalDivisions.add(politicalDivisionGA);
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_STATE, politicalDivisionGA.getFips(), "incomeTaxBracketedMarginalRateCalculator", TEST_INCOME_TAX_TWO, "test description", 1);
 
-		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS, taxDefinition.getDescription(), new MonetaryAmountEntity(5000.00));
+		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.PAYROLL_FEDERAL, politicalDivisionUS, "payroll tax", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
 		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),
@@ -158,6 +177,48 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 			fail("Unexpected TaxCalculationException");
 		}
 		assertNotNull(result);
-		assertEquals(10950, result.getAmount().longValue());
+		assertEquals(7150, result.getAmount().longValue());
 	}
+
+    @Test
+    public void calculateFederalIncomeTaxTestTest() {
+        incomeTaxBracketedMarginalRateCalculator = new IncomeTaxBracketedMarginalRateCalculator();
+        incomeTaxBracketedMarginalRateCalculator.setTaxRateSetRepository(mockTaxRateSetRepository);
+        incomeTaxBracketedMarginalRateCalculator.setIncomeTaxDefinitionRepository(mockIncomeTaxDefinitionRepository);
+        incomeTaxBracketedMarginalRateCalculator.init();
+
+        // Set up TaxBurdenReport with other tax entries
+        TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
+        PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
+        PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
+        PoliticalDivisionEntity politicalDivisionCounty = new PoliticalDivisionEntity("13001", "Test County", "Test County", "COUNTY");
+        List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
+        politicalDivisions.add(politicalDivisionUS);
+        politicalDivisions.add(politicalDivisionGA);
+        politicalDivisions.add(politicalDivisionCounty);
+
+        TaxEntryEntity taxEntryStateIncome = new TaxEntryEntity(TaxType.INCOME_STATE, politicalDivisionGA, "State Income Tax", new MonetaryAmountEntity(5000.00));
+        taxBurdenReport.addTaxEntry(taxEntryStateIncome);
+        TaxEntryEntity taxEntryStateSales = new TaxEntryEntity(TaxType.SALES_STATE, politicalDivisionGA, "State Sales Tax", new MonetaryAmountEntity(4000.00));
+        taxBurdenReport.addTaxEntry(taxEntryStateSales);
+        TaxEntryEntity taxEntryCountySales = new TaxEntryEntity(TaxType.SALES_COUNTY, politicalDivisionCounty, "County Sales Tax", new MonetaryAmountEntity(500.00));
+        taxBurdenReport.addTaxEntry(taxEntryCountySales);
+        TaxEntryEntity taxEntryCountyProperty = new TaxEntryEntity(TaxType.PROPERTY_COUNTY, politicalDivisionCounty, "County Property Tax", new MonetaryAmountEntity(3000.00));
+        taxBurdenReport.addTaxEntry(taxEntryCountyProperty);
+
+        // Set the federal income tax definition
+        TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_FEDERAL, politicalDivisionUS.getFips(), "incomeTaxBracketedMarginalRateCalculator", TEST_INCOME_TAX_THREE, "test description", 10);
+
+        // Create the taxPayerProfile
+        TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(5000)),
+                new MonetaryAmountEntity(BigDecimal.valueOf(200000)), TaxFilingStatus.HEAD_OF_HOUSEHOLD, new MonetaryAmountEntity(BigDecimal.valueOf(9000)), new MonetaryAmountEntity(BigDecimal.valueOf(2000)), Integer.valueOf(3));
+        MonetaryAmountEntity result = null;
+        try {
+            result = incomeTaxBracketedMarginalRateCalculator.calculate(taxPayerProfile, politicalDivisionUS, taxDefinition, taxBurdenReport);
+        } catch (TaxCalculationException e) {
+            fail("Unexpected TaxCalculationException");
+        }
+        assertNotNull(result);
+        assertEquals(6200, result.getAmount().longValue());
+    }
 }

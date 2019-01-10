@@ -34,10 +34,10 @@ public class ConsumerExpenditureProfileRepositoryTest {
 
 	private static Map<String, BigDecimal> expenditureProfileEntries() {
         return Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>("FOOD_AT_HOME", new BigDecimal(25.0)),
-                new AbstractMap.SimpleEntry<>("FOOD_AWAY_FROM_HOME", new BigDecimal(25.0)),
-                new AbstractMap.SimpleEntry<>("ALCOHOL", new BigDecimal(10.0)),
-                new AbstractMap.SimpleEntry<>("HOUSING_SHELTER", new BigDecimal(40.0)))
+                new AbstractMap.SimpleEntry<>("FOOD_AT_HOME", BigDecimal.valueOf(25.0)),
+                new AbstractMap.SimpleEntry<>("FOOD_AWAY_FROM_HOME", BigDecimal.valueOf(25.0)),
+                new AbstractMap.SimpleEntry<>("ALCOHOL", BigDecimal.valueOf(10.0)),
+                new AbstractMap.SimpleEntry<>("HOUSING_SHELTER", BigDecimal.valueOf(40.0)))
                 .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
     }
 			

@@ -1,6 +1,5 @@
 package com.ttb.service.taxburden.calculation;
 
-import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.ConsumerExpenditureProfileRepository;
 import com.ttb.service.taxburden.repositories.ExpenditureCategoryGroupRepository;
@@ -93,18 +92,14 @@ public class SalesTaxCalculator implements TaxCalculator {
 			logger.error("No rate defined for taxDefinitionKey: " + taxDefinition.getTaxDefinitionKey());
 		} else {
 			// Determine total annual expenditure
+			// Start with adjusted gross income
+			BigDecimal adjustedGrossIncome = TaxCalculatorUtils.calculateAdjustedGrossIncome(taxPayerProfile, taxBurdenReport);
+
 			// Subtract income taxes (federal and state)
-			BigDecimal calculatedIncomeTaxes = new BigDecimal(0.0, PRECISION_TWO);
-			List<TaxEntryEntity> federalIncomeTaxEntries = taxBurdenReport.getTaxEntries(TaxType.INCOME_FEDERAL);
-			for (TaxEntryEntity entry : federalIncomeTaxEntries) {
-				calculatedIncomeTaxes = calculatedIncomeTaxes.add(entry.getAmount().getAmount());
-			}
-			List<TaxEntryEntity> stateIncomeTaxEntries = taxBurdenReport.getTaxEntries(TaxType.INCOME_STATE);
-			for (TaxEntryEntity entry : stateIncomeTaxEntries) {
-				calculatedIncomeTaxes = calculatedIncomeTaxes.add(entry.getAmount().getAmount());
-			}
+			BigDecimal calculatedIncomeTaxes = TaxCalculatorUtils.calculateEstimatedSimpleIncomeTax(adjustedGrossIncome);
 			logger.debug("calculatedIncomeTaxes: " + calculatedIncomeTaxes);
-			BigDecimal totalExpenditures = taxPayerProfile.getAnnualIncome().getAmount().subtract(calculatedIncomeTaxes);
+
+			BigDecimal totalExpenditures = adjustedGrossIncome.subtract(calculatedIncomeTaxes);
 			logger.debug("totalExpenditures: " + totalExpenditures);
 			
 			// Get applicable expenditure categories

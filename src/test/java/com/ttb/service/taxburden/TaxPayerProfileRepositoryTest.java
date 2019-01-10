@@ -25,7 +25,7 @@ public class TaxPayerProfileRepositoryTest {
 	@Autowired
 	private TaxPayerProfileRepository taxPayerProfileRepository;
 
-	private static TaxPayerProfileEntity taxPayerProfileOne = new TaxPayerProfileEntity("30306", new MonetaryAmountEntity(new BigDecimal(100000.00)), new MonetaryAmountEntity(new BigDecimal(5000.00)));
+	private static TaxPayerProfileEntity taxPayerProfileOne = new TaxPayerProfileEntity("30306", new MonetaryAmountEntity(BigDecimal.valueOf(100000.00)), new MonetaryAmountEntity(BigDecimal.valueOf(5000.00)));
 
 	@Test
 	public void saveTest() {

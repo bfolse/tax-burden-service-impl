@@ -74,6 +74,7 @@ public class TaxBurdenReportEntity {
 		super();
 		this.reportKey = UUID.randomUUID().toString();
 		this.timestamp = new Date();
+		this.taxEntries = new ArrayList<TaxEntryEntity>();
 	}
 
 	public TaxBurdenReportEntity(TaxBurdenReport taxBurdenReport) {

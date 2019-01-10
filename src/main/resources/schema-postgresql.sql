@@ -64,9 +64,9 @@ DROP TABLE IF EXISTS public.tax_rate_set_tax_rates;
 -- Sequence: public.hibernate_sequence
 CREATE SEQUENCE public.hibernate_sequence
   INCREMENT 1
-  MINVALUE 1
+  MINVALUE 100000000001
   MAXVALUE 9223372036854775807
-  START 1
+  START 100000000001
   CACHE 1;
 ALTER TABLE public.hibernate_sequence
   OWNER TO ttbdev;
@@ -173,8 +173,12 @@ CREATE TABLE public.income_tax_definition
     dependent_exemption integer,
     personal_exemption_joint integer,
     personal_exemption_single integer,
+    personal_exemption_married_filing_separate integer,
+    personal_exemption_head_of_household integer,
     standard_deduction_joint integer,
     standard_deduction_single integer,
+    standard_deduction_married_filing_separate integer,
+    standard_deduction_head_of_household integer,
     tax_definition_key character varying(255),
     CONSTRAINT income_tax_definition_pkey PRIMARY KEY (id),
     CONSTRAINT uk_ilqi08ug4qe9235vtlt59q3id UNIQUE (tax_definition_key)
