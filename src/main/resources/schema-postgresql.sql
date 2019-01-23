@@ -46,9 +46,6 @@ DROP TABLE IF EXISTS public.assessed_rate;
 -- Table: public.tax_rate
 DROP TABLE IF EXISTS public.tax_rate CASCADE;
 
--- Table: public.postal_code_political_division
-DROP TABLE IF EXISTS public.postal_code_political_division;
-
 -- Table: public.political_division
 DROP TABLE IF EXISTS public.political_division;
 

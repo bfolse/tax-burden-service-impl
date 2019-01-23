@@ -1,0 +1,1 @@
+java -cp ../target/classes  com.ttb.service.taxburden.util.PoliticalDivisionImport census_place_fips_2016.csv

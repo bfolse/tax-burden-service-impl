@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,8 +44,8 @@ public class TaxBurdenReportRepositoryTest {
 	
 	@Before
 	public void setup() {
-		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE"));
-		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", "COUNTY"));
+		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE));
+		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", PoliticalDivisionType.COUNTY));
 		taxPayerProfileOne = entityManager.persist(new TaxPayerProfileEntity("30306", new MonetaryAmountEntity(BigDecimal.valueOf(0100000.00)), new MonetaryAmountEntity(BigDecimal.valueOf(5000.00))));
 	}
 	

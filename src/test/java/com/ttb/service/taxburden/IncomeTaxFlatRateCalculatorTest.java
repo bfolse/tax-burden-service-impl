@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +57,7 @@ public class IncomeTaxFlatRateCalculatorTest {
 		incomeTaxFlatRateCalculator.setTaxRateFlatRepository(mockTaxRateFlatRepository);
 		incomeTaxFlatRateCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", "FEDERAL");
+		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", PoliticalDivisionType.FEDERAL);
 		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, "test description", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", new MonetaryAmountEntity(BigDecimal.valueOf(10000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)));

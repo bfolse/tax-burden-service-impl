@@ -3,6 +3,8 @@ package com.ttb.service.taxburden;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
+import com.ttb.service.taxburden.domain.PoliticalDivision;
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,13 +29,13 @@ public class PoliticalDivisionRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     
-	private PoliticalDivisionEntity politicalDivisionStateAL = new PoliticalDivisionEntity("01", "AL", "Alabama", "STATE");
-	private PoliticalDivisionEntity politicalDivisionCountyAutauga = new PoliticalDivisionEntity("001", "Autauga County", "Autauga County", "COUNTY");
+	private PoliticalDivisionEntity politicalDivisionStateAL = new PoliticalDivisionEntity("01", "AL", "Alabama", PoliticalDivisionType.STATE);
+	private PoliticalDivisionEntity politicalDivisionCountyAutauga = new PoliticalDivisionEntity("001", "Autauga County", "Autauga County", PoliticalDivisionType.COUNTY);
 	
 	@Before
 	public void setup() {
-		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE"));
-		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", "COUNTY"));
+		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE));
+		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", PoliticalDivisionType.COUNTY));
 	}
 	
 	@Test

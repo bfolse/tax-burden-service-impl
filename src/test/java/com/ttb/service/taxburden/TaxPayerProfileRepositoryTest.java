@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +46,7 @@ public class TaxPayerProfileRepositoryTest {
 	
 	@Test
 	public void politicalDivisionsTest() {
-		PoliticalDivisionEntity politicalDivisionEntityThirteen = new PoliticalDivisionEntity("13", "Georgia", "test description", "STATE");
+		PoliticalDivisionEntity politicalDivisionEntityThirteen = new PoliticalDivisionEntity("13", "Georgia", "test description", PoliticalDivisionType.STATE);
 		taxPayerProfileOne.addPoliticalDivision(politicalDivisionEntityThirteen);
 		taxPayerProfileRepository.save(taxPayerProfileOne);
 		taxPayerProfileRepository.delete(taxPayerProfileOne);

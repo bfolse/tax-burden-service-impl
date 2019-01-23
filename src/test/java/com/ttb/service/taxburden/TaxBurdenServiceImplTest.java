@@ -1,10 +1,7 @@
 package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
-import com.ttb.service.taxburden.domain.InvalidTaxPayerProfileException;
-import com.ttb.service.taxburden.domain.MonetaryAmount;
-import com.ttb.service.taxburden.domain.TaxBurdenReport;
-import com.ttb.service.taxburden.domain.TaxPayerProfile;
+import com.ttb.service.taxburden.domain.*;
 import com.ttb.service.taxburden.entities.PoliticalDivisionEntity;
 import com.ttb.service.taxburden.impl.TaxBurdenServiceImpl;
 import com.ttb.service.taxburden.repositories.PoliticalDivisionRepository;
@@ -39,7 +36,7 @@ public class TaxBurdenServiceImplTest {
         .willReturn(new MockTaxCalculator());
 		taxBurdenServiceImpl.setTaxCalculatorFactory(mockTaxCalculatorFactory);
 
-		PoliticalDivisionEntity politicalDivisionEntity = new PoliticalDivisionEntity("13", "Georgia", "State of Georgia", "STATE");
+		PoliticalDivisionEntity politicalDivisionEntity = new PoliticalDivisionEntity("13", "Georgia", "State of Georgia", PoliticalDivisionType.STATE);
 		politicalDivisionRepository.save(politicalDivisionEntity);
 
         ArrayList<String> politicalDivisionKeys = new ArrayList<String>();

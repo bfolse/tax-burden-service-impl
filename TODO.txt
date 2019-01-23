@@ -28,7 +28,6 @@ Add address search to map
 Add Integration tests to Code Pipeline
 Add development branch to Git, switch Code Pipeline awsdev to use development branch
 Add Code Pipeline and AWS environments for prod, use master branch
-Redirect http to https
 
 Explore using Flyway or Liquibase for DB mgmt and migration
 Private Github repo?
@@ -46,13 +45,11 @@ Add other states
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
 
-Remove postal_code_political_division
-
 Re-work IncomeTaxFlatRateCalculator to use IncomeTaxDefinition (isDeductItemized and isDeductPreTaxContributions)
 Make AVERAGE_FUEL_PRICE_PER_GALLON dynamic in FuelTaxCalculator
-Add cap ($118,500) to Social Security payroll tax
 
 Add helper in Web to calculate pre-tax deductions based on % of annual income
+Add helper in Web to calculate mortgage interest based on loan amount, interest rate, term, and date of mortgage
 
 Re-work handling of money:
   http://www.javapractices.com/topic/TopicAction.do?Id=13
@@ -61,3 +58,5 @@ Re-work handling of money:
 Enum for political division type
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes
 Add corporate portion of payroll tax
+
+Google AdSense

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -34,8 +35,8 @@ public class TaxDefinitionRepositoryTest {
     
 	@Before
 	public void setup() {
-		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE"));
-		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", "COUNTY"));
+		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE));
+		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", PoliticalDivisionType.COUNTY));
 	}
 	
 	@Test

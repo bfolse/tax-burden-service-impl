@@ -1,0 +1,161 @@
+001 Appling 8 L E S T
+002 Atkinson 8 L E S T
+003 Bacon 8 L E S T
+004 Baker 7 L E S
+005 Baldwin 7 L E S
+006 Banks 8 L E S T2
+007 Barrow 7 L E S
+008 Bartow 7 L E S
+009 Ben Hill 8 L E S T
+010 Berrien 8 L E S T
+011 Bibb 7 L E S
+012 Bleckley 8 L E S T
+013 Brantley 8 L E S T
+014 Brooks 8 L E S T
+015 Bryan 8 L E S T2
+016 Bulloch 8 L E S T2
+017 Burke 7 L S T
+018 Butts 7 L E S
+019 Calhoun 7 L E S
+020 Camden 7 L E S
+021 Candler 8 L E S T
+022 Carroll 7 L E S
+023 Catoosa 7 L E S
+024 Charlton 8 L E S T
+025 Chatham 7 L E S
+026 Chattahoochee 8 L E S T
+027 Chattooga 7 L E S
+028 Cherokee 6 E S
+029 Clarke 8 L E S T2
+030 Clay 8 L E S T
+031 Clayton 8 M L E S
+032 Clinch 8 L E S T
+033 Cobb 6 E S
+034 Coffee 8 L E S T
+035 Colquitt 8 L E S T2
+036 Columbia 8 L E S T
+037 Cook 8 L E S T
+038 Coweta 7 L E S
+039 Crawford 7 L E S
+040 Crisp 8 L E S T
+041 Dade 7 L E S
+042 Dawson 7 L E S
+043 Decatur 8 L E S T2
+044 DeKalb (Not Atlanta) 8 M E H S
+044A DeKalb (In Atlanta) 8.9 M E H O mTa
+045 Dodge 8 L E S T
+046 Dooly 8 L E S T
+047 Dougherty 7 L E S
+048 Douglas 7 L E S
+049 Early 8 L E S T2
+050 Echols 8 L E S T
+051 Effingham 7 L E S
+052 Elbert 7 L E S
+053 Emanuel 8 L E S T
+054 Evans 8 L E S T
+055 Fannin 7 L E S
+056 Fayette 7 L E S
+057 Floyd 7 L E S
+058 Forsyth 7 L E S
+059 Franklin 7 L E S
+060 Fulton (Not Atlanta) 7.75 ML E Tf
+060A Fulton (In Atlanta) 8.9 ML E O mTa
+061 Gilmer 7 L E S
+062 Glascock 8 L E S T
+063 Glynn 7 L E S
+064 Gordon 7 L E S
+065 Grady 7 L E S
+066 Greene 7 L E S
+067 Gwinnett 6 E S
+068 Habersham 7 L E S
+069 Hall 7 L E S
+070 Hancock 8 L E S T
+071 Haralson 8 L E S T2
+072 Harris 8 L E S T
+073 Hart 7 L E S
+074 Heard 7 L E S
+075 Henry 7 L E S
+076 Houston 7 L E S
+077 Irwin 8 L E S T
+078 Jackson 7 L E S
+079 Jasper 7 L E S
+080 Jeff Davis 8 L E S T
+081 Jefferson 8 L E S T
+082 Jenkins 8 L E S T
+083 Johnson 8 L E S T
+084 Jones 7 L E S
+085 Lamar 7 L E S
+086 Lanier 8 L E S T
+087 Laurens 8 L E S T
+088 Lee 7 L E S
+089 Liberty 7 L E S
+090 Lincoln 8 L E S T
+091 Long 7 L E S
+092 Lowndes 8 L E S T
+093 Lumpkin 7 L E S
+094 Macon 8 L E S T
+095 Madison 7 L E S
+096 Marion 8 L E S T
+097 McDuffie 8 L E S T
+098 McIntosh 7 L E S
+099 Meriwether 7 L E S
+100 Miller 7 L E S
+101 Mitchell 7 L E S
+102 Monroe 7 L E S
+103 Montgomery 8 L E S T
+104 Morgan 7 L E S
+105 Murray 7 L E S
+106 Muscogee 8 L E OT
+107 Newton 7 L E S
+108 Oconee 7 L E S
+109 Oglethorpe 7 L E S
+110 Paulding 7 L E S
+111 Peach 7 L E S
+112 Pickens 7 L E S
+113 Pierce 8 L E S T
+114 Pike 7 L E S
+115 Polk 7 L E S
+116 Pulaski 7 L E S
+117 Putnam 8 L E S T2
+118 Quitman 8 L E S T
+119 Rabun 7 L E S
+120 Randolph 8 L E S T
+121 Richmond 8 L E S T
+122 Rockdale 7 E H S
+123 Schley 8 L E S T
+124 Screven 7 L E S
+125 Seminole 8 L E S T2
+126 Spalding 7 L E S
+127 Stephens 7 L E S
+128 Stewart 8 L E S T
+129 Sumter 8 L E S T
+130 Talbot 8 L E S T
+131 Taliaferro 8 L E S T
+132 Tattnall 8 L E S T
+133 Taylor 8 L E S T
+134 Telfair 8 L E S T
+135 Terrell 7 L E S
+136 Thomas 7 L E S
+137 Tift 8 L E S T
+138 Toombs 8 L E S T
+139 Towns 7 L E O
+140 Treutlen 8 L E S T
+141 Troup 7 L E S
+142 Turner 8 L E S T
+143 Twiggs 7 L E S
+144 Union 7 L E S
+145 Upson 7 L E S
+146 Walker 8 L E S T2
+147 Walton 7 L E S
+148 Ware 9 L E S T T2
+149 Warren 8 L E S T
+150 Washington 8 L E S T
+151 Wayne 8 L E S T
+152 Webster 8 L E S T
+153 Wheeler 8 L E S T
+154 White 7 L E S
+155 Whitfield 7 L E S
+156 Wilcox 8 L E S T
+157 Wilkes 8 L E S T
+158 Wilkinson 7 L E S
+159 Worth 7 L E S

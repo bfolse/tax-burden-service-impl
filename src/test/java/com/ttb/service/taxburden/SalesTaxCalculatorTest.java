@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -105,7 +106,7 @@ public class SalesTaxCalculatorTest {
 		salesTaxCalculator.init();
 		
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", "COUNTRY");
+		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States Federal", PoliticalDivisionType.FEDERAL);
 		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.PAYROLL_FEDERAL, politicalDivision, "payroll tax", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 

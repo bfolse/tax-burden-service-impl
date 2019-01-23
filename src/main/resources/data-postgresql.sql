@@ -1066,7 +1066,7 @@ INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
     VALUES
     -- Social Security
-    (1, 'US_PAYROLL_SOC_SEC', 0.062, 0, 127200),
+    (1, 'US_PAYROLL_SOC_SEC', 0.062, 0, 132900),
     -- Medicare Married filing separate
     (2, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
     (3, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),

@@ -2,6 +2,7 @@ package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.calculation.FuelTaxCalculator;
 import com.ttb.service.taxburden.calculation.IncomeTaxFlatRateCalculator;
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.ConsumerExpenditureProfileRepository;
@@ -60,7 +61,7 @@ public class FuelTaxCalculatorTest {
 		fuelTaxCalculator.setConsumerExpenditureProfileRepository(mockConsumerExpenditureProfileRepository);
 		fuelTaxCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States", "FEDERAL");
+		PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("0", "US", "United States", PoliticalDivisionType.FEDERAL);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
 		politicalDivisions.add(politicalDivision);
 		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, "TEST", new MonetaryAmountEntity(0.00));

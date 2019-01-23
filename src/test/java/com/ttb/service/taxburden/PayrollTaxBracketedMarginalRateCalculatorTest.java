@@ -2,6 +2,7 @@ package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.calculation.PayrollTaxBracketedMarginalRateCalculator;
 import com.ttb.service.taxburden.calculation.TaxCalculationException;
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import com.ttb.service.taxburden.domain.TaxFilingStatus;
 import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.entities.*;
@@ -70,8 +71,8 @@ public class PayrollTaxBracketedMarginalRateCalculatorTest {
 		payrollTaxBracketedMarginalRateCalculator.setTaxRateSetRepository(mockTaxRateSetRepository);
 		payrollTaxBracketedMarginalRateCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
-		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
+		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", PoliticalDivisionType.FEDERAL);
+		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
 		politicalDivisions.add(politicalDivisionUS);
 		politicalDivisions.add(politicalDivisionGA);
@@ -98,8 +99,8 @@ public class PayrollTaxBracketedMarginalRateCalculatorTest {
 		payrollTaxBracketedMarginalRateCalculator.setTaxRateSetRepository(mockTaxRateSetRepository);
 		payrollTaxBracketedMarginalRateCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
-		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
+		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", PoliticalDivisionType.FEDERAL);
+		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
 		politicalDivisions.add(politicalDivisionUS);
 		politicalDivisions.add(politicalDivisionGA);

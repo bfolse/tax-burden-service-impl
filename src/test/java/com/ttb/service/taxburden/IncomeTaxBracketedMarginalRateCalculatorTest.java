@@ -2,6 +2,7 @@ package com.ttb.service.taxburden;
 
 import com.ttb.service.taxburden.calculation.IncomeTaxBracketedMarginalRateCalculator;
 import com.ttb.service.taxburden.calculation.TaxCalculationException;
+import com.ttb.service.taxburden.domain.PoliticalDivisionType;
 import com.ttb.service.taxburden.domain.TaxFilingStatus;
 import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.entities.*;
@@ -129,8 +130,8 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		incomeTaxBracketedMarginalRateCalculator.setIncomeTaxDefinitionRepository(mockIncomeTaxDefinitionRepository);
 		incomeTaxBracketedMarginalRateCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
-		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
+		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", PoliticalDivisionType.FEDERAL);
+		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
 		politicalDivisions.add(politicalDivisionUS);
 		politicalDivisions.add(politicalDivisionGA);
@@ -158,8 +159,8 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 		incomeTaxBracketedMarginalRateCalculator.setIncomeTaxDefinitionRepository(mockIncomeTaxDefinitionRepository);
 		incomeTaxBracketedMarginalRateCalculator.init();
 		TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
-		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
+		PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", PoliticalDivisionType.FEDERAL);
+		PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
 		politicalDivisions.add(politicalDivisionUS);
 		politicalDivisions.add(politicalDivisionGA);
@@ -189,9 +190,9 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 
         // Set up TaxBurdenReport with other tax entries
         TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
-        PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", "FEDERAL");
-        PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", "STATE");
-        PoliticalDivisionEntity politicalDivisionCounty = new PoliticalDivisionEntity("13001", "Test County", "Test County", "COUNTY");
+        PoliticalDivisionEntity politicalDivisionUS = new PoliticalDivisionEntity("US", "US", "United States", PoliticalDivisionType.FEDERAL);
+        PoliticalDivisionEntity politicalDivisionGA = new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE);
+        PoliticalDivisionEntity politicalDivisionCounty = new PoliticalDivisionEntity("13001", "Test County", "Test County", PoliticalDivisionType.COUNTY);
         List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<PoliticalDivisionEntity>();
         politicalDivisions.add(politicalDivisionUS);
         politicalDivisions.add(politicalDivisionGA);
