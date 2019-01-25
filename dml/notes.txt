@@ -1,1 +1,20 @@
-java -cp ../target/classes  com.ttb.service.taxburden.util.PoliticalDivisionImport census_place_fips_2016.csv
+Create Local (County, City, County Subdivision, and Consolidated City) Political Division insert SQL
+java -cp ../target/classes  com.ttb.service.taxburden.util.PoliticalDivisionImport census_place_fips_2016.csv > data_political_division_local-postgresql.sql
+
+NOTE: Remove County Subdivision entries to avoid duplicate fips entries:
+ 17 14000 Chicago
+ 18 51876 Muncie
+ 18 84014 Whitestown
+ 18 86084 Yorktown
+ 18 86372 Zionsville
+ 20 53450 Oswego
+ 20 07975 Bonner Springs
+ 20 67625 Spring Hill
+ 20 31400 Herington
+ 20 62025 Sabetha
+ 20 44250 Manhattan
+ 20 00125 Abilene
+ 20 01975 Anthony
+ 20 02300 Arkansas City
+ 20 02900 Atchison
+ 31 53450 Wisner

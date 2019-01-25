@@ -55,8 +55,9 @@ Re-work handling of money:
   http://www.javapractices.com/topic/TopicAction.do?Id=13
   Joda-money?
 
-Enum for political division type
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes
 Add corporate portion of payroll tax
+
+Fix problem with boundary query for case where postal code boundary includes unincorporated area
 
 Google AdSense

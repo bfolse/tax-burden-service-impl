@@ -27,6 +27,7 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	private static final int SRID = 4326;
 
 	private static final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), SRID);
+	private static final PoliticalDivision unincorporated = new PoliticalDivision("00000", "Unincorporated", "Unincorporated", PoliticalDivisionType.CITY);
 
 	@Autowired
 	PoliticalDivisionRepository politicalDivisionRepository;
@@ -60,6 +61,11 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
             List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             placePoliticalDivisionEntities = boundaryPlaceRepository.contains(postalCode);
 			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
+// TODO
+//			if (!boundaryPlaceRepository.covers(postalCode)) {
+				// Add unincorporated political division to list
+				foundPoliticalDivisions.add(unincorporated);
+//			}
 			// State
             List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             statePoliticalDivisionEntities = boundaryStateRepository.contains(postalCode);
