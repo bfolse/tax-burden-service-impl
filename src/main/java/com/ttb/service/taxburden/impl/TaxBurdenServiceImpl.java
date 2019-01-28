@@ -7,10 +7,7 @@ import com.ttb.service.taxburden.calculation.TaxCalculatorFactory;
 import com.ttb.service.taxburden.domain.*;
 import com.ttb.service.taxburden.entities.*;
 import com.ttb.service.taxburden.repositories.*;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.geom.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +58,13 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
             List<PoliticalDivisionEntity> placePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             placePoliticalDivisionEntities = boundaryPlaceRepository.contains(postalCode);
 			placePoliticalDivisionEntities.forEach(ppde -> foundPoliticalDivisions.add(ppde.toPoliticalDivision()));
-// TODO
-//			if (!boundaryPlaceRepository.covers(postalCode)) {
-				// Add unincorporated political division to list
-				foundPoliticalDivisions.add(unincorporated);
-//			}
+			// Are there any unincorporated areas in this postal boundary?
+			if (placePoliticalDivisionEntities.size() > 0) {
+			    if (hasUnincorporated(postalCode)) {
+                    foundPoliticalDivisions.add(unincorporated);
+                }
+            }
+
 			// State
             List<PoliticalDivisionEntity> statePoliticalDivisionEntities = new ArrayList<PoliticalDivisionEntity>();
             statePoliticalDivisionEntities = boundaryStateRepository.contains(postalCode);
@@ -79,6 +78,28 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 		logger.info("End findAllPoliticalDivisionsByPostalCode");
 		return foundPoliticalDivisions;
 	}
+
+	private boolean hasUnincorporated(String postalCode) {
+        logger.debug("Begin");
+	    boolean returnVal = false;
+        List<Geometry> coveredPlaces = boundaryPlaceRepository.placesCovered(postalCode);
+        Geometry postalBoundary = boundaryPlaceRepository.postalBoundary(postalCode);
+        Geometry unionedPlaces = null;
+        for (Geometry geom : coveredPlaces) {
+            if (unionedPlaces == null) {
+                unionedPlaces = geom;
+            } else {
+                unionedPlaces = unionedPlaces.union(geom);
+            }
+        }
+        if (!unionedPlaces.covers(postalBoundary)) {
+            logger.debug("Postal boundary not covered by city/place political division boundaries, unincorporated area included in postal boundary");
+            returnVal = true;
+        }
+
+        logger.debug("End");
+	    return returnVal;
+    }
 
 	public List<PoliticalDivision> findAllPoliticalDivisionsByLatitudeLongitude(String latitude, String longitude) {
 		logger.info("Begin findAllPoliticalDivisionsByLatitudeLongitude");

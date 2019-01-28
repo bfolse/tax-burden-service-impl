@@ -58,6 +58,7 @@ Re-work handling of money:
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes
 Add corporate portion of payroll tax
 
-Fix problem with boundary query for case where postal code boundary includes unincorporated area
+Improve efficiency of boundary queries, look into using spatial functions (within, contains, intersects, etc.)
+  from com.vividsolutions.jts.geom java library instead of in PostGis query
 
 Google AdSense
