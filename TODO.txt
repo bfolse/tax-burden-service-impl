@@ -58,6 +58,8 @@ Add tests for isDeductItemized and isDeductPreTaxContributions
 Re-work IncomeTaxFlatRateCalculator to use IncomeTaxDefinition (isDeductItemized and isDeductPreTaxContributions)
 Make AVERAGE_FUEL_PRICE_PER_GALLON dynamic in FuelTaxCalculator
 
+Sales tax rates by expenditure category? (Some states do this)
+
 Add helper in Web to calculate pre-tax deductions based on % of annual income
 Add helper in Web to calculate mortgage interest based on loan amount, interest rate, term, and date of mortgage
 

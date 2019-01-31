@@ -245,7 +245,6 @@ INSERT INTO public.tax_rate_set_tax_rates(
 INSERT INTO public.tax_definition(
             id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)
     VALUES
-(nextval('public.hibernate_sequence'),'13','GA_STATE_SALES', 'GA State Sales', 'salesTaxCalculator', 'SALES_STATE', 5),
 (nextval('public.hibernate_sequence'),'13001','APPLING_GA_COUNTY_SALES','Appling County GA Sales','salesTaxCalculator','SALES_COUNTY',5),
 (nextval('public.hibernate_sequence'),'13003','ATKINSON_GA_COUNTY_SALES','Atkinson County GA Sales','salesTaxCalculator','SALES_COUNTY',5),
 (nextval('public.hibernate_sequence'),'13005','BACON_GA_COUNTY_SALES','Bacon County GA Sales','salesTaxCalculator','SALES_COUNTY',5),
@@ -412,7 +411,6 @@ INSERT INTO public.tax_definition(
 INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
     VALUES
-    (nextval('public.hibernate_sequence'), 'GA_STATE_SALES', 0.04, null, null),
 (nextval('public.hibernate_sequence'),'APPLING_GA_COUNTY_SALES', 0.08,null,null),
 (nextval('public.hibernate_sequence'),'ATKINSON_GA_COUNTY_SALES', 0.07,null,null),
 (nextval('public.hibernate_sequence'),'BACON_GA_COUNTY_SALES', 0.07,null,null),
@@ -666,7 +664,7 @@ INSERT INTO public.expenditure_category(
 -- tax_definition_expenditure_category_GA.sql
 INSERT INTO public.tax_definition_expenditure_category(
             id, tax_definition_key, expenditure_category_group_key)
-    VALUES (nextval('public.hibernate_sequence'), 'GA_STATE_SALES', 'SALES_TAX_GROUP'),
+VALUES
 (nextval('public.hibernate_sequence'),'APPLING_GA_COUNTY_SALES','SALES_TAX_GROUP_WITH_UNPREPARED_FOOD'),
 (nextval('public.hibernate_sequence'),'ATKINSON_GA_COUNTY_SALES','SALES_TAX_GROUP_WITH_UNPREPARED_FOOD'),
 (nextval('public.hibernate_sequence'),'BACON_GA_COUNTY_SALES','SALES_TAX_GROUP_WITH_UNPREPARED_FOOD'),
