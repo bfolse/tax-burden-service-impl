@@ -87,4 +87,7 @@ public class PropertyTaxFlatRateCalculator implements TaxCalculator {
         this.taxRateFlatRepository = taxRateFlatRepository;
     }
 
+    public void setAssessedRateRepository(AssessedRateRepository assessedRateRepository) {
+        this.assessedRateRepository = assessedRateRepository;
+    }
 }

@@ -1,0 +1,29 @@
+Aleutians East Borough	$124,500	$200	0.16%
+Aleutians West Census Area	$211,400	$2,673	1.26%
+Anchorage Municipality	$298,000	$3,954	1.33%
+Bethel Census Area	$151,400	$1,290	0.85%
+Bristol Bay Borough	$199,000	$1,896	0.95%
+Denali Borough	$228,600	$2,389	1.05%
+Dillingham Census Area	$196,400	$2,616	1.33%
+Fairbanks North Star Borough	$224,000	$2,807	1.25%
+Haines Borough	$198,400	$1,553	0.78%
+Hoonah-Angoon Census Area	$235,100	$1,438	0.61%
+Juneau City and Borough	$329,500	$2,988	0.91%
+Kenai Peninsula Borough	$229,200	$1,557	0.68%
+Ketchikan Gateway Borough	$257,100	$1,972	0.77%
+Kodiak Island Borough	$266,700	$2,980	1.12%
+Kusilvak Census Area	$101,300	$200	0.20%
+Lake and Peninsula Borough	$143,800	$1,125	0.78%
+Matanuska-Susitna Borough	$230,100	$2,666	1.16%
+Nome Census Area	$138,300	$1,734	1.25%
+North Slope Borough	$154,100	$2,108	1.37%
+Northwest Arctic Borough	$146,400	$1,750	1.20%
+Petersburg Borough	$213,400	$1,736	0.81%
+Prince of Wales-Hyder Census Area	$171,100	$952	0.56%
+Sitka City and Borough	$341,600	$1,718	0.50%
+Skagway Municipality	$305,700	$1,520	0.50%
+Southeast Fairbanks Census Area	$201,600	$200	0.10%
+Valdez-Cordova Census Area	$227,900	$2,416	1.06%
+Wrangell City and Borough	$183,300	$1,342	0.73%
+Yakutat City and Borough	$165,800	$1,406	0.85%
+Yukon-Koyukuk Census Area	$90,800	$450	0.50%

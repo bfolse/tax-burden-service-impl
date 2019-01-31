@@ -1,0 +1,64 @@
+Acadia	$91,600	$255	0.28%
+Allen	$82,700	$201	0.24%
+Ascension	$172,300	$930	0.54%
+Assumption	$108,600	$412	0.38%
+Avoyelles	$93,000	$200	0.22%
+Beauregard	$108,700	$403	0.37%
+Bienville	$78,300	$200	0.26%
+Bossier	$158,400	$800	0.51%
+Caddo	$132,400	$788	0.60%
+Calcasieu	$126,600	$501	0.40%
+Caldwell	$61,200	$236	0.39%
+Cameron	$94,800	$652	0.69%
+Catahoula	$73,700	$259	0.35%
+Claiborne	$76,100	$218	0.29%
+Concordia	$77,800	$278	0.36%
+De Soto	$103,600	$322	0.31%
+East Baton Rouge	$173,200	$987	0.57%
+East Carroll	$55,900	$219	0.39%
+East Feliciana	$137,100	$200	0.15%
+Evangeline	$86,600	$256	0.30%
+Franklin	$82,100	$200	0.24%
+Grant	$87,200	$337	0.39%
+Iberia	$100,300	$353	0.35%
+Iberville	$115,500	$334	0.29%
+Jackson	$85,300	$307	0.36%
+Jefferson Davis	$97,600	$296	0.30%
+Jefferson	$173,500	$906	0.52%
+Lafayette	$168,300	$890	0.53%
+Lafourche	$138,200	$526	0.38%
+LaSalle	$69,100	$299	0.43%
+Lincoln	$141,300	$740	0.52%
+Livingston	$152,700	$811	0.53%
+Madison	$62,000	$200	0.32%
+Morehouse	$80,500	$302	0.38%
+Natchitoches	$105,400	$438	0.42%
+Orleans	$197,000	$1,543	0.78%
+Ouachita	$128,500	$650	0.51%
+Plaquemines	$153,700	$815	0.53%
+Pointe Coupee	$121,400	$358	0.29%
+Rapides	$129,000	$539	0.42%
+Red River	$83,900	$200	0.24%
+Richland	$86,900	$220	0.25%
+Sabine	$78,900	$320	0.41%
+St. Bernard	$133,400	$552	0.41%
+St. Charles	$190,200	$1,132	0.60%
+St. Helena	$89,900	$339	0.38%
+St. James	$134,500	$711	0.53%
+St. John the Baptist	$151,000	$607	0.40%
+St. Landry	$95,200	$295	0.31%
+St. Martin	$108,900	$446	0.41%
+St. Mary	$95,500	$336	0.35%
+St. Tammany	$202,000	$1,661	0.82%
+Tangipahoa	$143,300	$622	0.43%
+Tensas	$57,200	$296	0.52%
+Terrebonne	$139,200	$500	0.36%
+Union	$89,500	$322	0.36%
+Vermilion	$103,800	$267	0.26%
+Vernon	$107,900	$412	0.38%
+Washington	$82,100	$303	0.37%
+Webster	$80,800	$200	0.25%
+West Baton Rouge	$168,600	$761	0.45%
+West Carroll	$73,100	$253	0.35%
+West Feliciana	$197,700	$1,134	0.57%
+Winn	$71,700	$200	0.28%

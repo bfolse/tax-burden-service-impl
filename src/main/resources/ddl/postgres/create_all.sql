@@ -255,7 +255,7 @@ CREATE TABLE public.tax_rate
     id bigint NOT NULL,
     range_high numeric(19,2),
     range_low numeric(19,2),
-    rate numeric(19,2),
+    rate numeric(19,6),
     tax_definition_key character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT tax_rate_pkey PRIMARY KEY (id)
 

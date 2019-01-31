@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class PayrollTaxBracketedMarginalRateCalculator extends MarginalTaxRateCa
         // Calculate income tax using bracketed marginal rates
         BigDecimal payrollTax = calculateMarginalTax(annualIncome.getAmount(), taxRateSet);
 
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), payrollTax);
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), payrollTax.setScale(2, RoundingMode.UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}

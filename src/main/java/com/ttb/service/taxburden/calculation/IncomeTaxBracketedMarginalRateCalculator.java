@@ -92,7 +92,7 @@ public class IncomeTaxBracketedMarginalRateCalculator extends MarginalTaxRateCal
         // Tax Credits
         // TODO
 
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax.setScale(2, RoundingMode.HALF_UP));
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), incomeTax.setScale(2, RoundingMode.UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}

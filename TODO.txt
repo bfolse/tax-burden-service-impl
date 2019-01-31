@@ -12,6 +12,11 @@ WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4326));
 Create SQL from Shape File:
 shp2pgsql -s 4269:4326 -I -d cb_2017_us_county_500k.shp public.boundary_county > boundary_county.sql
 
+Postal Codes for testing:
+30306 - Multi-county, multi-city, unincorporated
+30313 - Single county, single city
+31550 - Multi-county, unincorporated
+
 == TO DO ==
 Add unit test for PropertyTaxFlatRateCalculator
 Break down property tax components for separate city, state, school district, etc.
@@ -40,7 +45,12 @@ Add tax types:
     Student Loan interest adjustment to income
   Alcohol/Tobacco
   Corporate
+  Commercial Property Tax
 Add other states
+  Property - DONE with SA effective rate for counties
+  Sales
+  Income
+  Fuel
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
