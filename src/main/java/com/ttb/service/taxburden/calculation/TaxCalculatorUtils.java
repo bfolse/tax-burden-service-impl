@@ -4,10 +4,16 @@ import com.ttb.service.taxburden.domain.TaxType;
 import com.ttb.service.taxburden.entities.TaxBurdenReportEntity;
 import com.ttb.service.taxburden.entities.TaxEntryEntity;
 import com.ttb.service.taxburden.entities.TaxPayerProfileEntity;
+import com.ttb.service.taxburden.entities.TaxRateEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
 
 public class TaxCalculatorUtils {
+    private static final Logger logger = LoggerFactory.getLogger(TaxCalculatorUtils.class);
     /**
      * Calculate Adjusted Gross Income from Annual Income by subtracting payroll taxes from the
      * provided Tax Burden Report (if not null) and other pre-tax contributions
@@ -60,6 +66,35 @@ public class TaxCalculatorUtils {
             estimatedIncomeTax = adjustedGrossIncome.multiply(BigDecimal.valueOf(0.28));
         }
         return estimatedIncomeTax;
+    }
+
+    public static BigDecimal calculateMarginalTax(BigDecimal taxableIncome, List<TaxRateEntity> rates) {
+        BigDecimal tax = BigDecimal.ZERO;
+        if (!(taxableIncome.compareTo(BigDecimal.ZERO) <= 0)) {
+            // Sort tax rates low to high
+            rates.sort(new TaxRateComparator());
+            logger.debug("Sorted tax rates: {}" + rates);
+            // Rate list
+            for (TaxRateEntity rate : rates) {
+                BigDecimal rangeHigh;
+                if (rate.getRangeHigh() == null) {
+                    // Null rangeHigh signifies open ended range, substitute with max value
+                    rangeHigh = BigDecimal.valueOf(Double.MAX_VALUE);
+                } else {
+                    rangeHigh = new BigDecimal(rate.getRangeHigh());
+                }
+                BigDecimal rangeLow = new BigDecimal(rate.getRangeLow());
+                if (taxableIncome.compareTo(rangeHigh) >= 0) {
+                    // taxableIncome >= high end of range for this rate
+                    tax = tax.add(rangeHigh.subtract(rangeLow).multiply(rate.getRate()));
+                } else {
+                    // taxableIncome < high end of range for this rate
+                    tax = tax.add(taxableIncome.subtract(rangeLow).multiply(rate.getRate()));
+                    break;
+                }
+            }
+        }
+        return tax;
     }
 }
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class PayrollTaxBracketedMarginalRateCalculator extends MarginalTaxRateCalculator implements TaxCalculator {
+public class PayrollTaxBracketedMarginalRateCalculator implements TaxCalculator {
 	private static final Logger logger = LoggerFactory.getLogger(PayrollTaxBracketedMarginalRateCalculator.class);
 
 	@Autowired
@@ -65,7 +65,7 @@ public class PayrollTaxBracketedMarginalRateCalculator extends MarginalTaxRateCa
         }
 
         // Calculate income tax using bracketed marginal rates
-        BigDecimal payrollTax = calculateMarginalTax(annualIncome.getAmount(), taxRateSet);
+        BigDecimal payrollTax = TaxCalculatorUtils.calculateMarginalTax(annualIncome.getAmount(), taxRateSet);
 
 		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(annualIncome.getCurrency(), payrollTax.setScale(2, RoundingMode.UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);

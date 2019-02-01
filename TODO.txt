@@ -48,20 +48,22 @@ Add tax types:
   Commercial Property Tax
 Add other states
   Property - DONE with SA effective rate for counties
-  Sales
-  Income
-  Fuel
+  State Sales - DONE
+  City/County Sales
+  State Income
+  City/County Income
+  State Fuel
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
 
-Re-work IncomeTaxFlatRateCalculator to use IncomeTaxDefinition (isDeductItemized and isDeductPreTaxContributions)
 Make AVERAGE_FUEL_PRICE_PER_GALLON dynamic in FuelTaxCalculator
 
 Sales tax rates by expenditure category? (Some states do this)
 
 Add helper in Web to calculate pre-tax deductions based on % of annual income
 Add helper in Web to calculate mortgage interest based on loan amount, interest rate, term, and date of mortgage
+Maintain tax payer profile allowing comparison with different locations
 
 Re-work handling of money:
   http://www.javapractices.com/topic/TopicAction.do?Id=13
@@ -74,3 +76,11 @@ Improve efficiency of boundary queries, look into using spatial functions (withi
   from com.vividsolutions.jts.geom java library instead of in PostGis query
 
 Google AdSense
+
+== Improvements to specific tax calculations ==
+PA income tax allows itemized deductions for only Med. Savings, Healthcare Savings, and 529 contributions. Need
+  break down "Other itemized deductions" and "Pre tax contributions" further to have a more accurate calculation.
+  Currently not using any exemptions or deductions in calculation.
+
+AL income tax has standard deductions that vary based on income. Income ranges only from $0-15,000 for SINGLE
+  and $0-30,000 for married, so current solution is to always use max standard deduction.

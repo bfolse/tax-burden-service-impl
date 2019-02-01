@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class IncomeTaxFlatRateCalculator implements TaxCalculator {
+public class IncomeTaxFlatRateCalculator extends IncomeTaxCalculator {
 	private static final Logger logger = LoggerFactory.getLogger(IncomeTaxFlatRateCalculator.class);
 	
 	@Autowired
@@ -28,6 +28,7 @@ public class IncomeTaxFlatRateCalculator implements TaxCalculator {
 
 	@PostConstruct
 	public void init() {
+		super.init();
 		taxRates = new HashMap<String, BigDecimal>();
 		Iterable<TaxRateEntity> taxRateFlatIterable = taxRateFlatRepository.findAll();
 		for (TaxRateEntity taxRateFlat : taxRateFlatIterable) {
@@ -38,13 +39,15 @@ public class IncomeTaxFlatRateCalculator implements TaxCalculator {
 	}
 	
 	@Override
-	public MonetaryAmountEntity calculate(TaxPayerProfileEntity taxPayerProfile, PoliticalDivisionEntity politicalDivision, TaxDefinitionEntity taxDefinition, TaxBurdenReportEntity taxBurdenReport) {
+	public MonetaryAmountEntity calculate(TaxPayerProfileEntity taxPayerProfile, PoliticalDivisionEntity politicalDivision, TaxDefinitionEntity taxDefinition, TaxBurdenReportEntity taxBurdenReport) throws TaxCalculationException {
 		logger.debug("Begin tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition);
 		BigDecimal rate = taxRates.get(taxDefinition.getTaxDefinitionKey());
-		BigDecimal adjustedGrossIncome = TaxCalculatorUtils.calculateAdjustedGrossIncome(taxPayerProfile, taxBurdenReport);
+
+		// Calculate taxable income
+		BigDecimal taxableIncome = calculateTaxableIncome(taxPayerProfile, incomeTaxDefinitions.get(taxDefinition.getTaxDefinitionKey()), taxBurdenReport);
 
 		MonetaryAmountEntity mortgageInterest = taxPayerProfile.getMortgageInterest();
-		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome().getCurrency(), adjustedGrossIncome.subtract(mortgageInterest.getAmount()).multiply(rate).setScale(2, RoundingMode.UP));
+		MonetaryAmountEntity calculatedTax = new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome().getCurrency(), taxableIncome.multiply(rate).setScale(2, RoundingMode.UP));
 		logger.debug("End tax calculation for politicalDivision: " + politicalDivision + " taxDefinition: " + taxDefinition + " calculatedTax: " + calculatedTax);
 		return calculatedTax;
 	}
