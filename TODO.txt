@@ -53,6 +53,7 @@ Add other states
   State Income
   City/County Income
   State Fuel
+  Capital Gains
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
@@ -78,9 +79,18 @@ Improve efficiency of boundary queries, look into using spatial functions (withi
 Google AdSense
 
 == Improvements to specific tax calculations ==
+Income tax calculation for many states includes tax credits, including
+  Military, Child Care, Earned Income, Historic Preservation, First Responder, etc.
 PA income tax allows itemized deductions for only Med. Savings, Healthcare Savings, and 529 contributions. Need
   break down "Other itemized deductions" and "Pre tax contributions" further to have a more accurate calculation.
   Currently not using any exemptions or deductions in calculation.
 
 AL income tax has standard deductions that vary based on income. Income ranges only from $0-15,000 for SINGLE
   and $0-30,000 for married, so current solution is to always use max standard deduction.
+
+AR (and maybe other states) exempts active duty military income and gives exemptions, enlisted and retired
+military personnel receive exemptions
+  Tax credits for filer and dependents, % of child care expenses
+
+CT income tax has personal exemption that varies based on income.  Current solution is to
+  use average personal exemption of $2000 for single, married-separate, HOH, and $4000 for joint
