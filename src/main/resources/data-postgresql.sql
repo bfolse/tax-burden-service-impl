@@ -483,22 +483,6 @@ INSERT INTO public.tax_rate(
 (nextval('public.hibernate_sequence'),'ATLANTA_GA_CITY_SALES', 0.019,null,null)
 ;
 
--- tax_definition_fuel.sql
-INSERT INTO public.tax_definition(
-            id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)
-    VALUES
-(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel','fuelTaxCalculator','FUEL_FEDERAL',6),
-(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel','fuelTaxCalculator','FUEL_STATE',6)
-;
-
--- tax_rate_fuel.sql
-INSERT INTO public.tax_rate(
-            id, tax_definition_key, rate, range_low, range_high)
-    VALUES
-    (nextval('public.hibernate_sequence'), 'US_FEDERAL_FUEL_TAX', 0.184, null, null),
-    (nextval('public.hibernate_sequence'), 'GA_STATE_FUEL_TAX', 0.3159, null, null)
-    ;
-
 -- expenditure_category.sql
 INSERT INTO public.expenditure_category(
             id, expenditure_category_key, description)
