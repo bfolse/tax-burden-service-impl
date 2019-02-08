@@ -51,7 +51,18 @@ Add other states
   State Sales - DONE
   City/County Sales
   State Income
+    New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
   City/County Income
+    Indiana counties all collect income tax
+    Iowa has school district sur-taxes based on state income tax
+    Kentucky has county and city occupational (income) taxes that apply to all wages
+    Maryland has county income tax (flat rate, but different per county)
+      Baltimore city has income tax
+    Michigan cities have income taxes in addition to state income taxes
+    New York City Income Tax
+    Ohio cities and school districts
+    Oregon cities/counties (2)
+
   State Fuel
   Capital Gains
 
@@ -81,6 +92,10 @@ Google AdSense
 == Improvements to specific tax calculations ==
 Income tax calculation for many states includes tax credits, including
   Military, Child Care, Earned Income, Historic Preservation, First Responder, etc.
+Income tax calculation for many states allows for exemptions of income from Social Security,
+  unemployment, government bonds, active duty military. Also exemptions from political donations,
+  college savings plans contributions. Consider adding these to tax payer profile.
+
 PA income tax allows itemized deductions for only Med. Savings, Healthcare Savings, and 529 contributions. Need
   break down "Other itemized deductions" and "Pre tax contributions" further to have a more accurate calculation.
   Currently not using any exemptions or deductions in calculation.
@@ -94,3 +109,27 @@ military personnel receive exemptions
 
 CT income tax has personal exemption that varies based on income.  Current solution is to
   use average personal exemption of $2000 for single, married-separate, HOH, and $4000 for joint
+
+MD income tax has exemption amount that varies based on income.  Current solution is to use amount
+  for most common bracket: $3200 for single income less than $100,000 or joint less than $150,000.
+  Standard deduction is 15% of AGI with minimum and maximum dependent on filing status. Current solution
+  is to use average of $2000 and $3000.
+
+MI has standard deduction only for those 67 yeears of age or older
+
+MN state income tax has a phase-out of itemized deductions based on taxable income. Current solution
+  is to ignore and include all itemized deductions.
+
+MT state income tax has standard deduction of 20% of AGI with minimum and maximum.  Maximum is low.
+  Current solution is to use maximums since they would apply for taxpayers with median state income.
+
+NE state income has a personal exemption credit of $134.
+
+OH state income has bracketed (3 brackets) exemption amount based on AGI. Current solution is
+  to use value from middle bracket, $2050 for personal and dependent.
+
+RI state income phases out stardard deductions and exemptions for high income earners, starting
+  at $199,000.  Current solution ignores this.
+
+SC state income allows dependent exemption only for those 6 years and younger.  Current solution
+  has no dependent exemption.

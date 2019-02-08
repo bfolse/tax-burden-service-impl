@@ -487,8 +487,8 @@ INSERT INTO public.tax_rate(
 INSERT INTO public.tax_definition(
             id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)
     VALUES
-(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel Tax','fuelTaxCalculator','FUEL_FEDERAL',6),
-(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel Tax','fuelTaxCalculator','FUEL_STATE',6)
+(nextval('public.hibernate_sequence'),'US','US_FEDERAL_FUEL_TAX','US Federal Fuel','fuelTaxCalculator','FUEL_FEDERAL',6),
+(nextval('public.hibernate_sequence'),'13','GA_STATE_FUEL_TAX','State of Georgia Fuel','fuelTaxCalculator','FUEL_STATE',6)
 ;
 
 -- tax_rate_fuel.sql
