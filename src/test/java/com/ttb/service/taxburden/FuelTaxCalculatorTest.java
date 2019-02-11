@@ -66,7 +66,7 @@ public class FuelTaxCalculatorTest {
 		politicalDivisions.add(politicalDivision);
 		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.INCOME_FEDERAL, politicalDivision, "TEST", new MonetaryAmountEntity(0.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
-		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),"testKey");
+		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity(politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(100000)), new MonetaryAmountEntity(BigDecimal.valueOf(0)),"testKey");
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.FUEL_FEDERAL, "0", "fuelTaxCalculator", "TEST", "test description", 1);
 		MonetaryAmountEntity result = fuelTaxCalculator.calculate(taxPayerProfile, null, taxDefinition, taxBurdenReport);
 		assertNotNull(result);

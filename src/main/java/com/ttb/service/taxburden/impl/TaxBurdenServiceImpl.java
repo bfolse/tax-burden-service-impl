@@ -139,7 +139,6 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 			if (taxPayerProfileEntity == null) {
 				taxPayerProfileEntity = new TaxPayerProfileEntity(taxPayerProfile.getTaxPayerProfileKey(),
 						taxPayerProfile.getTimestamp(),
-						taxPayerProfile.getPostalCode(),
 						findPoliticalDivisionEntities(taxPayerProfile.getPoliticalDivisions()),
 						new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()),
 						new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()),
@@ -170,7 +169,7 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 	}
 
 	public TaxPayerProfile createTaxPayerProfile(String postalCode, List<String> politicalDivisionKeys, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue) {
-		TaxPayerProfileEntity taxPayerProfileEntity = new TaxPayerProfileEntity(postalCode, findPoliticalDivisionEntitiesByKeys(politicalDivisionKeys), new MonetaryAmountEntity(annualIncome), new MonetaryAmountEntity(mortgageInterest), new MonetaryAmountEntity(realPropertyMarketValue));
+		TaxPayerProfileEntity taxPayerProfileEntity = new TaxPayerProfileEntity(findPoliticalDivisionEntitiesByKeys(politicalDivisionKeys), new MonetaryAmountEntity(annualIncome), new MonetaryAmountEntity(mortgageInterest), new MonetaryAmountEntity(realPropertyMarketValue));
 		TaxPayerProfileEntity savedTaxPayerProfileEntity = taxPayerProfileRepository.save(taxPayerProfileEntity);
 		return savedTaxPayerProfileEntity.toTaxPayerProfile();
 	}

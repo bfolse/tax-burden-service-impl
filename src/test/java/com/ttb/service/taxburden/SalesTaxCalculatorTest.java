@@ -110,14 +110,14 @@ public class SalesTaxCalculatorTest {
 		TaxEntryEntity taxEntry = new TaxEntryEntity(TaxType.PAYROLL_FEDERAL, politicalDivision, "payroll tax", new MonetaryAmountEntity(5000.00));
 		taxBurdenReport.addTaxEntry(taxEntry);
 
-		TaxPayerProfileEntity taxPayerProfileBasic = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(50000)),
+		TaxPayerProfileEntity taxPayerProfileBasic = new TaxPayerProfileEntity(null, new MonetaryAmountEntity(BigDecimal.valueOf(50000)),
 				new MonetaryAmountEntity(BigDecimal.valueOf(0)), "BASIC");
 		TaxDefinitionEntity taxDefinitionOne = new TaxDefinitionEntity(TaxType.SALES_STATE, null, "salesTaxCalculator", "TD_ONE", "test description one", 1);
 		MonetaryAmountEntity resultOne = salesTaxCalculator.calculate(taxPayerProfileBasic, null, taxDefinitionOne, taxBurdenReport);
 		assertNotNull(resultOne);
 		assertEquals(BigDecimal.valueOf(125.55), resultOne.getAmount());
 
-		TaxPayerProfileEntity taxPayerProfileSpender = new TaxPayerProfileEntity("30306", null, new MonetaryAmountEntity(BigDecimal.valueOf(100000)),
+		TaxPayerProfileEntity taxPayerProfileSpender = new TaxPayerProfileEntity(null, new MonetaryAmountEntity(BigDecimal.valueOf(100000)),
 				new MonetaryAmountEntity(BigDecimal.valueOf(0)), "SPENDER");
 		TaxDefinitionEntity taxDefinitionTwo = new TaxDefinitionEntity(TaxType.SALES_STATE, null, "salesTaxCalculator", "TD_TWO", "test description two", 1);
 		MonetaryAmountEntity resultTwo = salesTaxCalculator.calculate(taxPayerProfileSpender, null, taxDefinitionTwo, taxBurdenReport);

@@ -50,7 +50,7 @@ Add other states
   Property - DONE with SA effective rate for counties
   State Sales - DONE
   City/County Sales
-  State Income
+  State Income - DONE (see suggested improvements below)
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
   City/County Income
     Indiana counties all collect income tax
@@ -63,7 +63,6 @@ Add other states
     Ohio cities and school districts
     Oregon cities/counties (2)
 
-  State Fuel
   Capital Gains
 
 @Ignore in TaxDefinitionRepositoryTest

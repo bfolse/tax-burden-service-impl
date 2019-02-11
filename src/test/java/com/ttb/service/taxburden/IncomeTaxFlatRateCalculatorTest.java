@@ -60,7 +60,7 @@ public class IncomeTaxFlatRateCalculatorTest {
 		taxBurdenReport.addTaxEntry(taxEntry);
 		List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<>();
 		politicalDivisions.add(politicalDivision);
-		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(10000)), new MonetaryAmountEntity(BigDecimal.valueOf(4000)), new MonetaryAmountEntity(BigDecimal.valueOf(400000)), TaxFilingStatus.SINGLE, new MonetaryAmountEntity(BigDecimal.valueOf(0)), new MonetaryAmountEntity(BigDecimal.valueOf(0)), Integer.valueOf(0));
+		TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity(politicalDivisions, new MonetaryAmountEntity(BigDecimal.valueOf(10000)), new MonetaryAmountEntity(BigDecimal.valueOf(4000)), new MonetaryAmountEntity(BigDecimal.valueOf(400000)), TaxFilingStatus.SINGLE, new MonetaryAmountEntity(BigDecimal.valueOf(0)), new MonetaryAmountEntity(BigDecimal.valueOf(0)), Integer.valueOf(0));
 		TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.INCOME_STATE, null, "incomeTaxFlatRateCalculator", "TEST", "test description", 1);
 		MonetaryAmountEntity result = null;
 		try {

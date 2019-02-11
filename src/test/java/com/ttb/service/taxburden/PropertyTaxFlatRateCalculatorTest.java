@@ -60,7 +60,7 @@ public class PropertyTaxFlatRateCalculatorTest {
         TaxBurdenReportEntity taxBurdenReport = new TaxBurdenReportEntity();
         PoliticalDivisionEntity politicalDivision = new PoliticalDivisionEntity("13159", "TEST_COUNTY", "Test County", PoliticalDivisionType.COUNTY);
         List<PoliticalDivisionEntity> politicalDivisions = new ArrayList<>();
-        TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity("30306", politicalDivisions,	new MonetaryAmountEntity(BigDecimal.valueOf(10000)),
+        TaxPayerProfileEntity taxPayerProfile = new TaxPayerProfileEntity(politicalDivisions,	new MonetaryAmountEntity(BigDecimal.valueOf(10000)),
                 new MonetaryAmountEntity(BigDecimal.valueOf(1000)), new MonetaryAmountEntity(BigDecimal.valueOf(300000)), "BASIC");
         TaxDefinitionEntity taxDefinition = new TaxDefinitionEntity(TaxType.PROPERTY_COUNTY, "13159", "propertyTaxFlatRateCalculator", "TAX_DEFINITION_ONE", "test property tax one", 1);
         MonetaryAmountEntity result = propertyTaxFlatRateCalculator.calculate(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);

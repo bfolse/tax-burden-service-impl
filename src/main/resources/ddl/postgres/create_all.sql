@@ -45,7 +45,6 @@ CREATE TABLE public.tax_payer_profile
     id bigint NOT NULL,
     consumer_expenditure_profile_key character varying(255) COLLATE pg_catalog."default",
     dependents integer,
-    postal_code character varying(255) COLLATE pg_catalog."default",
     tax_filing_status character varying(255) COLLATE pg_catalog."default",
     tax_payer_profile_key character varying(255) COLLATE pg_catalog."default",
     "timestamp" timestamp without time zone,

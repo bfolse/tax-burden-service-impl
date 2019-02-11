@@ -46,7 +46,7 @@ public class TaxBurdenReportRepositoryTest {
 	public void setup() {
 		entityManager.persist(new PoliticalDivisionEntity("13", "GA", "Georgia", PoliticalDivisionType.STATE));
 		entityManager.persist(new PoliticalDivisionEntity("089", "Dekalb", "Dekalb County", PoliticalDivisionType.COUNTY));
-		taxPayerProfileOne = entityManager.persist(new TaxPayerProfileEntity("30306", new MonetaryAmountEntity(BigDecimal.valueOf(0100000.00)), new MonetaryAmountEntity(BigDecimal.valueOf(5000.00))));
+		taxPayerProfileOne = entityManager.persist(new TaxPayerProfileEntity(new MonetaryAmountEntity(BigDecimal.valueOf(0100000.00)), new MonetaryAmountEntity(BigDecimal.valueOf(5000.00))));
 	}
 	
 	@Test
