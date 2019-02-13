@@ -109,6 +109,8 @@ CREATE TABLE public.tax_payer_profile
     tax_payer_profile_key character varying(255) COLLATE pg_catalog."default",
     "timestamp" timestamp without time zone,
     annual_income_id bigint,
+    self_employed_income_id bigint,
+    capital_gains_income_id bigint,
     mortgage_interest_id bigint,
     other_itemized_deductions_id bigint,
     pre_tax_contributions_id bigint,

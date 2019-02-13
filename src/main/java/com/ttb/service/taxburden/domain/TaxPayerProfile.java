@@ -18,7 +18,9 @@ public class TaxPayerProfile {
 	private String taxPayerProfileKey = UUID.randomUUID().toString();
 	private Date timestamp = new Date();
 	private List<PoliticalDivision> politicalDivisions;
-	private MonetaryAmount annualIncome;
+	private MonetaryAmount annualIncome = new MonetaryAmount(BigDecimal.ZERO);
+	private MonetaryAmount selfEmployedIncome = new MonetaryAmount(BigDecimal.ZERO);
+	private MonetaryAmount capitalGainsIncome = new MonetaryAmount(BigDecimal.ZERO);
 	private MonetaryAmount mortgageInterest = new MonetaryAmount(BigDecimal.ZERO);
 	private MonetaryAmount realPropertyMarketValue = new MonetaryAmount(BigDecimal.ZERO);
 	private String consumerExpenditureProfileKey = BASIC_CONSUMER_EXPENDITURE_PROFILE_KEY;
@@ -79,12 +81,14 @@ public class TaxPayerProfile {
 		if (consumerExpenditureProfileKey != null) { this.consumerExpenditureProfileKey = consumerExpenditureProfileKey; }
 	}
 
-	public TaxPayerProfile(String taxPayerProfileKey, Date timestamp, List<PoliticalDivision> politicalDivisions, MonetaryAmount annualIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmount preTaxContributions, MonetaryAmount otherItemizedDeductions, Integer dependents) {
+	public TaxPayerProfile(String taxPayerProfileKey, Date timestamp, List<PoliticalDivision> politicalDivisions, MonetaryAmount annualIncome, MonetaryAmount selfEmployedIncome, MonetaryAmount capitalGainsIncome, MonetaryAmount mortgageInterest, MonetaryAmount realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmount preTaxContributions, MonetaryAmount otherItemizedDeductions, Integer dependents) {
 		super();
 		if (taxPayerProfileKey != null) { this.taxPayerProfileKey = taxPayerProfileKey; }
 		if (timestamp != null) { this.timestamp = timestamp; }
 		this.politicalDivisions = politicalDivisions;
 		if (annualIncome != null) { this.annualIncome = annualIncome; }
+		if (selfEmployedIncome != null) { this.selfEmployedIncome = selfEmployedIncome; }
+		if (capitalGainsIncome != null) { this.capitalGainsIncome = capitalGainsIncome; }
 		if (mortgageInterest != null) { this.mortgageInterest = mortgageInterest; }
 		if (realPropertyMarketValue != null) { this.realPropertyMarketValue = realPropertyMarketValue; }
 		if (consumerExpenditureProfileKey != null) { this.consumerExpenditureProfileKey = consumerExpenditureProfileKey; }
@@ -171,6 +175,22 @@ public class TaxPayerProfile {
 		this.annualIncome = annualIncome;
 	}
 
+	public MonetaryAmount getSelfEmployedIncome() {
+		return selfEmployedIncome;
+	}
+
+	public void setSelfEmployedIncome(MonetaryAmount selfEmployedIncome) {
+		this.selfEmployedIncome = selfEmployedIncome;
+	}
+
+	public MonetaryAmount getCapitalGainsIncome() {
+		return capitalGainsIncome;
+	}
+
+	public void setCapitalGainsIncome(MonetaryAmount capitalGainsIncome) {
+		this.capitalGainsIncome = capitalGainsIncome;
+	}
+
 	/**
 	 * @return the mortgageInterest
 	 */
@@ -254,6 +274,8 @@ public class TaxPayerProfile {
 				Objects.equals(timestamp, that.timestamp) &&
 				Objects.equals(politicalDivisions, that.politicalDivisions) &&
 				Objects.equals(annualIncome, that.annualIncome) &&
+				Objects.equals(selfEmployedIncome, that.selfEmployedIncome) &&
+				Objects.equals(capitalGainsIncome, that.capitalGainsIncome) &&
 				Objects.equals(mortgageInterest, that.mortgageInterest) &&
 				Objects.equals(realPropertyMarketValue, that.realPropertyMarketValue) &&
 				Objects.equals(consumerExpenditureProfileKey, that.consumerExpenditureProfileKey) &&
@@ -265,7 +287,7 @@ public class TaxPayerProfile {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(taxPayerProfileKey, timestamp, politicalDivisions, annualIncome, mortgageInterest, realPropertyMarketValue, consumerExpenditureProfileKey, taxFilingStatus, preTaxContributions, otherItemizedDeductions, dependents);
+		return Objects.hash(taxPayerProfileKey, timestamp, politicalDivisions, annualIncome, selfEmployedIncome, capitalGainsIncome, mortgageInterest, realPropertyMarketValue, consumerExpenditureProfileKey, taxFilingStatus, preTaxContributions, otherItemizedDeductions, dependents);
 	}
 
 	@Override
@@ -275,6 +297,8 @@ public class TaxPayerProfile {
 				", timestamp=" + timestamp +
 				", politicalDivisions=" + politicalDivisions +
 				", annualIncome=" + annualIncome +
+				", selfEmployedIncome=" + selfEmployedIncome +
+				", capitalGainsIncome=" + capitalGainsIncome +
 				", mortgageInterest=" + mortgageInterest +
 				", realPropertyMarketValue=" + realPropertyMarketValue +
 				", consumerExpenditureProfileKey='" + consumerExpenditureProfileKey + '\'' +

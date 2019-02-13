@@ -15,24 +15,31 @@ import java.util.List;
 public class TaxCalculatorUtils {
     private static final Logger logger = LoggerFactory.getLogger(TaxCalculatorUtils.class);
     /**
-     * Calculate Adjusted Gross Income from Annual Income by subtracting payroll taxes from the
-     * provided Tax Burden Report (if not null) and other pre-tax contributions
+     * Calculate Adjusted Gross Income from Regular Wage Income and Self-Employed Income by subtracting
+     * payroll taxes from the provided Tax Burden Report
      * @param taxPayerProfile
      * @param taxBurdenReport
      */
     public static BigDecimal calculateAdjustedGrossIncome(TaxPayerProfileEntity taxPayerProfile, TaxBurdenReportEntity taxBurdenReport) {
         // Start with annualIncome
         BigDecimal adjustedGrossIncome = taxPayerProfile.getAnnualIncome().getAmount();
-        // Subtract payroll taxes
+        // Add self-employed earnings
+        adjustedGrossIncome.add(taxPayerProfile.getSelfEmployedIncome().getAmount());
         if (taxBurdenReport != null) {
+            // Subtract payroll taxes
             for (TaxEntryEntity taxEntry : taxBurdenReport.getTaxEntries()) {
+                // Regular wages payroll tax
                 if (taxEntry.getTaxType() == TaxType.PAYROLL_FEDERAL) {
                     adjustedGrossIncome = adjustedGrossIncome.subtract(taxEntry.getAmount().getAmount());
+                } else if (taxEntry.getTaxType() == TaxType.PAYROLL_SELF_EMP_FEDERAL) {
+                    // Self-employed payroll tax, subtract 1/2
+                    BigDecimal selfEmpPayrollTax = taxEntry.getAmount().getAmount();
+                    if (selfEmpPayrollTax.compareTo(BigDecimal.ZERO) > 0) {
+                        adjustedGrossIncome = adjustedGrossIncome.subtract(selfEmpPayrollTax.divide(BigDecimal.valueOf(2)));
+                    }
                 }
             }
         }
-        // Subtract other pre-tax contributions
-        adjustedGrossIncome = adjustedGrossIncome.subtract(taxPayerProfile.getPreTaxContributions().getAmount());
         return adjustedGrossIncome;
     }
 

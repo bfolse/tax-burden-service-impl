@@ -100,35 +100,54 @@ INSERT INTO public.tax_rate_set_tax_rates(
 INSERT INTO public.tax_definition(
             id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
     VALUES (nextval('public.hibernate_sequence'), 'US_PAYROLL_SOC_SEC', 'US Federal Payroll Social Security', 'payrollTaxBracketedMarginalRateCalculator', 'PAYROLL_FEDERAL', 'US', 1),
-    (nextval('public.hibernate_sequence'), 'US_PAYROLL_MEDICARE', 'US Federal Payroll Medicare', 'payrollTaxBracketedMarginalRateCalculator', 'PAYROLL_FEDERAL', 'US', 1)
-    ;
+    (nextval('public.hibernate_sequence'), 'US_PAYROLL_MEDICARE', 'US Federal Payroll Medicare', 'payrollTaxBracketedMarginalRateCalculator', 'PAYROLL_FEDERAL', 'US', 1),
+    (nextval('public.hibernate_sequence'), 'US_PAYROLL_SELF_EMP_SOC_SEC', 'US Federal Payroll Self-Employed Social Security', 'selfEmployedPayrollTaxCalculator', 'PAYROLL_SELF_EMP_FEDERAL', 'US', 1),
+    (nextval('public.hibernate_sequence'), 'US_PAYROLL_SELF_EMP_MEDICARE', 'US Federal Payroll Self-Employed Medicare', 'selfEmployedPayrollTaxCalculator', 'PAYROLL_SELF_EMP_FEDERAL', 'US', 1);
 
 -- tax_rate_set US federal payroll
 INSERT INTO public.tax_rate_set(
 	id, tax_definition_key, tax_filing_status)
 	VALUES
-	(1, 'US_PAYROLL_SOC_SEC', null),
-	(2, 'US_PAYROLL_MEDICARE', 'SINGLE'),
-	(3, 'US_PAYROLL_MEDICARE', 'JOINT'),
-	(4, 'US_PAYROLL_MEDICARE', 'MARRIED_SEPARATE'),
-	(5, 'US_PAYROLL_MEDICARE', 'HEAD_OF_HOUSEHOLD')
+	(101, 'US_PAYROLL_SOC_SEC', null),
+	(102, 'US_PAYROLL_MEDICARE', 'SINGLE'),
+	(103, 'US_PAYROLL_MEDICARE', 'JOINT'),
+	(104, 'US_PAYROLL_MEDICARE', 'MARRIED_SEPARATE'),
+	(105, 'US_PAYROLL_MEDICARE', 'HEAD_OF_HOUSEHOLD'),
+	(106, 'US_PAYROLL_SELF_EMP_SOC_SEC', null),
+	(107, 'US_PAYROLL_SELF_EMP_MEDICARE', 'SINGLE'),
+	(108, 'US_PAYROLL_SELF_EMP_MEDICARE', 'JOINT'),
+	(109, 'US_PAYROLL_SELF_EMP_MEDICARE', 'MARRIED_SEPARATE'),
+	(110, 'US_PAYROLL_SELF_EMP_MEDICARE', 'HEAD_OF_HOUSEHOLD')
 	;
 
 -- tax_rate US federal payroll
 INSERT INTO public.tax_rate(
             id, tax_definition_key, rate, range_low, range_high)
     VALUES
+    -- Regular Wages
     -- Social Security
-    (1, 'US_PAYROLL_SOC_SEC', 0.062, 0, 132900),
+    (101, 'US_PAYROLL_SOC_SEC', 0.062, 0, 132900),
     -- Medicare Married filing separate
-    (2, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
-    (3, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),
+    (102, 'US_PAYROLL_MEDICARE', 0.0145, 0, 125000),
+    (103, 'US_PAYROLL_MEDICARE', 0.0235, 125000, null),
     -- Medicare Single and Head of Household
-    (4, 'US_PAYROLL_MEDICARE', 0.0145, 0, 200000),
-    (5, 'US_PAYROLL_MEDICARE', 0.0235, 200000, null),
+    (104, 'US_PAYROLL_MEDICARE', 0.0145, 0, 200000),
+    (105, 'US_PAYROLL_MEDICARE', 0.0235, 200000, null),
     -- Medicare Joint
-    (6, 'US_PAYROLL_MEDICARE', 0.0145, 0, 250000),
-    (7, 'US_PAYROLL_MEDICARE', 0.0235, 250000, null)
+    (106, 'US_PAYROLL_MEDICARE', 0.0145, 0, 250000),
+    (107, 'US_PAYROLL_MEDICARE', 0.0235, 250000, null),
+    -- Self-Employed Income
+    -- Social Security
+    (108, 'US_PAYROLL_SELF_EMP_SOC_SEC', 0.124, 0, 132900),
+    -- Medicare Married filing separate
+    (109, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.029, 0, 125000),
+    (110, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.038, 125000, null),
+    -- Medicare Single and Head of Household
+    (111, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.029, 0, 200000),
+    (112, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.038, 200000, null),
+    -- Medicare Joint
+    (113, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.029, 0, 250000),
+    (114, 'US_PAYROLL_SELF_EMP_MEDICARE', 0.038, 250000, null)
     ;
 
 -- tax_rate_set_tax_rates federal payroll
@@ -136,19 +155,33 @@ INSERT INTO public.tax_rate_set_tax_rates(
 	tax_rate_set_id, tax_rate_id)
 	VALUES
 	-- US Federal Payroll - Social Security
-	(1, 1),
+	(101, 101),
 	-- US Federal Payroll - Medicare Married Filing Separate
-	(4, 2),
-	(4, 3),
+	(104, 102),
+	(104, 103),
 	-- US Federal Payroll - Medicare Single
-	(2, 4),
-	(2, 5),
+	(102, 104),
+	(102, 105),
 	-- US Federal Payroll - Medicare Head of Household
-	(5, 4),
-	(5, 5),
+	(105, 104),
+	(105, 105),
 	-- US Federal Payroll - Medicare Joint
-	(3, 6),
-	(3, 7)
+	(103, 106),
+	(103, 107),
+	-- US Federal Payroll Self-Employed - Social Security
+	(106, 108),
+	-- US Federal Payroll Self-Employed - Medicare Married Filing Separate
+	(109, 109),
+	(109, 110),
+	-- US Federal Payroll Self-Employed - Medicare Single
+	(107, 111),
+	(107, 112),
+	-- US Federal Payroll Self-Employed - Medicare Head of Household
+	(110, 111),
+	(110, 112),
+	-- US Federal Payroll Self-Employed - Medicare Joint
+	(108, 113),
+	(108, 114)
     ;
 
 -- tax_definition_sales_GA.sql

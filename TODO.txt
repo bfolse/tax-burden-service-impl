@@ -27,6 +27,7 @@ Add unit tests for spatial repositories - need PostGis embedded DB (not currentl
 Add integration tests for lat/lon methods in service impl
 
 Fix consumerExpenditureProfileKey in TaxPayerProfileEntity
+Evaluate removing Housing-Shelter from Expenditure Categories for sales tax
 
 Add address search to map
 
@@ -53,6 +54,7 @@ Add other states
   State Income - DONE (see suggested improvements below)
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
   City/County Income
+    Alabama cities have an occupational (income) tax
     Indiana counties all collect income tax
     Iowa has school district sur-taxes based on state income tax
     Kentucky has county and city occupational (income) taxes that apply to all wages
@@ -81,6 +83,7 @@ Re-work handling of money:
   Joda-money?
 
 Add Self-employed to TaxPayerProfile, add self-employed calculation to payroll taxes
+Add Self-employed healthcare expense to TaxPayerProfile and as a deduction for fed income tax
 Add corporate portion of payroll tax
 
 Improve efficiency of boundary queries, look into using spatial functions (within, contains, intersects, etc.)

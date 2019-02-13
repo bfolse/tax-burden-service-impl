@@ -27,6 +27,10 @@ public class TaxPayerProfileEntity {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MonetaryAmountEntity annualIncome = new MonetaryAmountEntity(BigDecimal.ZERO);
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private MonetaryAmountEntity selfEmployedIncome = new MonetaryAmountEntity(BigDecimal.ZERO);
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private MonetaryAmountEntity capitalGainsIncome = new MonetaryAmountEntity(BigDecimal.ZERO);
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MonetaryAmountEntity mortgageInterest = new MonetaryAmountEntity(BigDecimal.ZERO);
 
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -157,6 +161,23 @@ public class TaxPayerProfileEntity {
 		this.dependents = dependents;
 	}
 
+	public TaxPayerProfileEntity(List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity selfEmployedIncome, MonetaryAmountEntity capitalGainsIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+		super();
+		this.timestamp = new Date();
+		this.taxPayerProfileKey = UUID.randomUUID().toString();
+		this.politicalDivisions = politicalDivisions;
+		this.annualIncome = annualIncome;
+		this.selfEmployedIncome = selfEmployedIncome;
+		this.capitalGainsIncome = capitalGainsIncome;
+		this.mortgageInterest = mortgageInterest;
+		this.realPropertyMarketValue = realPropertyMarketValue;
+		this.consumerExpenditureProfileKey = consumerExpenditureProfileKey;
+		this.taxFilingStatus = taxFilingStatus;
+		this.preTaxContributions = preTaxContributions;
+		this.otherItemizedDeductions = otherItemizedDeductions;
+		this.dependents = dependents;
+	}
+
 	/**
 	 * @param taxPayerProfileKey
 	 * @param timestamp
@@ -243,7 +264,7 @@ public class TaxPayerProfileEntity {
 		this.dependents = dependents;
 	}
 
-	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
+	public TaxPayerProfileEntity(String taxPayerProfileKey, Date timestamp, List<PoliticalDivisionEntity> politicalDivisions, MonetaryAmountEntity annualIncome, MonetaryAmountEntity selfEmployedIncome, MonetaryAmountEntity capitalGainsIncome, MonetaryAmountEntity mortgageInterest, MonetaryAmountEntity realPropertyMarketValue, String consumerExpenditureProfileKey, TaxFilingStatus taxFilingStatus, MonetaryAmountEntity preTaxContributions, MonetaryAmountEntity otherItemizedDeductions, Integer dependents) {
 		if (taxPayerProfileKey == null) {
 			this.taxPayerProfileKey = UUID.randomUUID().toString();
 		} else {
@@ -256,6 +277,8 @@ public class TaxPayerProfileEntity {
 		}
 		this.politicalDivisions = politicalDivisions;
 		this.annualIncome = annualIncome;
+		this.selfEmployedIncome = selfEmployedIncome;
+		this.capitalGainsIncome = capitalGainsIncome;
 		this.mortgageInterest = mortgageInterest;
 		this.realPropertyMarketValue = realPropertyMarketValue;
 		this.consumerExpenditureProfileKey = consumerExpenditureProfileKey;
@@ -266,11 +289,11 @@ public class TaxPayerProfileEntity {
 	}
 
 	public TaxPayerProfileEntity(TaxPayerProfile taxPayerProfile) {
-		this(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(), politicalDivisionListToPoliticalDivisionEntityList(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()), taxPayerProfile.getConsumerExpenditureProfileKey(), taxPayerProfile.getTaxFilingStatus(), new MonetaryAmountEntity(taxPayerProfile.getPreTaxContributions()), new MonetaryAmountEntity(taxPayerProfile.getOtherItemizedDeductions()), taxPayerProfile.getDependents());
+		this(taxPayerProfile.getTaxPayerProfileKey(), taxPayerProfile.getTimestamp(), politicalDivisionListToPoliticalDivisionEntityList(taxPayerProfile.getPoliticalDivisions()), new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()), new MonetaryAmountEntity(taxPayerProfile.getSelfEmployedIncome()), new MonetaryAmountEntity(taxPayerProfile.getCapitalGainsIncome()), new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()), new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()), taxPayerProfile.getConsumerExpenditureProfileKey(), taxPayerProfile.getTaxFilingStatus(), new MonetaryAmountEntity(taxPayerProfile.getPreTaxContributions()), new MonetaryAmountEntity(taxPayerProfile.getOtherItemizedDeductions()), taxPayerProfile.getDependents());
 	}
-	
+
 	public TaxPayerProfile toTaxPayerProfile() {
-		return new TaxPayerProfile(this.getTaxPayerProfileKey(), this.getTimestamp(), politicalDivisionEntityListToPoliticalDivisionList(this.getPoliticalDivisions()), this.getAnnualIncome().toMonetaryAmount(), this.getMortgageInterest().toMonetaryAmount(), this.getRealPropertyMarketValue().toMonetaryAmount(), this.getConsumerExpenditureProfileKey(), this.getTaxFilingStatus(), this.getPreTaxContributions().toMonetaryAmount(), this.getOtherItemizedDeductions().toMonetaryAmount(), this.getDependents());
+		return new TaxPayerProfile(this.getTaxPayerProfileKey(), this.getTimestamp(), politicalDivisionEntityListToPoliticalDivisionList(this.getPoliticalDivisions()), this.getAnnualIncome().toMonetaryAmount(), this.getSelfEmployedIncome().toMonetaryAmount(), this.getCapitalGainsIncome().toMonetaryAmount(), this.getMortgageInterest().toMonetaryAmount(), this.getRealPropertyMarketValue().toMonetaryAmount(), this.getConsumerExpenditureProfileKey(), this.getTaxFilingStatus(), this.getPreTaxContributions().toMonetaryAmount(), this.getOtherItemizedDeductions().toMonetaryAmount(), this.getDependents());
 	}
 
 	public static List<PoliticalDivisionEntity> politicalDivisionListToPoliticalDivisionEntityList(List<PoliticalDivision> politicalDivisions) {
@@ -303,6 +326,14 @@ public class TaxPayerProfileEntity {
 		return annualIncome;
 	}
 
+	public MonetaryAmountEntity getSelfEmployedIncome() {
+		return selfEmployedIncome;
+	}
+
+	public MonetaryAmountEntity getCapitalGainsIncome() {
+		return capitalGainsIncome;
+	}
+
 	/**
 	 * @return the mortgageInterest
 	 */
@@ -322,6 +353,14 @@ public class TaxPayerProfileEntity {
 	 */
 	public void setAnnualIncome(MonetaryAmountEntity annualIncome) {
 		this.annualIncome = annualIncome;
+	}
+
+	public void setSelfEmployedIncome(MonetaryAmountEntity selfEmployedIncome) {
+		this.selfEmployedIncome = selfEmployedIncome;
+	}
+
+	public void setCapitalGainsIncome(MonetaryAmountEntity capitalGainsIncome) {
+		this.capitalGainsIncome = capitalGainsIncome;
 	}
 
 	/**
@@ -430,6 +469,8 @@ public class TaxPayerProfileEntity {
 				Objects.equals(timestamp, that.timestamp) &&
 				Objects.equals(politicalDivisions, that.politicalDivisions) &&
 				Objects.equals(annualIncome, that.annualIncome) &&
+				Objects.equals(selfEmployedIncome, that.selfEmployedIncome) &&
+				Objects.equals(capitalGainsIncome, that.capitalGainsIncome) &&
 				Objects.equals(mortgageInterest, that.mortgageInterest) &&
 				Objects.equals(realPropertyMarketValue, that.realPropertyMarketValue) &&
 				Objects.equals(consumerExpenditureProfileKey, that.consumerExpenditureProfileKey) &&
@@ -441,7 +482,7 @@ public class TaxPayerProfileEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(taxPayerProfileKey, timestamp, politicalDivisions, annualIncome, mortgageInterest, realPropertyMarketValue, consumerExpenditureProfileKey, taxFilingStatus, preTaxContributions, otherItemizedDeductions, dependents);
+		return Objects.hash(taxPayerProfileKey, timestamp, politicalDivisions, annualIncome, selfEmployedIncome, capitalGainsIncome, mortgageInterest, realPropertyMarketValue, consumerExpenditureProfileKey, taxFilingStatus, preTaxContributions, otherItemizedDeductions, dependents);
 	}
 
 	@Override
@@ -452,6 +493,8 @@ public class TaxPayerProfileEntity {
 				", timestamp=" + timestamp +
 				", politicalDivisions=" + politicalDivisions +
 				", annualIncome=" + annualIncome +
+				", selfEmployedIncome=" + selfEmployedIncome +
+				", capitalGainsIncome=" + capitalGainsIncome +
 				", mortgageInterest=" + mortgageInterest +
 				", realPropertyMarketValue=" + realPropertyMarketValue +
 				", consumerExpenditureProfileKey='" + consumerExpenditureProfileKey + '\'' +

@@ -34,8 +34,16 @@ public class MonetaryAmountEntity {
 	 */
 	public MonetaryAmountEntity(Currency currency, BigDecimal amount) {
 		super();
-		this.currency = currency;
-		this.amount = amount;
+		if (currency == null) {
+			this.currency = Currency.getInstance(DEFAULT_CURRENCY_CODE);
+		} else {
+			this.currency = currency;
+		}
+		if (amount == null) {
+			this.amount = BigDecimal.ZERO;
+		} else {
+			this.amount = amount;
+		}
 	}
 
 	/**
@@ -44,7 +52,11 @@ public class MonetaryAmountEntity {
 	public MonetaryAmountEntity(BigDecimal amount) {
 		super();
 		this.currency = Currency.getInstance(DEFAULT_CURRENCY_CODE);
-		this.amount = amount;
+		if (amount == null) {
+			this.amount = BigDecimal.ZERO;
+		} else {
+			this.amount = amount;
+		}
 	}
 
 	/**
@@ -57,7 +69,7 @@ public class MonetaryAmountEntity {
 	}
 
 	public MonetaryAmountEntity(MonetaryAmount monetaryAmount) {
-		this(monetaryAmount.getAmount());
+		this(monetaryAmount.getCurrency(), monetaryAmount.getAmount());
 	}
 	
 	public MonetaryAmount toMonetaryAmount() {

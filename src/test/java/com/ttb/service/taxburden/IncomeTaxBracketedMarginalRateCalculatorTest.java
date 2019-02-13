@@ -149,7 +149,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 			fail("Unexpected TaxCalculationException");
 		}
 		assertNotNull(result);
-		assertEquals(7700, result.getAmount().longValue());
+		assertEquals(10700, result.getAmount().longValue());
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
 			fail("Unexpected TaxCalculationException");
 		}
 		assertNotNull(result);
-		assertEquals(7150, result.getAmount().longValue());
+		assertEquals(9950, result.getAmount().longValue());
 	}
 
     @Test
@@ -220,6 +220,6 @@ public class IncomeTaxBracketedMarginalRateCalculatorTest {
             fail("Unexpected TaxCalculationException");
         }
         assertNotNull(result);
-        assertEquals(6200, result.getAmount().longValue());
+        assertEquals(7550, result.getAmount().longValue());
     }
 }

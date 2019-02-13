@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,8 +142,11 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 						taxPayerProfile.getTimestamp(),
 						findPoliticalDivisionEntities(taxPayerProfile.getPoliticalDivisions()),
 						new MonetaryAmountEntity(taxPayerProfile.getAnnualIncome()),
+						new MonetaryAmountEntity(taxPayerProfile.getSelfEmployedIncome()),
+						new MonetaryAmountEntity(taxPayerProfile.getCapitalGainsIncome()),
 						new MonetaryAmountEntity(taxPayerProfile.getMortgageInterest()),
 						new MonetaryAmountEntity(taxPayerProfile.getRealPropertyMarketValue()),
+						taxPayerProfile.getConsumerExpenditureProfileKey(),
 						taxPayerProfile.getTaxFilingStatus(),
 						new MonetaryAmountEntity(taxPayerProfile.getPreTaxContributions()),
 						new MonetaryAmountEntity(taxPayerProfile.getOtherItemizedDeductions()),
@@ -231,7 +235,7 @@ public class TaxBurdenServiceImpl implements TaxBurdenService {
 					PoliticalDivisionEntity politicalDivision = politicalDivisionRepository.findByFips(taxDefinition.getPoliticalDivisionKey());
 					logger.debug("politicalDivision: " + politicalDivision);
 					TaxEntryEntity taxEntry = createTaxEntry(taxPayerProfile, politicalDivision, taxDefinition, taxBurdenReport);
-					if (taxEntry != null) {
+					if (taxEntry != null && taxEntry.getAmount().getAmount().compareTo(BigDecimal.ZERO) > 0) {
                         taxBurdenReport.addTaxEntry(taxEntry);
                     }
 				}
