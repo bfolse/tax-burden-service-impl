@@ -27,9 +27,9 @@ import static org.mockito.BDDMockito.given;
 @RunWith(SpringRunner.class)
 public class IncomeTaxBracketedMarginalRateCalculatorTest {
 
-	public static final String TEST_INCOME_TAX_ONE = "TEST_INCOME_TAX_ONE";
-	public static final String TEST_INCOME_TAX_TWO = "TEST_INCOME_TAX_TWO";
-    public static final String TEST_INCOME_TAX_THREE = "TEST_INCOME_TAX_THREE";
+	public static final String TEST_INCOME_TAX_ONE = "TEST_CAPITAL_GAINS_TAX_ONE";
+	public static final String TEST_INCOME_TAX_TWO = "TEST_CAPITAL_GAINS_TAX_TWO";
+    public static final String TEST_INCOME_TAX_THREE = "TEST_CAPITAL_GAINS_TAX_THREE";
 
 	private IncomeTaxBracketedMarginalRateCalculator incomeTaxBracketedMarginalRateCalculator;
 

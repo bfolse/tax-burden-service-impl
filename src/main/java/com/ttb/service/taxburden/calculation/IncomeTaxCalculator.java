@@ -93,6 +93,25 @@ public abstract class IncomeTaxCalculator implements TaxCalculator {
         if (taxableIncome.compareTo(BigDecimal.ZERO) < 0) {
             taxableIncome = BigDecimal.ZERO;
         }
+
+        // Capital Losses
+        if (taxPayerProfile.getCapitalGainsIncome() != null) {
+            BigDecimal capitalGainsIncome = taxPayerProfile.getCapitalGainsIncome().getAmount();
+            if (capitalGainsIncome.compareTo(BigDecimal.ZERO) < 0) {
+                BigDecimal loss = capitalGainsIncome.abs();
+                // Can deduct up to $3000 in capital losses
+                // TODO make this threshold value dynamic
+                if (loss.compareTo(BigDecimal.valueOf(3000.00)) < 0) {
+                    taxableIncome = taxableIncome.subtract(loss);
+                } else {
+                    taxableIncome = taxableIncome.subtract(BigDecimal.valueOf(3000.00));
+                }
+            }
+        }
+
+        // Set taxableIncome in TaxBurdenReport for other calculators to use
+        taxBurdenReportEntity.setTaxableIncome(taxableIncome);
+
         return taxableIncome;
     }
 

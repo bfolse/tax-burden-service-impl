@@ -1,7 +1,7 @@
 -- tax_definition US federal income
 INSERT INTO public.tax_definition(
             id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
-    VALUES (nextval('public.hibernate_sequence'), 'US_FEDERAL_INCOME', 'US Federal Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_FEDERAL', 'US', 10)
+    VALUES (nextval('public.hibernate_sequence'), 'US_FEDERAL_INCOME', 'US Federal Income', 'incomeTaxBracketedMarginalRateCalculator', 'INCOME_FEDERAL', 'US', 9)
     ;
 
 -- income_tax_definition US federal income
@@ -182,6 +182,59 @@ INSERT INTO public.tax_rate_set_tax_rates(
 	-- US Federal Payroll Self-Employed - Medicare Joint
 	(108, 113),
 	(108, 114)
+    ;
+
+-- tax_definition US capital gains
+INSERT INTO public.tax_definition(id, tax_definition_key, description, tax_calc_strategy, tax_type, political_division_key, ordinal)
+    VALUES (nextval('public.hibernate_sequence'), 'US_CAPITAL_GAINS', 'US Federal Capital Gains', 'capitalGainsTaxBracketedRateCalculator', 'CAPITAL_GAINS_FEDERAL', 'US', 10)
+    ;
+
+-- tax_rate_set US capital gains
+INSERT INTO public.tax_rate_set(id, tax_definition_key, tax_filing_status)
+	VALUES
+	(121, 'US_CAPITAL_GAINS', 'SINGLE'),
+	(122, 'US_CAPITAL_GAINS', 'JOINT'),
+	(123, 'US_CAPITAL_GAINS', 'MARRIED_SEPARATE'),
+	(124, 'US_CAPITAL_GAINS', 'HEAD_OF_HOUSEHOLD')
+	;
+
+-- tax_rate US capital gains
+INSERT INTO public.tax_rate(id, tax_definition_key, rate, range_low, range_high)
+    VALUES
+    -- Single and Married filing separate
+    (121, 'US_CAPITAL_GAINS', 0.0, 0, 39375),
+    (122, 'US_CAPITAL_GAINS', 0.15, 39375, 434550),
+    (123, 'US_CAPITAL_GAINS', 0.20, 434550, null),
+    -- Joint
+    (124, 'US_CAPITAL_GAINS', 0.0, 0, 78750),
+    (125, 'US_CAPITAL_GAINS', 0.15, 78750, 488850),
+    (126, 'US_CAPITAL_GAINS', 0.20, 488850, null),
+    -- Head of Household
+    (127, 'US_CAPITAL_GAINS', 0.0, 0, 52750),
+    (128, 'US_CAPITAL_GAINS', 0.15, 52750, 244425),
+    (129, 'US_CAPITAL_GAINS', 0.20, 244425, null)
+    ;
+
+-- tax_rate_set_tax_rates federal payroll
+INSERT INTO public.tax_rate_set_tax_rates(
+	tax_rate_set_id, tax_rate_id)
+	VALUES
+	-- US Capital Gains Single
+	(121, 121),
+	(121, 122),
+	(121, 123),
+	-- US Capital Gains Joint
+	(122, 124),
+	(122, 125),
+	(122, 126),
+	-- US Capital Gains Married Filing Separate
+	(123, 121),
+	(123, 122),
+	(123, 123),
+	-- US Capital Gains Head of Household
+	(124, 127),
+	(124, 128),
+	(124, 129)
     ;
 
 -- tax_definition_sales_GA.sql

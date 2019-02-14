@@ -33,6 +33,7 @@ public class TaxCalculatorUtils {
                     adjustedGrossIncome = adjustedGrossIncome.subtract(taxEntry.getAmount().getAmount());
                 } else if (taxEntry.getTaxType() == TaxType.PAYROLL_SELF_EMP_FEDERAL) {
                     // Self-employed payroll tax, subtract 1/2
+                    // TODO Make this value dynamic
                     BigDecimal selfEmpPayrollTax = taxEntry.getAmount().getAmount();
                     if (selfEmpPayrollTax.compareTo(BigDecimal.ZERO) > 0) {
                         adjustedGrossIncome = adjustedGrossIncome.subtract(selfEmpPayrollTax.divide(BigDecimal.valueOf(2)));
@@ -40,6 +41,18 @@ public class TaxCalculatorUtils {
                 }
             }
         }
+        // Add capital gains earnings
+        if (taxPayerProfile.getCapitalGainsIncome() != null) {
+            BigDecimal capitalGainsIncome = taxPayerProfile.getCapitalGainsIncome().getAmount();
+            // Don't subtract loss, handled as a deduction
+            if (capitalGainsIncome.compareTo(BigDecimal.ZERO) > 0) {
+                adjustedGrossIncome = adjustedGrossIncome.add(capitalGainsIncome);
+            }
+        }
+
+        // Set Adjusted Gross Income in TaxBurdenReport for other calculators to use
+        taxBurdenReport.setAdjustedGrossIncome(adjustedGrossIncome);
+
         return adjustedGrossIncome;
     }
 
@@ -47,6 +60,7 @@ public class TaxCalculatorUtils {
      * Use a simple method to calculate estimated income tax based solely on adjustedGrossIncome.
      * This method should be used in tax calculators that need an income tax estimate as an input,
      * but must be executed prior to more accurate income tax calculation.
+     * TODO Make these brackets dynamic
      * @param adjustedGrossIncome
      */
     public static BigDecimal calculateEstimatedSimpleIncomeTax(BigDecimal adjustedGrossIncome) {
@@ -100,6 +114,47 @@ public class TaxCalculatorUtils {
                     break;
                 }
             }
+        }
+        return tax;
+    }
+
+    /**
+     * Calculate simple (non-marginal) tax based on tax brackets.
+     *
+     * @param bracketAmount Amount used to determine which bracket to use
+     * @param taxableAmount Amount used for calculating tax
+     * @param rates List of rates
+     * @return
+     */
+    public static BigDecimal calculateBracketedTax(BigDecimal bracketAmount, BigDecimal taxableAmount, List<TaxRateEntity> rates) throws TaxCalculationException {
+        BigDecimal tax = BigDecimal.ZERO;
+        if (!(taxableAmount.compareTo(BigDecimal.ZERO) <= 0)) {
+            // Sort tax rates low to high
+            rates.sort(new TaxRateComparator());
+            logger.debug("Sorted tax rates: {}" + rates);
+            TaxRateEntity applicableTaxRate = null;
+            // Rate list
+            for (TaxRateEntity rate : rates) {
+                BigDecimal rangeHigh;
+                if (rate.getRangeHigh() == null) {
+                    // Null rangeHigh signifies open ended range, substitute with max value
+                    rangeHigh = BigDecimal.valueOf(Double.MAX_VALUE);
+                } else {
+                    rangeHigh = new BigDecimal(rate.getRangeHigh());
+                }
+                BigDecimal rangeLow = new BigDecimal(rate.getRangeLow());
+                if (bracketAmount.compareTo(rangeHigh) <= 0 && bracketAmount.compareTo(rangeLow) > 0) {
+                    applicableTaxRate = rate;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            if (applicableTaxRate == null) {
+                logger.error("No applicable rate found");
+                throw new TaxCalculationException("No applicable rate found");
+            }
+            tax = taxableAmount.multiply(applicableTaxRate.getRate());
         }
         return tax;
     }

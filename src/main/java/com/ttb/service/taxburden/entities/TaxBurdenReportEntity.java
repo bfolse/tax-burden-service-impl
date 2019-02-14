@@ -1,20 +1,12 @@
 package com.ttb.service.taxburden.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.ttb.service.taxburden.domain.TaxBurdenReport;
 import com.ttb.service.taxburden.domain.TaxEntry;
@@ -43,6 +35,10 @@ public class TaxBurdenReportEntity {
         inverseJoinColumns={ @JoinColumn(name="tax_entries_id", referencedColumnName="id", unique=true) }
     )
     private List<TaxEntryEntity> taxEntries;
+    @Transient
+	private BigDecimal adjustedGrossIncome = BigDecimal.ZERO;
+    @Transient
+	private BigDecimal taxableIncome = BigDecimal.ZERO;
 
 	/**
 	 * @param taxPayerProfile
@@ -57,7 +53,7 @@ public class TaxBurdenReportEntity {
 	}
 
 	/**
-	 * @param taxPayerId
+	 * @param taxPayerProfile
 	 */
 	public TaxBurdenReportEntity(TaxPayerProfileEntity taxPayerProfile) {
 		super();
@@ -197,6 +193,22 @@ public class TaxBurdenReportEntity {
 		if (taxEntries != null) {
 			this.taxEntries.add(taxEntry);
 		}
+	}
+
+	public BigDecimal getAdjustedGrossIncome() {
+		return adjustedGrossIncome;
+	}
+
+	public void setAdjustedGrossIncome(BigDecimal adjustedGrossIncome) {
+		this.adjustedGrossIncome = adjustedGrossIncome;
+	}
+
+	public BigDecimal getTaxableIncome() {
+		return taxableIncome;
+	}
+
+	public void setTaxableIncome(BigDecimal taxableIncome) {
+		this.taxableIncome = taxableIncome;
 	}
 
 	/* (non-Javadoc)

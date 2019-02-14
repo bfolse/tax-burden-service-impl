@@ -41,6 +41,7 @@ Private Github repo?
 Add tax types:
   Federal Income
     Capital Gains
+    Net Investment Income Tax
     AMT
     Small Business (Qualified Business Income Deduction)
     Student Loan interest adjustment to income
@@ -53,6 +54,7 @@ Add other states
   City/County Sales
   State Income - DONE (see suggested improvements below)
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
+    ** Re-work exemptions based on this research: https://taxfoundation.org/state-personal-exemptions-post-tcja/?utm_source=Tax+Foundation+Newsletters&utm_campaign=b37b2df1f7-EMAIL_CAMPAIGN_2019_02_06_03_53_COPY_04&utm_medium=email&utm_term=0_8387957ec9-b37b2df1f7-429377669&mc_cid=b37b2df1f7&mc_eid=cebc9f8936
   City/County Income
     Alabama cities have an occupational (income) tax
     Indiana counties all collect income tax
@@ -64,8 +66,8 @@ Add other states
     New York City Income Tax
     Ohio cities and school districts
     Oregon cities/counties (2)
-
   Capital Gains
+    State and Local
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
