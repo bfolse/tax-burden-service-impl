@@ -11,6 +11,7 @@ WHERE ST_Contains(geom, ST_PointFromText('POINT(-84.3330 33.7536)', 4326));
 
 Create SQL from Shape File:
 shp2pgsql -s 4269:4326 -I -d cb_2017_us_county_500k.shp public.boundary_county > boundary_county.sql
+shp2pgsql -s 4269:4326 -a -g geom cb_2017_<STATE FIPS>_place_500k.shp public.boundary_place > data_boundary_place_<STATE ABBREV>-postgresql.sql
 
 Postal Codes for testing:
 30306 - Multi-county, multi-city, unincorporated
