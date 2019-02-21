@@ -1,0 +1,64 @@
+Adams County,4.750%
+Alamosa County,5.900%
+Arapahoe County,4.250%
+Archuleta County,6.900%
+Baca County,2.900%
+Bent County,3.900%
+Boulder County,4.985%
+Broomfield County,4.000%
+Chaffee County,5.650%
+Cheyenne County,2.900%
+Clear Creek County,4.550%
+Conejos County,2.900%
+Costilla County,3.900%
+Crowley County,4.900%
+Custer County,4.900%
+Delta County,4.900%
+Denver County,4.000%
+Dolores County,2.900%
+Douglas County,5.000%
+Eagle County,4.400%
+El Paso County,5.130%
+Elbert County,3.900%
+Fremont County,5.400%
+Garfield County,3.900%
+Gilpin County,2.900%
+Grand County,4.200%
+Gunnison County,4.500%
+Hinsdale County,7.900%
+Huerfano County,4.900%
+Jackson County,6.900%
+Jefferson County,4.500%
+Kiowa County,2.900%
+Kit Carson County,2.900%
+La Plata County,4.900%
+Lake County,6.900%
+Larimer County,3.700%
+Las Animas County,4.400%
+Lincoln County,4.900%
+Logan County,3.900%
+Mesa County,4.900%
+Mineral County,5.500%
+Moffat County,4.900%
+Montezuma County,2.900%
+Montrose County,4.650%
+Morgan County,2.900%
+Otero County,3.900%
+Ouray County,5.450%
+Park County,3.900%
+Phillips County,3.900%
+Pitkin County,6.500%
+Prowers County,3.900%
+Pueblo County,3.900%
+Rio Blanco County,6.500%
+Rio Grande County,5.500%
+Routt County,3.900%
+Saguache County,5.400%
+San Juan County,9.400%
+San Miguel County,3.900%
+Sedgwick County,4.900%
+Summit County,6.375%
+Teller County,3.900%
+Washington County,4.400%
+Weld County,2.900%
+Yuma County,2.900%

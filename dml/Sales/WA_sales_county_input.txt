@@ -1,0 +1,39 @@
+Adams County,7.700%
+Asotin County,7.700%
+Benton County,8.000%
+Chelan County,8.200%
+Clallam County,8.500%
+Clark County,7.700%
+Columbia County,8.200%
+Cowlitz County,7.800%
+Douglas County,7.800%
+Ferry County,7.700%
+Franklin County,8.000%
+Garfield County,7.900%
+Grant County,7.900%
+Grays Harbor County,8.800%
+Island County,8.700%
+Jefferson County,9.000%
+King County,10.000%
+Kitsap County,9.000%
+Kittitas County,8.000%
+Klickitat County,7.000%
+Lewis County,7.800%
+Lincoln County,8.000%
+Mason County,8.500%
+Okanogan County,7.800%
+Pacific County,8.100%
+Pend Oreille County,7.600%
+Pierce County,9.300%
+San Juan County,8.100%
+Skagit County,8.100%
+Skamania County,7.700%
+Snohomish County,9.100%
+Spokane County,8.100%
+Stevens County,7.600%
+Thurston County,7.900%
+Wahkiakum County,7.600%
+Walla Walla County,8.100%
+Whatcom County,7.900%
+Whitman County,7.800%
+Yakima County,7.900%

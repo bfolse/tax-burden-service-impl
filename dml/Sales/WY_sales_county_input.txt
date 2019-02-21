@@ -1,0 +1,23 @@
+Albany County,6.000%
+Big Horn County,5.000%
+Campbell County,5.000%
+Carbon County,5.000%
+Converse County,5.000%
+Crook County,6.000%
+Fremont County,5.000%
+Goshen County,5.250%
+Hot Springs County,6.000%
+Johnson County,5.000%
+Laramie County,6.000%
+Lincoln County,5.000%
+Natrona County,5.000%
+Niobrara County,6.000%
+Park County,5.000%
+Platte County,6.000%
+Sheridan County,6.000%
+Sublette County,4.000%
+Sweetwater County,5.000%
+Teton County,6.000%
+Uinta County,5.000%
+Washakie County,5.000%
+Weston County,6.000%

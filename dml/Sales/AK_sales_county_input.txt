@@ -1,0 +1,27 @@
+Aleutians East Borough,0.000%
+Aleutians West Census Area,0.000%
+Anchorage Municipality,0.000%
+Bethel Census Area,6.000%
+Bristol Bay Borough,0.000%
+Wrangell City and Borough,7.000%
+Denali Borough,0.000%
+Dillingham Census Area,6.000%
+Fairbanks North Star Borough,0.000%
+Haines Borough,5.500%
+Hoonah-Angoon Census Area,0.000%
+Juneau City and Borough,5.000%
+Kenai Peninsula Borough,3.000%
+Ketchikan Gateway Borough,2.500%
+Kodiak Island Borough,0.000%
+Lake and Peninsula Borough,0.000%
+Matanuska-Susitna Borough,0.000%
+Nome Census Area,5.000%
+North Slope Borough,0.000%
+Northwest Arctic Borough,0.000%
+Petersburg Borough,6.000%
+Sitka City and Borough,5.000%
+Skagway Municipality,3.000%
+Southeast Fairbanks Census Area,0.000%
+Valdez-Cordova Census Area,0.000%
+Yakutat City and Borough,5.000%
+Yukon-Koyukuk Census Area,0.000%

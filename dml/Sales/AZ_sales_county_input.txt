@@ -1,0 +1,15 @@
+Apache County,6.100%
+Cochise County,6.100%
+Coconino County,6.900%
+Gila County,6.600%
+Graham County,6.600%
+Greenlee County,6.100%
+La Paz County,7.600%
+Maricopa County,6.300%
+Mohave County,5.850%
+Navajo County,6.100%
+Pima County,6.100%
+Pinal County,7.200%
+Santa Cruz County,6.600%
+Yavapai County,6.350%
+Yuma County,6.712%

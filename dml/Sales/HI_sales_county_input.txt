@@ -1,0 +1,5 @@
+Hawaii County,4.000%
+Honolulu County,4.500%
+Kalawao County,4.000%
+Kauai County,4.000%
+Maui County,4.000%

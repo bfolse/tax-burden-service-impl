@@ -1,0 +1,58 @@
+Alameda County,9.250%
+Alpine County,7.250%
+Amador County,7.750%
+Butte County,7.250%
+Calaveras County,7.250%
+Colusa County,7.250%
+Contra Costa County,8.250%
+Del Norte County,7.500%
+El Dorado County,7.250%
+Fresno County,7.975%
+Glenn County,7.250%
+Humboldt County,7.750%
+Imperial County,7.750%
+Inyo County,7.750%
+Kern County,7.250%
+Kings County,7.250%
+Lake County,7.250%
+Lassen County,7.250%
+Los Angeles County,9.500%
+Madera County,7.750%
+Marin County,8.250%
+Mariposa County,7.750%
+Mendocino County,7.875%
+Merced County,7.750%
+Modoc County,7.250%
+Mono County,7.250%
+Monterey County,7.750%
+Napa County,7.750%
+Nevada County,7.500%
+Orange County,7.750%
+Placer County,7.250%
+Plumas County,7.250%
+Riverside County,7.750%
+Sacramento County,7.750%
+San Benito County,7.250%
+San Bernardino County,7.750%
+San Diego County,7.750%
+San Francisco County,8.500%
+San Joaquin County,7.750%
+San Luis Obispo County,7.250%
+San Mateo County,8.750%
+Santa Barbara County,7.750%
+Santa Clara County,9.000%
+Santa Cruz County,8.500%
+Shasta County,7.250%
+Sierra County,7.250%
+Siskiyou County,7.250%
+Solano County,7.375%
+Sonoma County,8.125%
+Stanislaus County,7.875%
+Sutter County,7.250%
+Tehama County,7.250%
+Trinity County,7.250%
+Tulare County,7.750%
+Tuolumne County,7.250%
+Ventura County,7.250%
+Yolo County,7.250%
+Yuba County,7.250%

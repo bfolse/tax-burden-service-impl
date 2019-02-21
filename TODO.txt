@@ -53,6 +53,7 @@ Add other states
   Property - DONE with SA effective rate for counties
   State Sales - DONE
   City/County Sales
+    New Jersey has reduced sales tax rates in Urban Enterprise Zones
   State Income - DONE (see suggested improvements below)
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
     ** Re-work exemptions based on this research: https://taxfoundation.org/state-personal-exemptions-post-tcja/?utm_source=Tax+Foundation+Newsletters&utm_campaign=b37b2df1f7-EMAIL_CAMPAIGN_2019_02_06_03_53_COPY_04&utm_medium=email&utm_term=0_8387957ec9-b37b2df1f7-429377669&mc_cid=b37b2df1f7&mc_eid=cebc9f8936

@@ -1,0 +1,29 @@
+Beaver County,6.200%
+Box Elder County,5.950%
+Cache County,6.550%
+Carbon County,6.200%
+Daggett County,6.950%
+Davis County,6.750%
+Duchesne County,6.200%
+Emery County,6.200%
+Garfield County,6.950%
+Grand County,6.700%
+Iron County,5.950%
+Juab County,5.950%
+Kane County,6.950%
+Millard County,6.200%
+Morgan County,5.950%
+Piute County,5.950%
+Rich County,6.200%
+Salt Lake County,7.100%
+San Juan County,6.200%
+Sanpete County,6.200%
+Sevier County,6.200%
+Summit County,6.800%
+Tooele County,6.450%
+Uintah County,6.050%
+Utah County,6.750%
+Wasatch County,5.950%
+Washington County,6.050%
+Wayne County,5.950%
+Weber County,7.100%

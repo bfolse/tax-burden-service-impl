@@ -1,0 +1,97 @@
+Accomack County, 5.300%
+Albemarle County, 5.300%
+Alexandria City, 5.300%
+Alleghany County, 5.300%
+Amelia County, 5.300%
+Amherst County, 5.300%
+Appomattox County, 5.300%
+Arlington County, 6.000%
+Augusta County, 5.300%
+Bath County, 5.300%
+Bedford County, 5.300%
+Bland County, 5.300%
+Botetourt County, 5.300%
+Brunswick County, 5.300%
+Buchanan County, 5.300%
+Buckingham County, 5.300%
+Campbell County, 5.300%
+Caroline County, 5.300%
+Carroll County, 5.300%
+Charles City County, 5.300%
+Charlotte County, 5.300%
+Chesterfield County, 5.300%
+Clarke County, 5.300%
+Craig County, 5.300%
+Culpeper County, 5.300%
+Cumberland County, 5.300%
+Dickenson County, 5.300%
+Dinwiddie County, 5.300%
+Essex County, 5.300%
+Fairfax County, 6.000%
+Fauquier County, 5.300%
+Floyd County, 5.300%
+Fluvanna County, 5.300%
+Franklin County, 5.300%
+Frederick County, 5.300%
+Giles County, 5.300%
+Gloucester County, 5.300%
+Goochland County, 5.300%
+Grayson County, 5.300%
+Greene County, 5.300%
+Greensville County, 5.300%
+Halifax County, 5.300%
+Hanover County, 5.300%
+Henrico County, 5.300%
+Henry County, 5.300%
+Highland County, 5.300%
+Isle of Wight County, 6.000%
+James City County, 7.000%
+King and Queen County, 5.300%
+King George County, 5.300%
+King William County, 5.300%
+Lancaster County, 5.300%
+Lee County, 5.300%
+Loudoun County, 6.000%
+Louisa County, 5.300%
+Lunenburg County, 5.300%
+Madison County, 5.300%
+Mathews County, 5.300%
+Mecklenburg County, 5.300%
+Middlesex County, 5.300%
+Montgomery County, 5.300%
+Nelson County, 5.300%
+New Kent County, 5.300%
+Norfolk City, 5.300%
+Northampton County, 5.300%
+Northumberland County, 5.300%
+Nottoway County, 5.300%
+Orange County, 5.300%
+Page County, 5.300%
+Patrick County, 5.300%
+Pittsylvania County, 5.300%
+Powhatan County, 5.300%
+Prince Edward County, 5.300%
+Prince George County, 5.300%
+Prince William County, 6.000%
+Pulaski County, 5.300%
+Rappahannock County, 5.300%
+Richmond County, 5.300%
+Roanoke County, 5.300%
+Rockbridge County, 5.300%
+Rockingham County, 5.300%
+Russell County, 5.300%
+Scott County, 5.300%
+Shenandoah County, 5.300%
+Smyth County, 5.300%
+Southampton County, 6.000%
+Spotsylvania County, 5.300%
+Stafford County, 5.300%
+Surry County, 5.300%
+Sussex County, 5.300%
+Tazewell County, 5.300%
+Warren County, 5.300%
+Washington County, 5.300%
+Westmoreland County, 5.300%
+Wise County, 5.300%
+Wythe County, 5.300%
+York County, 7.000%
