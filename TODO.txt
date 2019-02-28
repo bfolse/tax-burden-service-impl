@@ -76,7 +76,7 @@ Add tests for isDeductItemized and isDeductPreTaxContributions
 
 Make AVERAGE_FUEL_PRICE_PER_GALLON dynamic in FuelTaxCalculator
 
-Sales tax rates by expenditure category? (Some states do this)
+Sales tax rates by expenditure category? (Some states do this: AZ, AR)
 
 Add helper in Web to calculate pre-tax deductions based on % of annual income
 Add helper in Web to calculate mortgage interest based on loan amount, interest rate, term, and date of mortgage
@@ -139,3 +139,35 @@ RI state income phases out stardard deductions and exemptions for high income ea
 
 SC state income allows dependent exemption only for those 6 years and younger.  Current solution
   has no dependent exemption.
+
+AL city sales tax - districts for:
+  "Spanish Fort East Shore District" and "Spanish Fort Town Center District",
+  "Tallassee with Elmore County" and "Tallassee within Tallapoosa County"
+  have different rates.  Need to be added to boundary and political division.
+
+AK city sales tax - Seldovia and some other Alaska cities have a different sales tax rate
+  from April-Sept (7.5%) than it does from Oct.-March (5%)
+
+AZ city sales tax - Queen Creek Special District
+
+CA city sales tax - Paso Robles, Ventura missing in census_place_fips file
+
+CO city sales tax - CO has Regional Transportation Districts, Local Improvement Districts, etc. that
+  need to be added to boundary files, political divisiond, and tax definitions
+  Missing in census_place_fips file: Creede
+
+IA city sales tax - missing in census_place_fips: Sutliff
+
+KS city sales tax - Kansas had Community Improvement Districts (CID), Transportation Development Districts (TDD),
+   and Sales Tax Revenue (STAR) bond areas that impose sales taxes
+
+MO city sales tax - 102 cities with sales tax in Missouri are missing in the census_place_fips file
+
+NJ has no city sales tax, but has Urban Enterprise Zones with reduced state sales tax.
+
+OH has Regional Transit Authorities that can levy sales tax
+
+OK city sales tax - missing in census_place_fips file: Cordell, Leflore, Lone Chimney, Shamrock, Vernon
+
+TX city sales tax - Texas has Development Districts, Transit Authorities, etc. that levy sales taxes
+
