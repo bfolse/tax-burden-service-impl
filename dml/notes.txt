@@ -5,3 +5,6 @@ Create County Property Tax insert SQL
 java -cp ../target/classes  com.ttb.service.taxburden.util.CountyPropertySAImport NC_property_county_input.txt > data_property_tax_<STATE>-postgresql.sql
 
 java -cp ../../target/classes  com.ttb.service.taxburden.util.CountyPropertySAImport <STATE>_property_county_input.txt <STATE FIPS> <STATE> ../census_place_fips_2016.csv > data_property_tax_<STATE>-postgresql.sql
+
+Create City Sales Tax insert SQL
+java -cp ../../target/classes  com.ttb.service.taxburden.util.CitySalesSTImport http://www.sale-tax.com/Illinois_all 17 IL ../census_place_fips_2016.csv SALES_TAX_GROUP_WITH_UNPREPARED_FOOD > data_sales_tax_city_IL-postgresql.sql

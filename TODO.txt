@@ -58,18 +58,27 @@ Add other states
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
     ** Re-work exemptions based on this research: https://taxfoundation.org/state-personal-exemptions-post-tcja/?utm_source=Tax+Foundation+Newsletters&utm_campaign=b37b2df1f7-EMAIL_CAMPAIGN_2019_02_06_03_53_COPY_04&utm_medium=email&utm_term=0_8387957ec9-b37b2df1f7-429377669&mc_cid=b37b2df1f7&mc_eid=cebc9f8936
   City/County Income
-    Alabama cities have an occupational (income) tax
+    Alabama cities have an occupational (income) tax - DONE
+    Arkansas (according to some) has school district income tax surchage, but nothing
+      specific is found on any official site.
+    Colorado cities (Aurora, Denver, Glendale, Greenwood Village, and Sheridan) hav
+      Occupational Privilege Tax
+    Delaware - Wilmington flat income tax 1.25% (earned income only) - DONE
     Indiana counties all collect income tax
-    Iowa has school district sur-taxes based on state income tax
+    Iowa has school district sur-taxes based on state income tax - need to add school district boundaries
     Kentucky has county and city occupational (income) taxes that apply to all wages
     Maryland has county income tax (flat rate, but different per county)
       Baltimore city has income tax
     Michigan cities have income taxes in addition to state income taxes
-    New York City Income Tax
+    New York
+      New York City Income Tax - DONE
+      Yonkers surtax based on state income tax - need to add surtax calculator
     Ohio cities and school districts
-    Oregon cities/counties (2)
+    Oregon cities/counties (2) - Transit Districts in Portland and Eugene and Multnomah County
+    Pennsylvania - many municipalities
   Capital Gains
     State and Local
+  Corporate
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions

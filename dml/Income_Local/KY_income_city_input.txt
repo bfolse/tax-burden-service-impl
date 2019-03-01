@@ -1,0 +1,102 @@
+Alexandria,1.50%
+Ashland,2.00%
+Bardstown,0.50%
+Beaver Dam,0.00%
+Bellevue,2.50%
+Benton,0.50%
+Berea,2.00%
+Bowling Green,1.85%
+Campbellsville,1.00%
+Carrollton,0.00%
+Central City,0.00%
+Cold Spring,1.00%
+Columbia,1.00%
+Corbin,0.00%
+Covington,2.45%
+Crescent Springs,1.00%
+Crestwood,0.00%
+Crittenden,0.00%
+Cynthiana,1.50%
+Danville,1.25%
+Dayton,2.00%
+Douglass Hills,0.00%
+Edgewood,1.00%
+Elizabethtown,1.35%
+Elsmere,1.25%
+Erlanger,1.50%
+Flatwoods,0.00%
+Florence,2.00%
+Fort Mitchell,1.00%
+Fort Thomas,1.25%
+Fort Wright,1.15%
+Frankfort,1.95%
+Franklin,1.00%
+Georgetown,1.00%
+Glasgow,1.50%
+Grayson,1.00%
+Greenville,0.00%
+Harrodsburg,1.00%
+Hazard,1.25%
+Henderson,1.00%
+Highland Heights,1.00%
+Hillview,1.50%
+Hodgenville,0.75%
+Hopkinsville,1.95%
+Hurstbourne,0.00%
+Independence,1.25%
+Jeffersontown,1.00%
+La Grange,1.00%
+Lancaster,0.00%
+Lawrenceburg,0.00%
+Lebanon,1.00%
+Leitchfield,1.20%
+Lexington-Fayette urban county,2.25%
+London,0.00%
+Louisville/Jefferson County metro government (balance),2.20%
+Ludlow,1.50%
+Lyndon,0.00%
+Madisonville,1.50%
+Mayfield,2.00%
+Maysville,1.95%
+Middlesborough,2.00%
+Middletown,0.00%
+Monticello,0.00%
+Morehead,1.50%
+Morganfield,0.00%
+Mount Sterling,0.00%
+Mount Washington,1.00%
+Murray,0.00%
+Newport,2.50%
+Nicholasville,1.50%
+Oak Grove,1.50%
+Owensboro,1.39%
+Paducah,2.00%
+Paintsville,1.00%
+Paris,1.50%
+Pikeville,2.00%
+Prestonsburg,1.50%
+Princeton,1.50%
+Prospect,0.00%
+Radcliff,2.00%
+Richmond,2.00%
+Russell,0.88%
+Russellville,2.00%
+Scottsville,1.50%
+Shelbyville,1.50%
+Shepherdsville,1.50%
+Shively,1.50%
+Somerset,0.00%
+Southgate,2.50%
+St Matthews,0.00%
+Stanford,0.65%
+Taylor Mill,2.00%
+Union,0.00%
+Versailles,1.50%
+Villa Hills,1.50%
+Vine Grove,1.00%
+Walton,0.00%
+West Liberty,0.50%
+Williamsburg,0.00%
+Williamstown,0.00%
+Wilmore,2.00%
+Winchester,2.00%

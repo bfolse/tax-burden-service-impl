@@ -1,7 +1,5 @@
 package com.ttb.service.taxburden.util;
 
-import com.ttb.service.taxburden.domain.PoliticalDivision;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -10,85 +8,71 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * args[0] county sales tax (per state) file
+ * args[0] city income tax (per state) file
  * args[1] state fips code - 2 char
  * args[2] state abbrev code - 2 char
  * args[3] political division file - census_place_fips_<year>.csv
- * args[4] expenditure category group - SALES_TAX_GROUP, SALES_TAX_GROUP_B, or SALES_TAX_GROUP_WITH_UNPREPARED_FOOD
  */
-public class CitySalesImport {
+public class CityIncomeImport {
 
     public static void main(String[] args) throws Exception {
 
-        String countyPropertyTaxFilename = args[0];
+        String cityIncomeTaxFilename = args[0];
         String stateFips = args[1];
         String stateAbbrev = args[2];
         String politicalDivisionFilename = args[3];
-        String expenditureCategoryGroup = args[4];
 
         // Load political divisions
         Map<String, PoliticalDivision> politicalDivisions = loadPoliticalDivisions(politicalDivisionFilename, stateFips);
 
-        // Process county property tax file
-        List lines = readFileInList(countyPropertyTaxFilename);
+        // Process city income tax file
+        List l = readFileInList(cityIncomeTaxFilename);
 
         // Tax Definition Insert
         StringBuffer taxDefinitionInsert = new StringBuffer();
-        taxDefinitionInsert.append("-- tax_definition_sales_" + stateAbbrev + ".sql\n");
+        taxDefinitionInsert.append("-- tax_definition_income_city_" + stateAbbrev + ".sql\n");
         taxDefinitionInsert.append("INSERT INTO public.tax_definition(id, political_division_key, tax_definition_key, description, tax_calc_strategy, tax_type, ordinal)\n");
         taxDefinitionInsert.append("VALUES\n");
 
         // Tax Rate Insert
         StringBuffer taxRateInsert = new StringBuffer();
-        taxRateInsert.append("-- tax_rate_sales_" + stateAbbrev + ".sql\n");
+        taxRateInsert.append("-- tax_rate_income_city_" + stateAbbrev + ".sql\n");
         taxRateInsert.append("INSERT INTO public.tax_rate(id, tax_definition_key, rate, range_low, range_high)\n");
         taxRateInsert.append("VALUES\n");
 
-        // Assessed Rate Insert
-        StringBuffer taxDefinitionExpenditureCategoryInsert = new StringBuffer();
-        taxDefinitionExpenditureCategoryInsert.append("-- tax_definition_expenditure_category_" + stateAbbrev + ".sql\n");
-        taxDefinitionExpenditureCategoryInsert.append("INSERT INTO public.tax_definition_expenditure_category(id, tax_definition_key, expenditure_category_group_key)\n");
-        taxDefinitionExpenditureCategoryInsert.append("VALUES\n");
-
-        Iterator<String> itr = lines.iterator();
+        Iterator<String> itr = l.iterator();
         while (itr.hasNext()) {
             String line = itr.next();
-            if (line.startsWith("#")) { continue; };
             String[] tokens = line.split(",");
-            String city = tokens[0].replace("\"", "");
-            String rateString = tokens[1].trim().replace("\"", "").replace("%", "");
+            String city = tokens[0];
+            String standardizedCity = standardizeName(city);
+            PoliticalDivision pd = politicalDivisions.get(standardizedCity);
+            if (pd == null) {
+                throw new Exception("Political Division for standardized city : " + standardizedCity + " in state: " + stateAbbrev + " not found");
+            }
+            String politicalDivisionKey = politicalDivisions.get(standardizedCity).fips;
+            if (politicalDivisionKey == null || "".equals(politicalDivisionKey)) {
+                throw new Exception("Political Division fips for city: " + city + " standardized: " + standardizedCity + " in state: " + stateAbbrev + " not found");
+            }
+            String taxDefinitionKey = standardizedCity + "_" + stateAbbrev + "_CITY_INCOME";
+            String description = politicalDivisions.get(standardizedCity).name.replace("'", "''") + " " + stateAbbrev + " Income";
+            String rateString = tokens[1].trim().replace("%", "");
             BigDecimal rate = new BigDecimal(rateString).multiply(BigDecimal.valueOf(0.01));
             if (rate.compareTo(BigDecimal.ZERO) > 0) {
-                String standardizedCity = standardizeName(city);
-                PoliticalDivision pd = politicalDivisions.get(standardizedCity);
-                if (pd == null) {
-                    System.out.println("Political Division for standardized city : " + standardizedCity + " in state: " + stateAbbrev + " not found");
-                    continue;
-                }
-                String politicalDivisionKey = pd.fips;
-                if (politicalDivisionKey == null || "".equals(politicalDivisionKey)) {
-                    System.out.println("Political Division fips for city: " + city + " standardized: " + standardizedCity + " in state: " + stateAbbrev + " not found");
-                    continue;
-                }
-                String taxDefinitionKey = standardizedCity + "_" + stateAbbrev + "_CITY_SALES";
-                String description = politicalDivisions.get(standardizedCity).name.replace("'", "''") + " " + stateAbbrev + " Sales";
                 String comma = ",";
                 if (!itr.hasNext()) {
                     comma = "";
                 }
 
-                taxDefinitionInsert.append("(nextval('public.hibernate_sequence'),'" + politicalDivisionKey + "','" + taxDefinitionKey + "','" + description + "','salesTaxCalculator','SALES_CITY',5)" + comma + "\n");
+                taxDefinitionInsert.append("(nextval('public.hibernate_sequence'),'" + politicalDivisionKey + "','" + taxDefinitionKey + "','" + description + "','incomeTaxFlatRateCalculator','INCOME_CITY',9)" + comma + "\n");
                 taxRateInsert.append("(nextval('public.hibernate_sequence'),'" + taxDefinitionKey + "'," + rate + ",null,null)" + comma + "\n");
-                taxDefinitionExpenditureCategoryInsert.append("(nextval('public.hibernate_sequence'),'" + taxDefinitionKey + "','" + expenditureCategoryGroup + "')" + comma + "\n");
             }
         }
         taxDefinitionInsert.append(";\n");
         taxRateInsert.append(";\n");
-        taxDefinitionExpenditureCategoryInsert.append(";\n");
-        System.out.println("-- Sales Tax for cities in " + stateAbbrev);
+        System.out.println("-- Income Tax for cities in " + stateAbbrev);
         System.out.println(taxDefinitionInsert.toString());
         System.out.println(taxRateInsert.toString());
-        System.out.println(taxDefinitionExpenditureCategoryInsert.toString());
         System.out.println();
     }
 
@@ -173,13 +157,16 @@ public class CitySalesImport {
                 .replace("&#39;", "")
                 .replace(".", "")
                 .replace(" ", "_")
+                .replace("/", "_")
+                .replace("-", "_")
                 .toUpperCase()
                 .replace("_CITY", "")
                 .replace("_TOWN", "")
                 .replace("_TOWNSHIP", "")
                 .replace("_VILLAGE", "")
                 .replace("SAINT_", "ST_")
-                .replace("FT_", "FORT_");
+                .replace("FT_", "FORT_")
+                .replace("_(BALANCE)", "");
     }
 
     public static List<String> readFileInList(String fileName) {
