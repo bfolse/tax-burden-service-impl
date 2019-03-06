@@ -160,6 +160,7 @@ public class CountySalesImport {
     private static String standardizeName(String name) {
         return name.trim()
                 .replace("'", "")
+                .replace("’", "")
                 .replace(".", "")
                 .replace(" County", "")
                 .replace(" Parish", "")

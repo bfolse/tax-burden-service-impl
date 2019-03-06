@@ -28,9 +28,8 @@ Add unit tests for spatial repositories - need PostGis embedded DB (not currentl
 Add integration tests for lat/lon methods in service impl
 
 Fix consumerExpenditureProfileKey in TaxPayerProfileEntity
-Evaluate removing Housing-Shelter from Expenditure Categories for sales tax
 
-Add address search to map
+Add address search to map - will require paid Google API
 
 Add Integration tests to Code Pipeline
 Add development branch to Git, switch Code Pipeline awsdev to use development branch
@@ -41,7 +40,7 @@ Private Github repo?
 
 Add tax types:
   Federal Income
-    Capital Gains
+    Capital Gains - DONE
     Net Investment Income Tax
     AMT
     Small Business (Qualified Business Income Deduction)
@@ -52,7 +51,7 @@ Add tax types:
 Add other states
   Property - DONE with SA effective rate for counties
   State Sales - DONE
-  City/County Sales
+  City/County Sales - DONE (see suggested improvements below)
     New Jersey has reduced sales tax rates in Urban Enterprise Zones
   State Income - DONE (see suggested improvements below)
     New Hampshire state tax on interest and dividends (see SA New Hampshire Income Tax)
@@ -61,15 +60,15 @@ Add other states
     Alabama cities have an occupational (income) tax - DONE
     Arkansas (according to some) has school district income tax surchage, but nothing
       specific is found on any official site.
-    Colorado cities (Aurora, Denver, Glendale, Greenwood Village, and Sheridan) hav
+    Colorado cities (Aurora, Denver, Glendale, Greenwood Village, and Sheridan) have
       Occupational Privilege Tax
     Delaware - Wilmington flat income tax 1.25% (earned income only) - DONE
-    Indiana counties all collect income tax
+    Indiana counties all collect income tax - DONE
     Iowa has school district sur-taxes based on state income tax - need to add school district boundaries
-    Kentucky has county and city occupational (income) taxes that apply to all wages
-    Maryland has county income tax (flat rate, but different per county)
-      Baltimore city has income tax
-    Michigan cities have income taxes in addition to state income taxes
+    Kentucky has county and city occupational (income) taxes that apply to all wages - DONE
+    Maryland has county income tax (flat rate, but different per county) - DONE
+      Baltimore city has income tax - DONE
+    Michigan cities have income taxes in addition to state income taxes - DONE
     New York
       New York City Income Tax - DONE
       Yonkers surtax based on state income tax - need to add surtax calculator
@@ -130,7 +129,7 @@ MD income tax has exemption amount that varies based on income.  Current solutio
   Standard deduction is 15% of AGI with minimum and maximum dependent on filing status. Current solution
   is to use average of $2000 and $3000.
 
-MI has standard deduction only for those 67 yeears of age or older
+MI has standard deduction only for those 67 years of age or older
 
 MN state income tax has a phase-out of itemized deductions based on taxable income. Current solution
   is to ignore and include all itemized deductions.

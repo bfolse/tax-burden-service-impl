@@ -154,6 +154,7 @@ public class CityIncomeImport {
     private static String standardizeName(String name) {
         return name.trim()
                 .replace("'", "")
+                .replace("’", "")
                 .replace("&#39;", "")
                 .replace(".", "")
                 .replace(" ", "_")

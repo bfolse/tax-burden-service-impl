@@ -3855,7 +3855,7 @@ INSERT INTO public.tax_definition(id, political_division_key, tax_definition_key
 VALUES
 (nextval('public.hibernate_sequence'),'24001','ALLEGANY_MD_COUNTY_PROPERTY','Allegany County MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
 (nextval('public.hibernate_sequence'),'24003','ANNE_ARUNDEL_MD_COUNTY_PROPERTY','Anne Arundel County MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
-(nextval('public.hibernate_sequence'),'24510','BALTIMORE_CITY_MD_COUNTY_PROPERTY','Baltimore city MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
+(nextval('public.hibernate_sequence'),'2404000','BALTIMORE_CITY_MD_CITY_PROPERTY','Baltimore city MD Property','propertyTaxFlatRateCalculator','PROPERTY_CITY',5),
 (nextval('public.hibernate_sequence'),'24005','BALTIMORE_MD_COUNTY_PROPERTY','Baltimore County MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
 (nextval('public.hibernate_sequence'),'24009','CALVERT_MD_COUNTY_PROPERTY','Calvert County MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
 (nextval('public.hibernate_sequence'),'24011','CAROLINE_MD_COUNTY_PROPERTY','Caroline County MD Property','propertyTaxFlatRateCalculator','PROPERTY_COUNTY',5),
@@ -3884,7 +3884,7 @@ INSERT INTO public.tax_rate(id, tax_definition_key, rate, range_low, range_high)
 VALUES
 (nextval('public.hibernate_sequence'),'ALLEGANY_MD_COUNTY_PROPERTY',0.0120,null,null),
 (nextval('public.hibernate_sequence'),'ANNE_ARUNDEL_MD_COUNTY_PROPERTY',0.0085,null,null),
-(nextval('public.hibernate_sequence'),'BALTIMORE_CITY_MD_COUNTY_PROPERTY',0.0165,null,null),
+(nextval('public.hibernate_sequence'),'BALTIMORE_CITY_MD_CITY_PROPERTY',0.0165,null,null),
 (nextval('public.hibernate_sequence'),'BALTIMORE_MD_COUNTY_PROPERTY',0.0115,null,null),
 (nextval('public.hibernate_sequence'),'CALVERT_MD_COUNTY_PROPERTY',0.0096,null,null),
 (nextval('public.hibernate_sequence'),'CAROLINE_MD_COUNTY_PROPERTY',0.0104,null,null),
@@ -3913,7 +3913,7 @@ INSERT INTO public.assessed_rate(id, tax_definition_key, rate)
 VALUES
 (nextval('public.hibernate_sequence'),'ALLEGANY_MD_COUNTY_PROPERTY',1.00),
 (nextval('public.hibernate_sequence'),'ANNE_ARUNDEL_MD_COUNTY_PROPERTY',1.00),
-(nextval('public.hibernate_sequence'),'BALTIMORE_CITY_MD_COUNTY_PROPERTY',1.00),
+(nextval('public.hibernate_sequence'),'BALTIMORE_CITY_MD_CITY_PROPERTY',1.00),
 (nextval('public.hibernate_sequence'),'BALTIMORE_MD_COUNTY_PROPERTY',1.00),
 (nextval('public.hibernate_sequence'),'CALVERT_MD_COUNTY_PROPERTY',1.00),
 (nextval('public.hibernate_sequence'),'CAROLINE_MD_COUNTY_PROPERTY',1.00),

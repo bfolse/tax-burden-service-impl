@@ -8598,7 +8598,6 @@ VALUES
 (nextval('public.hibernate_sequence'),'Washington County','Washington County','24043','COUNTY'),
 (nextval('public.hibernate_sequence'),'Wicomico County','Wicomico County','24045','COUNTY'),
 (nextval('public.hibernate_sequence'),'Worcester County','Worcester County','24047','COUNTY'),
-(nextval('public.hibernate_sequence'),'Baltimore city','Baltimore city','24510','COUNTY'),
 (nextval('public.hibernate_sequence'),'Aberdeen city','Aberdeen city','2400125','CITY'),
 (nextval('public.hibernate_sequence'),'Accident town','Accident town','2400225','CITY'),
 (nextval('public.hibernate_sequence'),'Annapolis city','Annapolis city','2401600','CITY'),

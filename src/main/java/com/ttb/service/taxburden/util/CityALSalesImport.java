@@ -167,6 +167,7 @@ public class CityALSalesImport {
     private static String standardizeName(String name) {
         return name.trim()
                 .replace("'", "")
+                .replace("’", "")
                 .replace(".", "")
                 .replace(" ", "_")
                 .toUpperCase()
