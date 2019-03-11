@@ -110,7 +110,7 @@ public class CityIncomeImport {
                 String consolidatedCity = state + tokens[5];
                 String city = state + tokens[4];
                 String name = tokens[6];
-                String standardizedName = standardizeName(name);
+                String standardizedName = standardizeCensusName(name);
 
                 String fips = null;
 
@@ -161,12 +161,30 @@ public class CityIncomeImport {
                 .replace("/", "_")
                 .replace("-", "_")
                 .toUpperCase()
-                .replace("_CITY", "")
-                .replace("_TOWN", "")
-                .replace("_TOWNSHIP", "")
-                .replace("_VILLAGE", "")
                 .replace("SAINT_", "ST_")
                 .replace("FT_", "FORT_")
+                .replace("MT_", "MOUNT_");
+    }
+
+    private static String standardizeCensusName(String name) {
+        return name.trim()
+                .replace("'", "")
+                .replace("’", "")
+                .replace("&#39;", "")
+                .replace(".", "")
+                .replace(" ", "_")
+                .replace("/", "_")
+                .replace("-", "_")
+                .toUpperCase()
+                .replaceAll("_TOWNSHIP$", "")
+                .replaceAll("_CITY$", "")
+                .replaceAll("_TOWN$", "")
+                .replaceAll("_VILLAGE$", "")
+                .replaceAll("_BOROUGH$", "")
+                .replaceAll("_MUNICIPALITY$", "")
+                .replace("SAINT_", "ST_")
+                .replace("FT_", "FORT_")
+                .replace("MT_", "MOUNT_")
                 .replace("_(BALANCE)", "");
     }
 

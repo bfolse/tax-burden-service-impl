@@ -72,12 +72,18 @@ Add other states
     New York
       New York City Income Tax - DONE
       Yonkers surtax based on state income tax - need to add surtax calculator
-    Ohio cities and school districts
+    Ohio
+      cities - DONE
+      school districts
     Oregon cities/counties (2) - Transit Districts in Portland and Eugene and Multnomah County
-    Pennsylvania - many municipalities
+    Pennsylvania Earned Income Tax
+      Cities - DONE
+      Local School Districts
   Capital Gains
     State and Local
   Corporate
+  Payroll
+    Oregon - Statewide Transit tax (employee), Tri-met and Lane Transit District transit tax (employer)
 
 @Ignore in TaxDefinitionRepositoryTest
 Add tests for isDeductItemized and isDeductPreTaxContributions
@@ -113,6 +119,9 @@ Income tax calculation for many states allows for exemptions of income from Soci
 PA income tax allows itemized deductions for only Med. Savings, Healthcare Savings, and 529 contributions. Need
   break down "Other itemized deductions" and "Pre tax contributions" further to have a more accurate calculation.
   Currently not using any exemptions or deductions in calculation.
+
+PA local income tax - problems with multiple political divisions named 'Franklin' there are several, each
+  in a different county. Need to resolve this. Also: 'Union', 'Lancaster'
 
 AL income tax has standard deductions that vary based on income. Income ranges only from $0-15,000 for SINGLE
   and $0-30,000 for married, so current solution is to always use max standard deduction.
